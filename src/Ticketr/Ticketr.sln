@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ticketr.UI", "Ticketr.UI\Ti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ticketr.Service", "Ticketr.Service\Ticketr.Service.csproj", "{72A8E916-7F70-41AD-84BB-48054E1998AD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ticketr.Schnittstellen", "Ticketr.Schnittstellen\Ticketr.Schnittstellen.csproj", "{751A4CB4-3941-4CA0-82AF-43871F91585B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{72A8E916-7F70-41AD-84BB-48054E1998AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72A8E916-7F70-41AD-84BB-48054E1998AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72A8E916-7F70-41AD-84BB-48054E1998AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{751A4CB4-3941-4CA0-82AF-43871F91585B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{751A4CB4-3941-4CA0-82AF-43871F91585B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{751A4CB4-3941-4CA0-82AF-43871F91585B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{751A4CB4-3941-4CA0-82AF-43871F91585B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
