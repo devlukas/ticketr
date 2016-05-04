@@ -69,10 +69,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="dbconnect.php" />
-    <Content Include="functions.php" />
     <Content Include="service.php" />
     <Content Include="ticketr.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="includes\.htaccess" />
+    <Content Include="includes\dbconnect.php" />
+    <Content Include="includes\functions.php" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include=".htaccess" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

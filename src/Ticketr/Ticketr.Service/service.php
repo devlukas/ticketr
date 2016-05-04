@@ -1,21 +1,26 @@
 <?php 
-	require_once("dbconnect.php");
-	require_once("functions.php");
+	require_once("includes/dbconnect.php");
+	require_once("includes/functions.php");
 	
-	global $dbHost;
-	global $dbUser;
-	global $dbPassword;
-	global $dbName;
+	$allowedFunctions = array(
+		"getAllKunden",
+		"getAllMitarbeiter",
+		"getkundendetail",
+		"getmitarbeiterdetail",
+		"addMitarbeiter",
+		"addKunde"
+	);
 	
-	//open db connection
-	$db = mysqli_connect($dbHost, $dbUser, $dbPassword, $dbName);
 	
-	if (mysqli_connect_errno())
+	//Check if this method is allowed
+	if(isset($_GET["method"]) && in_array($_GET["method"], $allowedFunctions))
 	{
-		echo "Failed to connect to MySQL: " . mysqli_connect_error();
+		//Call service method
+		call_user_func($_GET["method"]);
+	}
+	else{
+		header("HTTP/1.0 404 Not Found");
 	}
 	
-	$allowedMethods = "getallkunden,getallmitarbeiter,getkundendetail,getmitarbeiterdetail,addperson";
-	
-
+	mysqli_close($db);
 ?>
