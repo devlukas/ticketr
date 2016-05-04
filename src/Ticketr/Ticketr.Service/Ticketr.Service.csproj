@@ -72,6 +72,7 @@
     <Content Include="dbconnect.php" />
     <Content Include="functions.php" />
     <Content Include="service.php" />
+    <Content Include="ticketr.sql" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
