@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="Ticketr.UI.Components.MenuView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Ticketr.UI.Components"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="300">
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="NormalFont" Color="#EBEBEB"></SolidColorBrush>
+    </UserControl.Resources>
+    <Grid Width="300" Background="{DynamicResource WindowTitleColorBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Image Margin="0, 30, 0, 0" VerticalAlignment="Center" 
+                       HorizontalAlignment="Center" 
+                       Source="https://www.hslu.ch/Services/Other/SelbstpflegeDB/ImageService/ImageHandler.ashx/?id=3fd44ac1-fbf1-49d2-b164-8ce41a66d1cc" 
+                       Width="100" Height="100">
+        </Image>
+        <TextBlock Margin="0,10,0,0" Grid.Row="1" Foreground="{DynamicResource NormalFont}" TextAlignment="Center" FontSize="16">Werner Odermatt</TextBlock>
+    </Grid>
+</UserControl>
