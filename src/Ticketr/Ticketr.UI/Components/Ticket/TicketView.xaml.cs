@@ -18,9 +18,9 @@ namespace Ticketr.UI.Components
     /// <summary>
     /// Interaction logic for DashboardView.xaml
     /// </summary>
-    public partial class DashboardView : UserControl
+    public partial class TicketView : UserControl
     {
-        public DashboardView()
+        public TicketView()
         {
             InitializeComponent();
         }

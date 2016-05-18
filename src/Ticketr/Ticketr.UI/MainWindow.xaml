@@ -11,9 +11,9 @@
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-        GlowBrush="{DynamicResource AccentColorBrush}"
+        GlowBrush="{DynamicResource MaterialDesignBody}"
         BorderThickness="1">
     <Grid>
-        <component:DashboardView></component:DashboardView>
+        <component:TicketView></component:TicketView>
     </Grid>
 </metro:MetroWindow>
