@@ -4,14 +4,21 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Ticketr.UI.Components"
-             xmlns:components="clr-namespace:Ticketr.UI.Components"
+             xmlns:component="clr-namespace:Ticketr.UI.Components"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1000">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <components:MenuView Grid.Column="0" Width="170"></components:MenuView>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <!-- Statistics -->
+        </Grid>
+        <component:TicketTableUserControl Grid.Row="1"></component:TicketTableUserControl>
     </Grid>
 </UserControl>

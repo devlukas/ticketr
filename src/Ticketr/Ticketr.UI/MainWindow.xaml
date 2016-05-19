@@ -14,6 +14,11 @@
         GlowBrush="{DynamicResource MaterialDesignBody}"
         BorderThickness="1">
     <Grid>
-        <component:TicketView></component:TicketView>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <component:MenuView Grid.Column="0" Width="170"></component:MenuView>
+        <component:TicketTableUserControl Grid.Column="1"></component:TicketTableUserControl>
     </Grid>
 </metro:MetroWindow>
