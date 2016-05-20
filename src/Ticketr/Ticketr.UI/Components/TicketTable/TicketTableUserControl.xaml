@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Ticketr.UI.Components"
+             xmlns:component="clr-namespace:Ticketr.UI.Components"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1000">
@@ -13,25 +14,33 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <materialDesign:Card Margin="5" FontSize="14">
-            <Border Padding="5" Grid.Row="0" Background="#F2F2F2"  Height="40">
-                <Grid >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Orientation="Horizontal" Grid.Column="0">
-                        <materialDesign:PackIcon VerticalAlignment="Center" Kind="AlertOutline" Height="22" Width="22" Grid.Column="1" Margin="5,0,5,0" />
-                        <TextBlock VerticalAlignment="Center" Text="Offen"></TextBlock>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Grid.Column="1">
-                        <materialDesign:PackIcon Kind="Check" VerticalAlignment="Center" Height="22" Width="22" Grid.Column="1" Margin="5,0,5,0" />
-                        <TextBlock VerticalAlignment="Center" Text="Abgeschlossen"></TextBlock>
-                    </StackPanel>
-                    <Button Width="150" HorizontalAlignment="Right" Grid.Column="2" Content="Ticket erstellen"></Button>
-                </Grid>
-            </Border>
-
+            <Grid>
+                <Border Padding="5" Grid.Row="0" Background="#F2F2F2"  Height="40">
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Horizontal" Grid.Column="0">
+                            <materialDesign:PackIcon VerticalAlignment="Center" Kind="AlertOutline" Height="22" Width="22" Grid.Column="1" Margin="5,0,5,0" />
+                            <TextBlock VerticalAlignment="Center" Text="Offen"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Column="1">
+                            <materialDesign:PackIcon Kind="Check" VerticalAlignment="Center" Height="22" Width="22" Grid.Column="1" Margin="5,0,5,0" />
+                            <TextBlock VerticalAlignment="Center" Text="Abgeschlossen"></TextBlock>
+                        </StackPanel>
+                        <Button Width="150" HorizontalAlignment="Right" Grid.Column="2" Content="Ticket erstellen"></Button>
+                    </Grid>
+                </Border>
+                <ItemsControl ItemsSource="{Binding}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <component:TicketTableItemUserControl DataContext="{Binding}"></component:TicketTableItemUserControl>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
         </materialDesign:Card>
     </Grid>
 </UserControl>

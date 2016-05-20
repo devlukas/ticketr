@@ -79,6 +79,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Components\TicketTableItem\TicketTableItemUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Components\TicketTable\TicketTableUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -104,9 +108,14 @@
     </Compile>
     <Compile Include="Components\MenuItem\MenuItemViewModel.cs" />
     <Compile Include="Components\Menu\MenuViewModel.cs" />
+    <Compile Include="Components\TicketTableItem\TicketTableItemUserControl.xaml.cs">
+      <DependentUpon>TicketTableItemUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\TicketTableItem\TicketTableItemViewModel.cs" />
     <Compile Include="Components\TicketTable\TicketTableUserControl.xaml.cs">
       <DependentUpon>TicketTableUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Components\TicketTable\TicketTableViewModel.cs" />
     <Compile Include="Components\Ticket\TicketView.xaml.cs">
       <DependentUpon>TicketView.xaml</DependentUpon>
     </Compile>
@@ -146,6 +155,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

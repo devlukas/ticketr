@@ -11,10 +11,6 @@ namespace Ticketr.UI.Components.MenuItem
     /// </summary>
     public class MenuItemViewModel
     {
-        private string name;
-
-        private string iconName;
-
         /// <summary>
         /// Intiaisliert das MenuItemViewModel
         /// </summary>
@@ -22,27 +18,17 @@ namespace Ticketr.UI.Components.MenuItem
         /// <param name="iconName">Das Icon, dass angezeigt werden sollte. Die Iconnamen findet man auf : https://materialdesignicons.com/</param>
         public MenuItemViewModel(string name, string iconName)
         {
-            this.name = name;
-            this.iconName = iconName;
+            this.Name = name;
+            this.IconName = iconName;
         }
         /// <summary>
         /// Gibt den Anzeigenamen des Menu Items zurück
         /// </summary>
-        public string Name
-        {
-            get
-            {
-                return name;
-            }
-        }
+        public string Name { get; }
 
         /// <summary>
         /// Gibt den Icon Namen zurück. Die Iconnamen findet man auf : https://materialdesignicons.com/
         /// </summary>
-        public string IconName { get
-            {
-                return iconName;
-            }
-        }
+        public string IconName { get; }
     }
 }
