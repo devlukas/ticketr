@@ -79,6 +79,11 @@
   <ItemGroup>
     <Content Include=".htaccess" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="includes\authenticate.php" />
+    <Content Include="includes\controller.php" />
+    <Content Include="includes\TicketrRepository.php" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

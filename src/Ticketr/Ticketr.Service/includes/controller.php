@@ -3,133 +3,139 @@
 //Alle öffentlichen Methoden dieser Klasse werden aufgerufen durch Routing
 //z.B. Methode getAllKunden -> GET /service/getAllKunden
 class Controller {
+    
+    private $repo;
+    
+    function __construct() {
+        $this->repo = new TicketrRepository();
+    }
+    
+    
     //Gibt alle verfügbaren Kunden zurück
     function getAllKunden() {
-        global $db;
-
-        $sql = "SELECT person.vorname, person.name, person.id as personId,
-				person.eMail, person.erstellDatum, person.aenderungsDatum,
-				kunde.id as kundeId, kunde.erstellDatum as kundeSeit
-				FROM kunde
-				INNER JOIN person ON person.id = kunde.personId";
-
-        $result = $this->query($sql);
-        $this->printQueryAsJson($result);
+        
+        $reponse = $this->repo->getAllKunden();
+        $this->repo->printJson($reponse);
+        
     }
+    
 
     //Gibt alle verfügbaren Mitarbeiter zurück
     function getAllMitarbeiter() {
-        global $db;
-
-        $sql = "SELECT person.vorname, person.name, person.id as personId,
-				person.eMail, person.erstellDatum, person.aenderungsDatum,
-				mitarbeiter.id as mitarbeiterId, mitarbeiter.erstellDatum as mitarbeiterSeit
-				FROM mitarbeiter
-				INNER JOIN person ON person.id = mitarbeiter.personId";
-
-        $result = $this->query($sql);
-        $this->printQueryAsJson($result);
+        $reponse = $this->repo->getAllMitarbeiter();
+        $this->repo->printJson($reponse);
     }
 
     //Gibt die Daten für die Detailansicht eines Kunden zurück
     function getKundeDetail() {
 
     }
+    
 
     //Gibt die Daten für die Detailansicht eines Benutzers zurück
     function getMitarbeiterDetail() {
-
+        $reponse = $this->repo->getMitarbeiterDetail($_GET["id"]);
+        $this->repo->printJson($reponse);
     }
+    
 
     //fügt einen neuen Mitarbeiter hinzu und gibt die erstellte Mitarbeiter-ID zurück
     function addMitarbeiter() {
+
         global $db;
-
-        $name = realString($_POST["name"]);
-        $vorname = realString($_POST["vorname"]);
-        $email = realString($_POST["email"]);
-        $passwort = realString($_POST["passwort"]);
-
-        if (!empty($name) && !empty($vorname) && !empty($email) && !empty($passwort)) {
-            $pwHash = hash('sha256', $passwort);
-            //add Person
-            $sqlPerson = "INSERT INTO person (name, vorname, email, erstellDatum, aenderungsDatum) VALUES ('$name', '$vorname', '$email', NOW(), NOW())";
-            $result = $this->query($sqlPerson);
-
-            //get id of new inserted person
-            $personId = $db->insert_id;
-
-            //add Mitabeiter
-            $sqlMitabeiter = "INSERT INTO mitarbeiter (personId, passwort, erstellDatum) VALUES ($personId,'$pwHash', NOW())";
-            $result = $this->query($sqlMitabeiter);
-
-            $json = "{ \"mitarbeiterId\":".$db->insert_id."}";
-
-            echo $json;
-
-            header('Content-Type: application/json');
-        }
+        
+        //Gets the json in post-Body
+        $data = json_decode(file_get_contents('php://input'), true);
+        
+       $this->repo->addMitarbeiter($data);
     }
+    
+    
+    //Gibt das Profilbild einer Person zurück
+    function getPersonPicture(){
+        
+        $id = $_GET["id"];
+        
+        //todo hack
+        header('Content-Type: image/png');
+        
+        echo $this->repo->getPersonPicture($id);
+    }
+    
+    
+    function setPersonPicture(){
+        
+        $personId = $_POST["personId"];
+        $image = addslashes(file_get_contents($_FILES['image']['tmp_name']));
+        
+        echo $this->repo->setPersonPicture($image);
+    }
+    
+    
+    //löscht einen Mitarbeiter
+    function deleteMitarbeiter(){
+        echo $this->repo->deleteMitarbeiter();
+    }
+    
 
     //Fügt einen neuen Kunden hinzu
     function addKunde() {
-        global $db;
-
-        $name = realString($_POST["name"]);
-        $vorname = realString($_POST["vorname"]);
-        $email = realString($_POST["email"]);
-
-        if (!empty($name) && !empty($vorname) && !empty($email)) {
-            //add Person
-            $sqlPerson = "INSERT INTO person (name, vorname, email, erstellDatum, aenderungsDatum) VALUES ('$name', '$vorname', '$email', NOW(), NOW())";
-            $result = $this->query($sqlPerson);
-
-            //get id of new inserted person
-            $personId = $db->insert_id;
-
-            //add Mitabeiter
-            $sqlKunde = "INSERT INTO kunde (personId, erstellDatum) VALUES ($personId, NOW())";
-            $result = $this->query($sqlKunde);
-
-            $json = "{ \"kundeId\":".$db->insert_id."}";
-
-            echo $json;
-
-            header('Content-Type: application/json');
+        echo $this->repo->addKunde();
+    }
+    
+    
+    //Gibt alle Tickets zurück
+    function getTickets(){
+       $response = $this->repo->getTickets();
+       $this->repo->printJson($response);
+    }
+    
+    
+    //Gibt die Detailansicht eines Tickets zurück
+    function getTicketDetail(){
+        $response = $this->repo->getTicketDetail();
+        $this->repo->printJson($response);
+    }
+    
+    //Erstellt ein neues Ticket
+    function createTicket(){
+        
+        //Gets the json in post-Body
+        $data = json_decode(file_get_contents('php://input'), true);
+        $response = $this->repo->createTicket($data);
+        
+        $this->repo->printJson($response);
+    }
+    
+    
+    //Gibt die Details des angemeldeten Benutzers zurück
+    function getCurrentMitarbeiterDetail(){
+        //todo hack :)
+        $personId = $this->repo->getCurrentPersonId();
+        
+        $response = $this->repo->getMitarbeiterDetail($personId);
+        
+        $this->repo->printJson($response);
+    }
+    
+    function info()
+    {
+        echo "<h1>M120 Ticktr Service</h1>";
+        echo "<p>by Lukas Weber & Livio Brunner</p>";
+        $class_methods = get_class_methods($this);
+        echo "<h2>All Methods of the Controller Class: </h2><ul>";
+        foreach ($class_methods as $method_name) {
+            echo "<li>$method_name </li>";
         }
+        echo "</ul>";
+        
     }
+    
+    
+    
+    
 
 
-    //Schreibt das angegebene SQL-Result als JSON
-    private function printQueryAsJson($result) {
-        $rows = array();
-
-        while ($r = mysqli_fetch_assoc($result)) {
-            $rows[] = $r;
-        }
-
-        $json = json_encode($rows, JSON_UNESCAPED_UNICODE);
-        echo $json;
-
-        header('Content-Type: application/json');
-    }
-
-    //executes a $this->query on the database
-    private function query($sql) {
-        global $db;
-        $result = $db->query($sql);
-
-        if (!$result) {
-            die('FAIL: '.mysqli_error($db));
-        }
-
-        return $result;
-    }
-
-    private function realString($value) {
-        global $db;
-        return $db->real_escape_string($value);
-    }
 
 }
 
