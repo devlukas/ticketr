@@ -68,7 +68,7 @@ class Controller {
         $personId = $_POST["personId"];
         $image = addslashes(file_get_contents($_FILES['image']['tmp_name']));
         
-        echo $this->repo->setPersonPicture($image);
+        echo $this->repo->setPersonPicture($image,$personId);
     }
     
     

@@ -140,7 +140,7 @@
             return $row["picture"];
         }
         
-        function setPersonPicture($image)
+        function setPersonPicture($image, $personId)
         {
             $sql = "UPDATE person SET picture = '$image' WHERE id = $personId";
             return $this->query($sql);
