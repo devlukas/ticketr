@@ -165,8 +165,19 @@ namespace Ticketr.Businesslogik
         }
 
 
-        private Ticket(Schnittstellen.Dto.Ticket ticket)
+        Ticket(Schnittstellen.Dto.Ticket ticket)
         {
+            prioritaet = (Prioritaet)ticket.Prioritaet;
+            abgeschlossen = ticket.Abgeschlossen;
+            aenderungsDatum = ticket.AenderungsDatum;
+            bearbeiter = new Mitarbeiter(ticket.Bearbeiter);
+            kommentare = ticket.Kommentare.Select(k => new Kommentar(k)).ToList();
+            kunde = new Kunde(ticket.Kunde);
+            kategorie = new Kategorie(ticket.Kategorie);
+            erstellDatum = ticket.ErstellDatum;
+            bezeichnung = ticket.Bezeichnung;
+            beschreibung = ticket.Beschreibung;
+            id = ticket.Id;
         }
     }
 }
