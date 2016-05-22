@@ -155,12 +155,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Ticketr.Schnittstellen\Ticketr.Schnittstellen.csproj">
-      <Project>{751a4cb4-3941-4ca0-82af-43871f91585b}</Project>
-      <Name>Ticketr.Schnittstellen</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

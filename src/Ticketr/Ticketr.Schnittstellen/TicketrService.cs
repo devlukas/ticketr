@@ -195,6 +195,27 @@ namespace Ticketr.Schnittstellen
             webClient.UploadString(new Uri(BaseUrl, "updateTicket"), data);
         }
 
+        /// <summary>
+        /// Gibt das Bild einer Person zurück
+        /// </summary>
+        /// <param name="personId"></param>
+        /// <returns></returns>
+        public byte[] GetProfilePicture(int personId)
+        {
+            return webClient.DownloadData(new Uri(BaseUrl, String.Format("getPersonPicture?id={0}", personId)));
+        }
+
+
+        /// <summary>
+        /// Ändert das Bild einer Person
+        /// </summary>
+        /// <param name="profilePicture"></param>
+        /// <param name="personId"></param>
+        public void SetProfilePicture(byte[] profilePicture, int personId)
+        {
+            webClient.UploadData(new Uri(BaseUrl, String.Format("setPersonPicture?personId={0}", personId)), profilePicture);
+        }
+
 
         /// <summary>
         /// Gibt die Service Infos (in HTML) zurück

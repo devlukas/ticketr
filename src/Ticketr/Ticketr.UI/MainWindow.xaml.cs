@@ -26,6 +26,7 @@ namespace Ticketr.UI
         public MainWindow()
         {
             InitializeComponent();
+
             TicketrService service = new TicketrService();
 
             bool test = service.Login("test@test.ch", "test");
@@ -42,9 +43,9 @@ namespace Ticketr.UI
             //ticketList.First().Bezeichnung = "HAllo123";
             //service.UpdateTicket(ticketList.First());
 
-
-
-
+            byte[] pb = service.GetProfilePicture(1);
+            service.SetProfilePicture(pb, 1);
+            
             bool auth = service.Authorized;
         }
     }
