@@ -32,8 +32,13 @@ namespace Ticketr.UI
             get { return mainWindowViewModel; }
         }
         
+        /// <summary>
+        /// Gibt das MainWindow zurück
+        /// </summary>
         public static MainWindow MainWindow { get; set; }
-
+        /// <summary>
+        /// Gibt das TicketSystem zurück
+        /// </summary>
         public static TicketSystem TicketSystem { get; set; }
     }
 }
