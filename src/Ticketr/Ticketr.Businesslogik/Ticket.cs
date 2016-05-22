@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Ticketr.Businesslogik
 {
-    class Ticket
+    public class Ticket
     {
 
         //--------------Members------------
