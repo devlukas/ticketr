@@ -40,6 +40,8 @@ namespace Ticketr.Businesslogik
 
         //--------------Properties------------
 
+        #region Properties
+
         public int Id
         {
             get
@@ -164,8 +166,9 @@ namespace Ticketr.Businesslogik
             }
         }
 
+#endregion
 
-        Ticket(Schnittstellen.Dto.Ticket ticket)
+        public Ticket(Schnittstellen.Dto.Ticket ticket)
         {
             prioritaet = (Prioritaet)ticket.Prioritaet;
             abgeschlossen = ticket.Abgeschlossen;
