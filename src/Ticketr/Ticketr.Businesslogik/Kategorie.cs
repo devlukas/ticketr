@@ -7,6 +7,9 @@ using Ticketr.Schnittstellen.Dto;
 
 namespace Ticketr.Businesslogik
 {
+    /// <summary>
+    /// Representiert eine Kategorie
+    /// </summary>
     public class Kategorie
     {
         private int id;

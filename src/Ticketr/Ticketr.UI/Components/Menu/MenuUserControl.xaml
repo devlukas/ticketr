@@ -19,10 +19,10 @@
         </Grid.RowDefinitions>
         <Image Margin="0, 30, 0, 0" VerticalAlignment="Center" 
                        HorizontalAlignment="Center" 
-                       Source="https://www.hslu.ch/Services/Other/SelbstpflegeDB/ImageService/ImageHandler.ashx/?id=3fd44ac1-fbf1-49d2-b164-8ce41a66d1cc" 
-                       Width="100" Height="100">
+                       Source="{Binding UserImage}" 
+                       Width="100" >
         </Image>
-        <TextBlock Margin="0,10,0,0" Grid.Row="1" Foreground="{DynamicResource NormalFont}" TextAlignment="Center" FontSize="16">Werner Odermatt</TextBlock>
+        <TextBlock Margin="0,10,0,0" Grid.Row="1" Foreground="{DynamicResource NormalFont}" TextAlignment="Center" FontSize="16" Text="{Binding FormattedUserName}"></TextBlock>
         <ItemsControl  Margin="0,20,0,0" Grid.Row="2" ItemsSource="{Binding MenuItems}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>

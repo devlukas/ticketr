@@ -15,8 +15,8 @@
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Rectangle Width="5" Fill="{DynamicResource AccentColorBrush}"></Rectangle>
-            <materialDesign:PackIcon Kind="{Binding IconName}" Height="24" Width="24" Grid.Column="1" Margin="10,0,0,0"/>
-            <TextBlock Text="{Binding Name}" Grid.Column="2" HorizontalAlignment="Center" Margin="10,0,0,0" VerticalAlignment="Center"></TextBlock>
+            <materialDesign:PackIcon Kind="{Binding IconName}" Height="24" Width="24" Grid.Column="1" Margin="10,0,0,0" Foreground="White"/>
+            <TextBlock Text="{Binding Name}" Grid.Column="2" HorizontalAlignment="Center" Margin="10,0,0,0" Foreground="White" VerticalAlignment="Center"></TextBlock>
         </Grid>
     </Button>
 </UserControl>
