@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Ticketr.UI.Components.TicketTable;
 
 namespace Ticketr.UI.Components
 {
@@ -22,6 +23,11 @@ namespace Ticketr.UI.Components
     {
         public TicketTableUserControl()
         {
+            TicketTableViewModel viewModel = new TicketTableViewModel();
+            viewModel.LoadItems();
+
+            this.DataContext = viewModel;
+
             InitializeComponent();
         }
     }

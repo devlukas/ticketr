@@ -27,7 +27,6 @@
                     <Run Text="geöffnet vor"></Run>
                     <Run Text="{Binding FormattedCreatedAt}"></Run>
                     <Run Text="von"></Run>
-                    <!-- TODO: Benutzernamen -->
                 </TextBlock>
             </Grid>
         </Grid>

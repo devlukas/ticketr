@@ -25,7 +25,12 @@ namespace Ticketr.Businesslogik
             this.name = kategorie.Name;
             this.beschreibung = kategorie.Beschreibung;
             this.id = kategorie.Id;
-            this.subKategorien = kategorie.SubKategorien.Select(k => new Kategorie(k)).ToList();
+
+            if (kategorie.SubKategorien != null)
+            {
+                this.subKategorien = kategorie.SubKategorien.Select(k => new Kategorie(k)).ToList();
+            }
+
         }
 
         public int Id

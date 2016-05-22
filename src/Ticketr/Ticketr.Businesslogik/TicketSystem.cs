@@ -129,7 +129,12 @@ namespace Ticketr.Businesslogik
         public bool Login(string eMail, string password)
         {
             bool authenticated = service.Login(eMail, password);
-            currentUser = new Mitarbeiter(service.GetCurrentMitarbeiterDetail());
+
+            if (authenticated)
+            {
+                currentUser = new Mitarbeiter(service.GetCurrentMitarbeiterDetail());
+            }
+
             return authenticated;
         }
 

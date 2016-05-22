@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Ticketr.Businesslogik;
 using Ticketr.UI.Components.Login;
+using Ticketr.UI.Components.TicketTable;
 using Ticketr.UI.Models;
 
 namespace Ticketr.UI
@@ -14,11 +15,8 @@ namespace Ticketr.UI
     /// </summary>
     public class MainWindowViewModel : ViewModel
     {
-        public bool Login(string username, string password)
-        {
-            return App.TicketSystem.Login(username, password);
-        }
+        public TicketTableViewModel TicketTableViewModel { get; set; }
 
-       
+        
     }
 }
