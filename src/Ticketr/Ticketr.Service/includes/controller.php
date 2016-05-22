@@ -107,6 +107,17 @@ class Controller {
         $this->repo->printJson($response);
     }
     
+    //Bearbeitet ein neues Ticket
+    function updateTicket(){
+        
+        //Gets the json in post-Body
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        $response = $this->repo->udpateTicket($data);
+        
+        $this->repo->printJson($response);
+    }
+    
     
     //Gibt die Details des angemeldeten Benutzers zurück
     function getCurrentMitarbeiterDetail(){
@@ -115,6 +126,12 @@ class Controller {
         
         $response = $this->repo->getMitarbeiterDetail($personId);
         
+        echo $response;
+    }
+    
+    //Gibt alle vorhandenen Kategorien zurück
+    function getKategorien(){
+        $response = $this->repo->getKategorien();
         $this->repo->printJson($response);
     }
     

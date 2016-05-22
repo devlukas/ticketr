@@ -2,7 +2,6 @@
     class TicketrRepository{
         
         function getAllKunden() {
-            global $db;
 
             $sql = "SELECT person.vorname, person.name, person.id as personId,
                     person.eMail, person.erstellDatum, person.aenderungsDatum,
@@ -34,7 +33,6 @@
 
         //Gibt alle verfügbaren Mitarbeiter zurück
         function getAllMitarbeiter() {
-            global $db;
 
             $sql = "SELECT person.vorname, person.name, person.id as personId,
                     person.eMail, person.erstellDatum, person.aenderungsDatum,
@@ -184,16 +182,16 @@
         
         //Gibt alle Tickets zurück
         function getTickets(){
-            global $db;
             
             $sql = "
                   SELECT 
-                    ticket.id, ticket.erstellDatum, ticket.aenderungsDatum,
+                    ticket.id, ticket.erstellDatum, ticket.aenderungsDatum, ticket.kategorie_id, kategorie.name as kategorieName,
                     ticket.bezeichnung, ticket.beschreibung, ticket.abgeschlossen, ticket.prioritaet,
                     ticket.bearbeiter_id as bearbeiterMitarbeiterId, bearbeiterP.id as bearbeiterPersonId, bearbeiterP.name as bearbeiterName,  bearbeiterP.vorname as bearbeiterVorname, 
                     ticket.kunde_id as kundeId, kundeP.id as kundePersonId, kundeP.name as kundeName, kundeP.vorname as kundeVorname,
-                    ticket.typ,COUNT(kommentar.id) as 'kommentarCount'
+                    COUNT(kommentar.id) as 'kommentarCount'
                 FROM ticket
+                INNER JOIN kategorie ON kategorie.id = ticket.kategorie_id
                 LEFT JOIN kommentar ON kommentar.ticket_id = ticket.id
                 INNER JOIN mitarbeiter bearbeiterM ON bearbeiterM.id = ticket.bearbeiter_id
                 INNER JOIN person bearbeiterP ON bearbeiterP.id = bearbeiterM.person_id
@@ -216,7 +214,8 @@
                     $ticket["bezeichnung"] = $row["bezeichnung"];
                     $ticket["beschreibung"] = $row["beschreibung"];
                     $ticket["abgeschlossen"] = $row["abgeschlossen"];
-                    $ticket["kategorie"] = $row["typ"];
+                    $ticket["kategorie"]["id"] = $row["kategorie_id"];
+                    $ticket["kategorie"]["name"] = $row["kategorieName"];
                     $ticket["prioritaet"] = $row["prioritaet"];
                     $ticket["kommentarCount"] = $row["kommentarCount"];
                     
@@ -240,7 +239,6 @@
         
         //Gibt die Detailansicht eines Tickets zurück
         function getTicketDetail(){
-            global $db;
             
             $id = $_GET["id"];
             
@@ -248,12 +246,12 @@
             
             $ticketSql = "
                 SELECT 
-                    ticket.id, ticket.erstellDatum, ticket.aenderungsDatum,
+                    ticket.id, ticket.erstellDatum, ticket.aenderungsDatum, ticket.kategorie_id, kategorie.name as kategorieName,
                     ticket.bezeichnung, ticket.beschreibung, ticket.abgeschlossen, ticket.prioritaet,
                     ticket.bearbeiter_id as bearbeiterMitarbeiterId, bearbeiterP.id as bearbeiterPersonId, bearbeiterP.name as bearbeiterName,  bearbeiterP.vorname as bearbeiterVorname, 
-                    ticket.kunde_id as kundeId, kundeP.id as kundePersonId, kundeP.name as kundeName, kundeP.vorname as kundeVorname,
-                    ticket.typ
+                    ticket.kunde_id as kundeId, kundeP.id as kundePersonId, kundeP.name as kundeName, kundeP.vorname as kundeVorname
                 FROM ticket
+                INNER JOIN kategorie ON kategorie.id = ticket.kategorie_id
                 INNER JOIN mitarbeiter bearbeiterM ON bearbeiterM.id = ticket.bearbeiter_id
                 INNER JOIN person bearbeiterP ON bearbeiterP.id = bearbeiterM.person_id
                 INNER JOIN kunde kundeK ON kundeK.id = ticket.kunde_id
@@ -288,7 +286,8 @@
             $ticket["beschreibung"] = $ticketRow["beschreibung"];
             $ticket["abgeschlossen"] = $ticketRow["abgeschlossen"];
             $ticket["prioritaet"] = $ticketRow["prioritaet"];
-            $ticket["kategorie"] = $ticketRow["typ"];
+            $ticket["kategorie"]["id"] = $ticketRow["kategorie_id"];
+            $ticket["kategorie"]["name"] = $ticketRow["kategorieName"];
             
             $ticket["bearbeiter"]["id"] = $ticketRow["bearbeiterMitarbeiterId"];
             $ticket["bearbeiter"]["person"]["id"] = $ticketRow["bearbeiterPersonId"];
@@ -323,20 +322,98 @@
         //Erstellt ein neues Ticket
         function createTicket($ticket)
         {
-            global $db;
             
             $bezeichnung = $ticket["bezeichnung"];
             $beschreibung = $ticket["beschreibung"];
             $kundeId = $ticket["kunde"]["id"];
-            $bearbeiterId = $this->getCurrentMitarbeiterId();
+            $bearbeiterId = $ticket["bearbeiter"]["id"];
             $prioritaet = $ticket["prioritaet"];
-            $kategorie = $ticket["kategorie"];
+            $kategorieId = $ticket["kategorie"]["id"];
             
             $sql = "INSERT INTO ticket 
-                    (bezeichnung, beschreibung, kunde_id, bearbeiter_id, abgeschlossen, prioritaet, typ, erstellDatum, aenderungsDatum)
-                    VALUES ('$bezeichnung', '$beschreibung', $kundeId, $bearbeiterId, 0, $prioritaet ,'$kategorie', NOW(), NOW())";
+                    (bezeichnung, beschreibung, kunde_id, bearbeiter_id, abgeschlossen, prioritaet, kategorie_id, erstellDatum, aenderungsDatum)
+                    VALUES ('$bezeichnung', '$beschreibung', $kundeId, $bearbeiterId, 0, $prioritaet ,'$kategorieId', NOW(), NOW())";
                        
             return $this->query($sql);
+        }
+        
+        //Updatet ein Ticket
+        function udpateTicket($ticket)
+        {
+            $id = $ticket["id"];
+            $bezeichnung = $ticket["bezeichnung"];
+            $beschreibung = $ticket["beschreibung"];
+            $kundeId = $ticket["kunde"]["id"];
+            $bearbeiterId = $ticket["bearbeiter"]["id"];
+            $prioritaet = $ticket["prioritaet"];
+            $kategorieId = $ticket["kategorie"]["id"];
+            $abgeschlossen = $ticket["abgeschlossen"];
+            
+            $sql = "
+                UPDATE ticket
+                SET 
+                    bezeichnung = '$bezeichnung',
+                    beschreibung = '$beschreibung ',
+                    kunde_id = $kundeId,
+                    bearbeiter_id = $bearbeiterId,
+                    prioritaet = $prioritaet,
+                    kategorie_id = $kategorieId,
+                    aenderungsDatum = NOW(),
+                    abgeschlossen = $abgeschlossen 
+                WHERE id = $id";
+                
+            
+            return $this->query($sql);
+        }
+        
+        //Gibt alle, im System verfügbaren, Kategorien zurück
+        function getKategorien()
+        {
+            global $db;
+            $sql = "SELECT * FROM kategorie";
+            
+            $result = $this->query($sql);
+            
+            $parentCategories = array();
+            $subCategories = array();
+                 
+            //-----read categories from database-----
+            
+            while ($row = mysqli_fetch_array($result)) 
+            {
+                $category = array();
+                
+                $category["id"] = $row["id"];
+                $category["name"] = $row["name"];
+                $category["beschreibung"] = $row["beschreibung"];
+                
+                //Wenn Subkategorie
+                if(isset($row["parentKategorie_id"]))
+                {
+                    $category["parentKategorieId"] = $row["parentKategorie_id"];
+                    array_push($subCategories,  $category);
+                }
+                else{
+                    array_push($parentCategories,  $category);
+                }
+            }
+            
+            //----prepare for JSON--------
+            
+            foreach ($parentCategories as &$parentCategory) 
+            {
+                $parentCategory["subKategorien"] = array();
+                foreach ($subCategories as &$subCategory) 
+                {
+                    //Wenn die SubKategorie der Parent-Kategorie zugewiesen ist
+                    if($subCategory["parentKategorieId"] == $parentCategory["id"])
+                    {
+                        array_push($parentCategory["subKategorien"],  $subCategory);
+                    }
+                } 
+            }
+            
+            return $parentCategories;
         }
         
         
