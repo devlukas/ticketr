@@ -7,6 +7,7 @@
              xmlns:component="clr-namespace:Ticketr.UI.Components"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1000">
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>

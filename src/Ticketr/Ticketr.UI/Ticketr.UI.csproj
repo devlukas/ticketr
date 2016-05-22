@@ -75,6 +75,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Components\Dashboard\DashboardViewUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\Login\LoginViewUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Components\MenuItem\MenuItemUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -103,6 +111,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Components\Dashboard\DashboardViewUserControl.xaml.cs">
+      <DependentUpon>DashboardViewUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Login\LoginViewModel.cs" />
+    <Compile Include="Components\Login\LoginViewUserControl.xaml.cs">
+      <DependentUpon>LoginViewUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Components\MenuItem\MenuItemUserControl.xaml.cs">
       <DependentUpon>MenuItemUserControl.xaml</DependentUpon>
     </Compile>
@@ -128,6 +143,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="Models\ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -154,6 +171,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\background.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ticketr.Schnittstellen\Ticketr.Schnittstellen.csproj">
+      <Project>{751a4cb4-3941-4ca0-82af-43871f91585b}</Project>
+      <Name>Ticketr.Schnittstellen</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
