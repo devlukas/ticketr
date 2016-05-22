@@ -111,5 +111,23 @@ namespace Ticketr.Businesslogik
             this.aenderungsDatum = person.AenderungsDatum;
             this.erstellDatum = person.ErstellDatum;
         }
+
+        /// <summary>
+        /// Gibt das Profilbild für die Person zurück
+        /// </summary>
+        /// <returns></returns>
+        public byte[] GetProfilePicture()
+        {
+            return TicketSystem.Service.GetProfilePicture(id);
+        }
+
+        /// <summary>
+        /// Lädt das angegebene Profilbild hoch
+        /// </summary>
+        /// <param name="pictureFile"></param>
+        public void UploadProfilePicture(string fileName)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

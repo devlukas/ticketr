@@ -9,7 +9,6 @@ namespace Ticketr.Businesslogik
 {
     public class Kategorie
     {
-        private Schnittstellen.Dto.Kategorie kategorie;
 
         public Kategorie(Schnittstellen.Dto.Kategorie kategorie)
         {

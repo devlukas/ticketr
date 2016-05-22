@@ -61,6 +61,8 @@ namespace Ticketr.Businesslogik
         {
             service = new TicketrService();
             mitarbeiter = new List<Mitarbeiter>();
+            kunden = new List<Kunde>();
+            tickets = new List<Ticket>();
         }
 
         /// <summary>
@@ -69,8 +71,10 @@ namespace Ticketr.Businesslogik
         /// <returns></returns>
         public bool Login(string eMail, string password)
         {
+            currentUser = new Mitarbeiter(service.GetCurrentMitarbeiterDetail());
             return service.Login(eMail, password);
         }
+
 
         
     }
