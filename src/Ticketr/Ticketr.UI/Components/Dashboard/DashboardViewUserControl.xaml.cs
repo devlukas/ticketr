@@ -1,5 +1,4 @@
-﻿using MahApps.Metro.Controls;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,20 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Ticketr.Schnittstellen;
-using Ticketr.Schnittstellen.Dto;
 
-namespace Ticketr.UI
+namespace Ticketr.UI.Components
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for DashboardViewUserControl.xaml
     /// </summary>
-    public partial class MainWindow : MetroWindow
+    public partial class DashboardViewUserControl : UserControl
     {
-        public MainWindow()
+        public DashboardViewUserControl()
         {
             InitializeComponent();
-            App.MainWindow = this;
         }
     }
 }
