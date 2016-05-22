@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using MahApps.Metro.Controls;
+using Ticketr.Businesslogik;
 
 namespace Ticketr.UI
 {
@@ -18,6 +19,8 @@ namespace Ticketr.UI
 
         public App()
         {
+            //Create new TicketSystem Obejct
+            TicketSystem = new TicketSystem();
             mainWindowViewModel = new MainWindowViewModel();
         }
 
@@ -30,5 +33,7 @@ namespace Ticketr.UI
         }
         
         public static MainWindow MainWindow { get; set; }
+
+        public static TicketSystem TicketSystem { get; set; }
     }
 }

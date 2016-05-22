@@ -12,7 +12,7 @@ namespace Ticketr.Businesslogik
         /// <summary>
         /// Die Referenz auf den Ticketr-Service
         /// </summary>
-        private TicketrService service;
+        private static TicketrService service;
 
         /// <summary>
         /// Alle Mitarbeiter des TicketSystems
@@ -30,12 +30,46 @@ namespace Ticketr.Businesslogik
         private List<Ticket> tickets;
 
 
+        /// <summary>
+        /// Der aktuell eingeloggte Benutzer
+        /// </summary>
+        private Mitarbeiter currentUser;
+
+
+        public static TicketrService Service
+        {
+            get
+            {
+                if (service == null)
+                {
+                    service = new TicketrService();
+                }
+                return service;
+            }
+        }
+
+        /// <summary>
+        /// Der aktuell eingeloggte Benutzer
+        /// </summary>
+        public Mitarbeiter CurrentUser
+        {
+            get { return currentUser; }
+        }
 
 
         public TicketSystem()
         {
             service = new TicketrService();
             mitarbeiter = new List<Mitarbeiter>();
+        }
+
+        /// <summary>
+        /// Loggt einen Benutzer im System ein
+        /// </summary>
+        /// <returns></returns>
+        public bool Login(string eMail, string password)
+        {
+            return service.Login(eMail, password);
         }
 
         

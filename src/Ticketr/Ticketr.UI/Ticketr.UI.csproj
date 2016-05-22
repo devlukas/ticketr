@@ -179,9 +179,9 @@
     <Resource Include="Images\Logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Ticketr.Schnittstellen\Ticketr.Schnittstellen.csproj">
-      <Project>{751a4cb4-3941-4ca0-82af-43871f91585b}</Project>
-      <Name>Ticketr.Schnittstellen</Name>
+    <ProjectReference Include="..\Ticketr.Businesslogik\Ticketr.Businesslogik.csproj">
+      <Project>{0ab20ba7-3556-42fa-bc83-78fe904dd06b}</Project>
+      <Name>Ticketr.Businesslogik</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

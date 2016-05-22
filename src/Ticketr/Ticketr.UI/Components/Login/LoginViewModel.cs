@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using Ticketr.Schnittstellen;
 using Ticketr.UI.Models;
 
 namespace Ticketr.UI.Components.Login
@@ -16,10 +15,13 @@ namespace Ticketr.UI.Components.Login
     {
         private string errorMessage;
 
+
         /// <summary>
         /// Gibt die Email zurück und legt diese fest
         /// </summary>
+
         public string Email { get; set; }
+
         /// <summary>
         /// Loggt den User ein mit dem angegeben Passwort und dem Email Property des LoginViewModels ein.
         /// <see cref="Email"/>
