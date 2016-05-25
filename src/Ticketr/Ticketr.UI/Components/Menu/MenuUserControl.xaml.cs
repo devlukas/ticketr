@@ -12,8 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Ticketr.UI.Components.Menu;
-using Ticketr.UI.Components.MenuItem;
+using Ticketr.UI.Components.Dashboard;
 
 namespace Ticketr.UI.Components
 {
@@ -26,11 +25,19 @@ namespace Ticketr.UI.Components
         {
             InitializeComponent();
 
-            MenuItemViewModel tickets = new MenuItemViewModel("Tickets", "Home");
+        }
 
-            MenuViewModel menuViewModel = new MenuViewModel();
-            menuViewModel.MenuItems.Add(tickets);
-            DataContext = menuViewModel;
+        private void BenutzerButton_Click(object sender, RoutedEventArgs e)
+        {
+            DashboardViewModel dashboardViewModel = (DashboardViewModel)((Button)sender).DataContext;
+            dashboardViewModel.OpenBenutzerMenu();
+
+        }
+
+        private void TicketsButton_Click(object sender, RoutedEventArgs e)
+        {
+            DashboardViewModel dashboardViewModel = (DashboardViewModel)((Button)sender).DataContext;
+            dashboardViewModel.OpenTicketMenu();
         }
     }
 }

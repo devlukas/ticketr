@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using Ticketr.UI.Components.Dashboard;
 using Ticketr.UI.Components.Login;
 
 namespace Ticketr.UI.Components
@@ -26,7 +27,7 @@ namespace Ticketr.UI.Components
                 bool login = loginViewModel.Login(userPassword);
                 if (login)
                 {
-                    App.MainWindow.Content = new DashboardViewUserControl();
+                    App.MainWindowViewModel.SetSelectedView(new DashboardViewModel(), new DashboardViewUserControl());
                 }
                 else
                 {

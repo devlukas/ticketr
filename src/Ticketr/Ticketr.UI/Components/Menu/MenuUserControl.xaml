@@ -16,6 +16,7 @@
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Image Margin="0, 30, 0, 0" VerticalAlignment="Center" 
                        HorizontalAlignment="Center" 
@@ -23,12 +24,29 @@
                        Width="100" >
         </Image>
         <TextBlock Margin="0,10,0,0" Grid.Row="1" Foreground="{DynamicResource NormalFont}" TextAlignment="Center" FontSize="16" Text="{Binding FormattedUserName}"></TextBlock>
-        <ItemsControl  Margin="0,20,0,0" Grid.Row="2" ItemsSource="{Binding MenuItems}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <component:MenuItemUserControl DataContext="{Binding}"></component:MenuItemUserControl>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        <Button Click="TicketsButton_Click" Margin="0,10,0,0" Grid.Row="2"  Height="24" Padding="0"  Background="Transparent" BorderBrush="Transparent">
+            <Grid Width="170" HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Rectangle Width="5" Fill="{DynamicResource AccentColorBrush}"></Rectangle>
+                <materialDesign:PackIcon Kind="Home" Height="24" Width="24" Grid.Column="1" Margin="10,0,0,0" Foreground="White"/>
+                <TextBlock Text="Tickets" Grid.Column="2" HorizontalAlignment="Center" Margin="10,0,0,0" Foreground="White" VerticalAlignment="Center"></TextBlock>
+            </Grid>
+        </Button>
+        <Button Click="BenutzerButton_Click" Grid.Row="3" Height="24" Padding="0"  Background="Transparent" BorderBrush="Transparent">
+            <Grid Width="170" HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Rectangle Width="5" Fill="{DynamicResource AccentColorBrush}"></Rectangle>
+                <materialDesign:PackIcon Kind="AccountOutline" Height="24" Width="24" Grid.Column="1" Margin="10,0,0,0" Foreground="White"/>
+                <TextBlock Text="Benutzer" Grid.Column="2" HorizontalAlignment="Center" Margin="10,0,0,0" Foreground="White" VerticalAlignment="Center"></TextBlock>
+            </Grid>
+        </Button>
     </Grid>
 </UserControl>

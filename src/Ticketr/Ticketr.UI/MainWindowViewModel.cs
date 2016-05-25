@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using Ticketr.Businesslogik;
 using Ticketr.UI.Components.Login;
 using Ticketr.UI.Components.TicketTable;
@@ -15,8 +16,32 @@ namespace Ticketr.UI
     /// </summary>
     public class MainWindowViewModel : ViewModel
     {
-        public TicketTableViewModel TicketTableViewModel { get; set; }
+        private ViewModel selectedViewModel;
+        /// <summary>
+        /// Setzt die angegebene View
+        /// </summary>
+        /// <param name="viewModel"></param>
+        /// <param name="usercontrol"></param>
+        public void SetSelectedView(ViewModel viewModel, UserControl usercontrol)
+        {
+            selectedViewModel = viewModel;
+            App.MainWindow.Content = usercontrol;
+        }
+        /// <summary>
+        /// Gibt das selektiere ViewModel, dass gerade aktiv ist, zurück
+        /// </summary>
+        public ViewModel SelectedViewModel
+        {
+            get
+            {
+                return selectedViewModel;
+            }
+        }
+        public bool Login(string username, string password)
+        {
+            return App.TicketSystem.Login(username, password);
+        }
 
-        
+       
     }
 }

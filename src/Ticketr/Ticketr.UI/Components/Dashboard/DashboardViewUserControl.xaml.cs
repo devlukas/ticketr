@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Ticketr.UI.Components.Dashboard;
 
 namespace Ticketr.UI.Components
 {
@@ -23,6 +24,9 @@ namespace Ticketr.UI.Components
         public DashboardViewUserControl()
         {
             InitializeComponent();
+            DashboardViewModel dashboardViewModel = new DashboardViewModel();
+            dashboardViewModel.OpenTicketMenu();
+            DataContext = dashboardViewModel;
         }
     }
 }

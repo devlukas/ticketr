@@ -27,5 +27,6 @@ namespace Ticketr.UI
             InitializeComponent();
             App.MainWindow = this;
         }
+
     }
 }
