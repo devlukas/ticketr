@@ -122,7 +122,6 @@
     <Compile Include="Components\Login\LoginViewUserControl.xaml.cs">
       <DependentUpon>LoginViewUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\Menu\MenuViewModel.cs" />
     <Compile Include="Components\TicketTableItem\TicketTableItemUserControl.xaml.cs">
       <DependentUpon>TicketTableItemUserControl.xaml</DependentUpon>
     </Compile>

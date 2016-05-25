@@ -22,11 +22,13 @@ namespace Ticketr.UI.Components.Dashboard
 
         }
         private string ticketViewWidth;
-
+        /// <summary>
+        /// Gibt die Breite der TicketView zurück und legt diese fest
+        /// </summary>
         public string TicketViewWidth
         {
             get { return ticketViewWidth; }
-            set
+            private set
             {
                 ticketViewWidth = value;
                 RaisePropertyChanged("TicketViewWidth");
@@ -34,15 +36,34 @@ namespace Ticketr.UI.Components.Dashboard
         }
 
         private string benutzerViewWidth;
-
+        /// <summary>
+        /// Gibt die Breite der BenutzerColumn zurück und legt diese fest
+        /// </summary>
         public string BenutzerViewWidth
         {
             get { return benutzerViewWidth; }
-            set
+            private set
             {
                 benutzerViewWidth = value;
                 RaisePropertyChanged("BenutzerViewWidth");
             }
+        }
+        /// <summary>
+        /// Gibt den Vornamen und Namen im Format "{Vorname} {Name}" zurück.
+        /// </summary>
+        public string FormattedUserName
+        {
+            get
+            {
+                return string.Format("{0} {1}", App.TicketSystem.CurrentUser.Vorname, App.TicketSystem.CurrentUser.Name);
+            }
+        }
+        /// <summary>
+        /// Gibt das Benutzerbild zurück, in dem der Ticketr Service angesprochen wird.
+        /// </summary>
+        public byte[] UserImage
+        {
+            get { return App.TicketSystem.CurrentUser.GetProfilePicture(); }
         }
 
     }

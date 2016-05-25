@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Ticketr.UI.Components.Dashboard;
-using Ticketr.UI.Components.Menu;
 
 namespace Ticketr.UI.Components
 {
@@ -25,6 +24,7 @@ namespace Ticketr.UI.Components
         public MenuView()
         {
             InitializeComponent();
+
         }
 
         private void BenutzerButton_Click(object sender, RoutedEventArgs e)
