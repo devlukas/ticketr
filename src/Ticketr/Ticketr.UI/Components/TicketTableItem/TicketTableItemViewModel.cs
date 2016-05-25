@@ -19,17 +19,42 @@ namespace Ticketr.UI.Components.TicketTableItem
             this.ticket = ticket;
         }
 
+        public int Id
+        {
+            get { return this.ticket.Id; }
+        }
+
         public string Bezeichnung
         {
             get { return this.ticket.Bezeichnung; }
         }
 
-        public string Beschreibung
+
+        public DateTime Erfassung
         {
-            get { return this.ticket.Beschreibung; }
+            get
+            {
+                return this.ticket.ErstellDatum;
+            }
         }
 
-        public string KategorieName
+        public string Kunde
+        {
+            get
+            {
+                return String.Format("{0} {1}", ticket.Kunde.Name, ticket.Kunde.Vorname);
+            }
+        }
+
+        public string Bearbeiter
+        {
+            get
+            {
+                return String.Format("{0} {1}", ticket.Bearbeiter.Name, ticket.Bearbeiter.Vorname);
+            }
+        }
+
+        public string Kategorie
         {
             get { return this.ticket.Kategorie.Name; }
         }

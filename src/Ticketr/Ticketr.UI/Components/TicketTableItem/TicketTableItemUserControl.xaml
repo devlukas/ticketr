@@ -31,8 +31,9 @@
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
                 <TextBlock Foreground="Black" FontWeight="Bold" Text="{Binding Bezeichnung}" FontSize="16" Margin="5 5 0 0"></TextBlock>
-                <TextBlock Grid.Row="1" Foreground="#A3A4A6">
-                    <Run Text="{Binding Id}"></Run>
+                <TextBlock Grid.Row="1" Foreground="#A3A4A6" Margin="5 0 0 0">
+                    <Run Text="#"></Run>
+                    <Run Text="{Binding Id, Mode=OneWay}"></Run>
                     <Run Text="geöffnet vor"></Run>
                     <Run Text="{Binding FormattedCreatedAt}"></Run>
                     <Run Text="von"></Run>

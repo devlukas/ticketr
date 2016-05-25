@@ -18,8 +18,8 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <materialDesign:Card Margin="5" FontSize="14">
-                <Border Padding="5" Grid.Row="0" Background="#F2F2F2"  Height="40">
+            <materialDesign:Card Margin="5 5 5 1" FontSize="14" Panel.ZIndex="2">
+                <Border Padding="5" Grid.Row="0" Background="#F2F2F2"  Height="50">
                     <Grid >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -37,16 +37,12 @@
                         <Button Width="150" HorizontalAlignment="Right" Grid.Column="2" Content="Ticket erstellen"></Button>
                     </Grid>
                 </Border>
-        </materialDesign:Card>
-        <materialDesign:Card Grid.Row="1" Margin="5" FontSize="14">
-            <ItemsControl ItemsSource="{Binding Tickets}" >
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <component:TicketTableItemUserControl DataContext="{Binding}"></component:TicketTableItemUserControl>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-        </materialDesign:Card>
+            </materialDesign:Card>
+            <materialDesign:Card Grid.Row="1" Margin="5 0 5 5" FontSize="14" >
+                <DataGrid Grid.Row="1" VerticalAlignment="Top" ItemsSource="{Binding Tickets}">
+                </DataGrid>
+            </materialDesign:Card>
         </Grid>
+        
     </Grid>
 </UserControl>

@@ -23,7 +23,8 @@ namespace Ticketr.UI.Components
             string userPassword = PasswordTextBox.Password;
             try
             {
-                if (loginViewModel.Login(userPassword))
+                bool login = loginViewModel.Login(userPassword);
+                if (login)
                 {
                     App.MainWindow.Content = new DashboardViewUserControl();
                 }
