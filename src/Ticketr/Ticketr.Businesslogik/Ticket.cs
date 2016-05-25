@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Ticketr.Businesslogik
 {
-    class Ticket
+    public class Ticket
     {
 
         //--------------Members------------
@@ -174,7 +174,12 @@ namespace Ticketr.Businesslogik
             abgeschlossen = ticket.Abgeschlossen;
             aenderungsDatum = ticket.AenderungsDatum;
             bearbeiter = new Mitarbeiter(ticket.Bearbeiter);
-            kommentare = ticket.Kommentare.Select(k => new Kommentar(k)).ToList();
+
+            if(ticket.Kommentare != null)
+            {
+                kommentare = ticket.Kommentare.Select(k => new Kommentar(k)).ToList();
+            }
+ 
             kunde = new Kunde(ticket.Kunde);
             kategorie = new Kategorie(ticket.Kategorie);
             erstellDatum = ticket.ErstellDatum;

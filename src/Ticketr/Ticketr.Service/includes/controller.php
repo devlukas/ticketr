@@ -47,7 +47,9 @@ class Controller {
         //Gets the json in post-Body
         $data = json_decode(file_get_contents('php://input'), true);
         
-       $this->repo->addMitarbeiter($data);
+        header('Content-Type: application/json');
+        
+        echo $this->repo->addMitarbeiter($data);
     }
     
     
@@ -79,8 +81,14 @@ class Controller {
     
 
     //Fügt einen neuen Kunden hinzu
-    function addKunde() {
-        echo $this->repo->addKunde();
+    function addKunde() 
+    {
+        //Gets the json in post-Body
+        $data = json_decode(file_get_contents('php://input'), true);
+        
+        header('Content-Type: application/json');
+        echo $this->repo->addKunde($data);
+
     }
     
     
@@ -104,7 +112,8 @@ class Controller {
         $data = json_decode(file_get_contents('php://input'), true);
         $response = $this->repo->createTicket($data);
         
-        $this->repo->printJson($response);
+        header('Content-Type: application/json');
+        echo $response;
     }
     
     //Bearbeitet ein neues Ticket
@@ -126,7 +135,7 @@ class Controller {
         
         $response = $this->repo->getMitarbeiterDetail($personId);
         
-        echo $response;
+        $this->repo->printJson($response);
     }
     
     //Gibt alle vorhandenen Kategorien zurück

@@ -31,7 +31,7 @@ namespace Ticketr.UI.Components.Login
         /// Ob das Login funktioniert hat</returns>
         public bool Login(string password)
         {
-            return App.MainWindowViewModel.Login(Email, password);
+            return App.TicketSystem.Login(Email, password);
         }
 
         /// <summary>

@@ -13,19 +13,46 @@ namespace Ticketr.Businesslogik
     public class Kategorie
     {
         private int id;
+
         private string name;
+
         private string beschreibung;
+
         private List<Kategorie> subKategorien;
-        /// <summary>
-        /// Initialisiert die Kategorie und kopiert die Daten des DTO-Objekts auf das neu erstelle Kategorie Objekt.
-        /// </summary>
-        /// <param name="kategorie">Das Kategorie DTO Objekt</param>
+
         public Kategorie(Schnittstellen.Dto.Kategorie kategorie)
         {
-            id = kategorie.Id;
-            name = kategorie.Name;
-            beschreibung = kategorie.Beschreibung;
-            subKategorien = kategorie.SubKategorien.Select(sk => new Kategorie(sk)).ToList();
+            this.name = kategorie.Name;
+            this.beschreibung = kategorie.Beschreibung;
+            this.id = kategorie.Id;
+
+            if (kategorie.SubKategorien != null)
+            {
+                this.subKategorien = kategorie.SubKategorien.Select(k => new Kategorie(k)).ToList();
+            }
+
+        }
+
+        public int Id
+        {
+            get { return id; }
+        }
+
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        public string Beschreibung
+        {
+            get { return beschreibung; }
+            set { beschreibung = value; }
+        }
+
+        public List<Kategorie> SubKategorien
+        {
+            get { return subKategorien; }
         }
     }
 }

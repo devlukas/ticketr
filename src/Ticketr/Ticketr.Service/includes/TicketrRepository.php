@@ -21,6 +21,7 @@
                 $kunde["person"]["id"] = $row["personId"];
                 $kunde["person"]["name"] = $row["name"];
                 $kunde["person"]["vorname"] = $row["vorname"];
+                $kunde["person"]["email"] = $row["eMail"];
                 $kunde["person"]["erstellDatum"] = $row["erstellDatum"];
                 $kunde["person"]["aenderungsDatum"] = $row["aenderungsDatum"];
                 
@@ -45,17 +46,18 @@
             $response = array();
             
             while ($row = mysqli_fetch_array($result)) {
-                $kunde = array();
+                $mitarbeiter = array();
                 
-                $kunde["id"] = $row["mitarbeiterId"];
-                $kunde["erstellDatum"] = $row["mitarbeiterSeit"];
-                $kunde["person"]["id"] = $row["personId"];
-                $kunde["person"]["name"] = $row["name"];
-                $kunde["person"]["vorname"] = $row["vorname"];
-                $kunde["person"]["erstellDatum"] = $row["erstellDatum"];
-                $kunde["person"]["aenderungsDatum"] = $row["aenderungsDatum"];
+                $mitarbeiter["id"] = $row["mitarbeiterId"];
+                $mitarbeiter["erstellDatum"] = $row["mitarbeiterSeit"];
+                $mitarbeiter["person"]["id"] = $row["personId"];
+                $mitarbeiter["person"]["name"] = $row["name"];
+                $mitarbeiter["person"]["vorname"] = $row["vorname"];
+                $mitarbeiter["person"]["email"] = $row["eMail"];
+                $mitarbeiter["person"]["erstellDatum"] = $row["erstellDatum"];
+                $mitarbeiter["person"]["aenderungsDatum"] = $row["aenderungsDatum"];
                 
-                array_push($response,  $kunde);
+                array_push($response,  $mitarbeiter);
             }
             
             return $response;
@@ -84,9 +86,11 @@
             
             $ticket["id"] = $row["id"];
             $ticket["ticketsCount"] = $row["ticketCount"];
+            $ticket["erstellDatum"] = $row["erstellDatum"];
             $ticket["person"]["id"] = $row["personId"];
             $ticket["person"]["name"] = $row["name"];
             $ticket["person"]["vorname"] = $row["vorname"];
+            $ticket["person"]["eMail"] = $row["eMail"];
             $ticket["person"]["erstellDatum"] = $row["personErstelldatum"];
             $ticket["person"]["aenderungsDatum"] = $row["personAenderungsdatum"];
             
@@ -152,7 +156,7 @@
         }
 
         //Fügt einen neuen Kunden hinzu
-        function addKunde() {
+        function addKunde($data) {
             global $db;
 
             //Gets the JSON in the post-Body
@@ -213,7 +217,7 @@
                     $ticket["aenderungsDatum"] = $row["aenderungsDatum"];
                     $ticket["bezeichnung"] = $row["bezeichnung"];
                     $ticket["beschreibung"] = $row["beschreibung"];
-                    $ticket["abgeschlossen"] = $row["abgeschlossen"];
+                    $ticket["abgeschlossen"] = ($row["abgeschlossen"] == "1" ? true : false);
                     $ticket["kategorie"]["id"] = $row["kategorie_id"];
                     $ticket["kategorie"]["name"] = $row["kategorieName"];
                     $ticket["prioritaet"] = $row["prioritaet"];
@@ -284,7 +288,7 @@
             $ticket["aenderungsDatum"] = $ticketRow["aenderungsDatum"];
             $ticket["bezeichnung"] = $ticketRow["bezeichnung"];
             $ticket["beschreibung"] = $ticketRow["beschreibung"];
-            $ticket["abgeschlossen"] = $ticketRow["abgeschlossen"];
+            $ticket["abgeschlossen"] = ($row["abgeschlossen"] == "1" ? true : false);
             $ticket["prioritaet"] = $ticketRow["prioritaet"];
             $ticket["kategorie"]["id"] = $ticketRow["kategorie_id"];
             $ticket["kategorie"]["name"] = $ticketRow["kategorieName"];
@@ -311,7 +315,7 @@
                 $comment["mitarbeiter"]["id"] = $commentRow["mitarbeiterId"];
                 $comment["mitarbeiter"]["person"]["id"] = $commentRow["personId"];
                 $comment["mitarbeiter"]["person"]["name"] = $commentRow["personName"];
-                $comment["mitarbeiter"]["person"]["name"] = $commentRow["personVorname"];
+                $comment["mitarbeiter"]["person"]["vorname"] = $commentRow["personVorname"];
                 
                 array_push($ticket["kommentare"],  $comment);
             }
@@ -322,6 +326,7 @@
         //Erstellt ein neues Ticket
         function createTicket($ticket)
         {
+            global $db;
             
             $bezeichnung = $ticket["bezeichnung"];
             $beschreibung = $ticket["beschreibung"];
@@ -332,9 +337,13 @@
             
             $sql = "INSERT INTO ticket 
                     (bezeichnung, beschreibung, kunde_id, bearbeiter_id, abgeschlossen, prioritaet, kategorie_id, erstellDatum, aenderungsDatum)
-                    VALUES ('$bezeichnung', '$beschreibung', $kundeId, $bearbeiterId, 0, $prioritaet ,'$kategorieId', NOW(), NOW())";
+                    VALUES ('$bezeichnung', '$beschreibung', $kundeId, $bearbeiterId, 0, $prioritaet ,$kategorieId, NOW(), NOW())";
                        
-            return $this->query($sql);
+            $this->query($sql);
+            
+            $json = "{ \"ticketId\":".$db->insert_id."}";
+            
+            return $json;
         }
         
         //Updatet ein Ticket
@@ -347,7 +356,7 @@
             $bearbeiterId = $ticket["bearbeiter"]["id"];
             $prioritaet = $ticket["prioritaet"];
             $kategorieId = $ticket["kategorie"]["id"];
-            $abgeschlossen = $ticket["abgeschlossen"];
+            $abgeschlossen = ($ticket["abgeschlossen"] == "true" ? "1" : "0");
             
             $sql = "
                 UPDATE ticket
