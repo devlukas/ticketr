@@ -75,15 +75,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Components\BenutzerView\BenutzerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Components\Dashboard\DashboardViewUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Components\Login\LoginViewUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Components\MenuItem\MenuItemUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -111,6 +111,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Components\BenutzerView\BenutzerView.xaml.cs">
+      <DependentUpon>BenutzerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Dashboard\DashboardViewModel.cs" />
     <Compile Include="Components\Dashboard\DashboardViewUserControl.xaml.cs">
       <DependentUpon>DashboardViewUserControl.xaml</DependentUpon>
     </Compile>
@@ -118,10 +122,6 @@
     <Compile Include="Components\Login\LoginViewUserControl.xaml.cs">
       <DependentUpon>LoginViewUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\MenuItem\MenuItemUserControl.xaml.cs">
-      <DependentUpon>MenuItemUserControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Components\MenuItem\MenuItemViewModel.cs" />
     <Compile Include="Components\Menu\MenuViewModel.cs" />
     <Compile Include="Components\TicketTableItem\TicketTableItemUserControl.xaml.cs">
       <DependentUpon>TicketTableItemUserControl.xaml</DependentUpon>

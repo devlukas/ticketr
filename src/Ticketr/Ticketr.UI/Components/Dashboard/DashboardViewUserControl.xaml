@@ -10,8 +10,10 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <component:MenuView Grid.Column="0" Width="170"></component:MenuView>
-        <component:TicketTableUserControl Grid.Column="1"></component:TicketTableUserControl>
+        <component:MenuView DataContext="{Binding}"  Grid.Column="0" Width="170"></component:MenuView>
+        <component:TicketView Grid.Column="1" Width="{Binding TicketViewWidth}"></component:TicketView>
+        <component:BenutzerView Grid.Column="2" Width="{Binding BenutzerViewWidth}"></component:BenutzerView>
     </Grid>
 </UserControl>

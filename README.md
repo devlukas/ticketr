@@ -13,6 +13,6 @@ Ticketr is a school project. It is a Ticketing system.
 
 Use for demonstration purposes 
 ```
-Email: test@test.ch
+Email: dummy
 Password: test
 ```
