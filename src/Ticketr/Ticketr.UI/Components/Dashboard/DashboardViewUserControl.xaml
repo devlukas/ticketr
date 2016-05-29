@@ -9,8 +9,8 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <component:MenuView DataContext="{Binding}"  Grid.Column="0" Width="170"></component:MenuView>
         <component:TicketView Grid.Column="1" Width="{Binding TicketViewWidth}"></component:TicketView>
