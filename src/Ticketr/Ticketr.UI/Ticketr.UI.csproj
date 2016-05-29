@@ -83,6 +83,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Components\EditTicketView\EditTicketUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Components\Login\LoginViewUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -118,6 +122,10 @@
     <Compile Include="Components\Dashboard\DashboardViewUserControl.xaml.cs">
       <DependentUpon>DashboardViewUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Components\EditTicketView\EditTicketUserControl.xaml.cs">
+      <DependentUpon>EditTicketUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\EditTicketView\EditTicketViewModel.cs" />
     <Compile Include="Components\Login\LoginViewModel.cs" />
     <Compile Include="Components\Login\LoginViewUserControl.xaml.cs">
       <DependentUpon>LoginViewUserControl.xaml</DependentUpon>

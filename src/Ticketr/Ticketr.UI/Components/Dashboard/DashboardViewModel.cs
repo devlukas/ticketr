@@ -8,18 +8,37 @@ using Ticketr.UI.Models;
 
 namespace Ticketr.UI.Components.Dashboard
 {
+    /// <summary>
+    /// Representiert das Viewmodel für DashboardViewUserControl.xaml
+    /// </summary>
     public class DashboardViewModel : ViewModel
     {
+        /// <summary>
+        /// Öffnet die TickketView
+        /// </summary>
         public void OpenTicketMenu()
         {
-            TicketViewWidth = "1*";
+            TicketViewWidth = "*";
             BenutzerViewWidth = "0";
+            EditTicketViewWidth = "0";
         }
+        /// <summary>
+        /// Öffnet die Benutzerview
+        /// </summary>
         public void OpenBenutzerMenu()
         {
             TicketViewWidth = "0";
-            BenutzerViewWidth = "1*";
-
+            EditTicketViewWidth = "0";
+            BenutzerViewWidth = "*";
+        }
+        /// <summary>
+        /// Öffnet die EditTicketView
+        /// </summary>
+        public void OpenEditTicketView()
+        {
+            TicketViewWidth = "0";
+            BenutzerViewWidth = "0";
+            EditTicketViewWidth = "*";
         }
         private string ticketViewWidth;
         /// <summary>
@@ -48,6 +67,19 @@ namespace Ticketr.UI.Components.Dashboard
                 RaisePropertyChanged("BenutzerViewWidth");
             }
         }
+        private string editTicketViewWidth;
+        /// <summary>
+        /// Gibt die Breite der EditTicketColumn zurück und legt diese fest
+        /// </summary>
+        public string EditTicketViewWidth
+        {
+            get { return editTicketViewWidth; }
+            private set
+            {
+                editTicketViewWidth = value;
+                RaisePropertyChanged("EditTicketViewWidth");
+            }
+        }
         /// <summary>
         /// Gibt den Vornamen und Namen im Format "{Vorname} {Name}" zurück.
         /// </summary>
@@ -63,7 +95,7 @@ namespace Ticketr.UI.Components.Dashboard
         /// </summary>
         public byte[] UserImage
         {
-            get { return App.TicketSystem.CurrentUser.GetProfilePicture(); }
+            get { return App.TicketSystem.CurrentUser.ProfilePicture; }
         }
 
     }

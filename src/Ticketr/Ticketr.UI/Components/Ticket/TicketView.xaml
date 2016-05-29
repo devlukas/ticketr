@@ -11,6 +11,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
@@ -20,6 +21,8 @@
             </Grid.ColumnDefinitions>
             <!-- Statistics -->
         </Grid>
-        <component:TicketTableUserControl Grid.Row="1"></component:TicketTableUserControl>
+        <Button Width="150" HorizontalAlignment="Right" Grid.Row="1" Click="TicketErstellenButtonClick" Margin="10" Content="Ticket erstellen">
+        </Button>
+        <component:TicketTableUserControl Grid.Row="2"></component:TicketTableUserControl>
     </Grid>
 </UserControl>

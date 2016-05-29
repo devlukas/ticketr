@@ -99,7 +99,7 @@ namespace Ticketr.Businesslogik
             get { return aenderungsDatum; }
         }
 
-#endregion
+        #endregion
 
 
         public Person(Schnittstellen.Dto.Person person)
@@ -115,10 +115,12 @@ namespace Ticketr.Businesslogik
         /// <summary>
         /// Gibt das Profilbild für die Person zurück
         /// </summary>
-        /// <returns></returns>
-        public byte[] GetProfilePicture()
+        public byte[] ProfilePicture
         {
-            return TicketSystem.Service.GetProfilePicture(id);
+            get
+            {
+                return TicketSystem.Service.GetProfilePicture(id);
+            }
         }
 
         /// <summary>

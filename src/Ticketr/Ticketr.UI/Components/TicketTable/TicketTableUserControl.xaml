@@ -34,7 +34,6 @@
                             <materialDesign:PackIcon Kind="Check" VerticalAlignment="Center" Height="22" Width="22" Grid.Column="1" Margin="5,0,5,0" />
                             <TextBlock VerticalAlignment="Center" Text="Abgeschlossen"></TextBlock>
                         </StackPanel>
-                        <Button Width="150" HorizontalAlignment="Right" Grid.Column="2" Content="Ticket erstellen"></Button>
                     </Grid>
                 </Border>
             </materialDesign:Card>

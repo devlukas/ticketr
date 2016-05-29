@@ -12,24 +12,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Ticketr.UI.Components.Dashboard;
+using Ticketr.UI.Components.EditTicketView;
 
 namespace Ticketr.UI.Components
 {
     /// <summary>
-    /// Interaction logic for DashboardView.xaml
+    /// Interaction logic for EditTicketUserControl.xaml
     /// </summary>
-    public partial class TicketView : UserControl
+    public partial class EditTicketUserControl : UserControl
     {
-        public TicketView()
+        public EditTicketUserControl()
         {
             InitializeComponent();
-        }
-
-        private void TicketErstellenButtonClick(object sender, RoutedEventArgs e)
-        {
-            DashboardViewModel dashboardViewModel = (DashboardViewModel) ((Button) sender).DataContext;
-            dashboardViewModel.OpenEditTicketView();
+            DataContext = new EditTicketViewModel();
         }
     }
 }
