@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,14 @@ namespace Ticketr.UI.Components.TicketTableItem
             this.ticket = ticket;
         }
 
+        public PackIconKind StatusIcon
+        {
+            get
+            {
+                return this.ticket.Abgeschlossen ? PackIconKind.Check : PackIconKind.AlertOutline;
+            }
+        }
+
         public int Id
         {
             get { return this.ticket.Id; }
@@ -30,11 +39,11 @@ namespace Ticketr.UI.Components.TicketTableItem
         }
 
 
-        public DateTime Erfassung
+        public string Erfassung
         {
             get
             {
-                return this.ticket.ErstellDatum;
+                return this.ticket.ErstellDatum.ToString("dd.MM.yyyy HH:mm:ss");
             }
         }
 
@@ -58,5 +67,11 @@ namespace Ticketr.UI.Components.TicketTableItem
         {
             get { return this.ticket.Kategorie.Name; }
         }
+
+        public string ParentKategorie
+        {
+            get { return this.ticket.Kategorie.Parent != null ? this.ticket.Kategorie.Parent.Name : ""; }
+        }
+
     }
 }

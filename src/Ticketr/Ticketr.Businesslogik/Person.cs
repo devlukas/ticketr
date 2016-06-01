@@ -110,6 +110,8 @@ namespace Ticketr.Businesslogik
             this.eMail = person.EMail;
             this.aenderungsDatum = person.AenderungsDatum;
             this.erstellDatum = person.ErstellDatum;
+            Ticketr.Schnittstellen.Dto.Mitarbeiter m = TicketSystem.Service.GetMitarbeiterDetail(1);
+            
         }
 
         /// <summary>

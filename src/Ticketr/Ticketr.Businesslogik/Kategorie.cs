@@ -20,6 +20,11 @@ namespace Ticketr.Businesslogik
 
         private List<Kategorie> subKategorien;
 
+        /// <summary>
+        /// Die Über-Kategorie, falss SubKAtegorie
+        /// </summary>
+        private Kategorie parent;
+
         public Kategorie(Schnittstellen.Dto.Kategorie kategorie)
         {
             this.name = kategorie.Name;
@@ -28,9 +33,13 @@ namespace Ticketr.Businesslogik
 
             if (kategorie.SubKategorien != null)
             {
-                this.subKategorien = kategorie.SubKategorien.Select(k => new Kategorie(k)).ToList();
+                this.subKategorien = kategorie.SubKategorien.Select(k => new Kategorie(k, this)).ToList();
             }
+        }
 
+        public Kategorie(Schnittstellen.Dto.Kategorie kategorie, Kategorie parent) : this(kategorie)
+        {
+            this.parent = parent;
         }
 
         public int Id
@@ -53,6 +62,11 @@ namespace Ticketr.Businesslogik
         public List<Kategorie> SubKategorien
         {
             get { return subKategorien; }
+        }
+
+        public Kategorie Parent
+        {
+            get { return parent; }
         }
     }
 }

@@ -38,7 +38,32 @@
                 </Border>
             </materialDesign:Card>
             <materialDesign:Card Grid.Row="1" Margin="5 0 5 5" FontSize="14" >
-                <DataGrid Grid.Row="1" VerticalAlignment="Top" ItemsSource="{Binding Tickets}">
+                <DataGrid Grid.Row="1" VerticalAlignment="Top" ItemsSource="{Binding Tickets}" AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="Status" Width="SizeToCells" IsReadOnly="True">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <materialDesign:PackIcon VerticalAlignment="Center" Kind="{Binding StatusIcon}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                        <DataGridTextColumn Header="Titel" Binding="{Binding Bezeichnung}"/>
+                        <DataGridTextColumn Header="Erfassung" Binding="{Binding Erfassung}"/>
+                        <DataGridTextColumn Header="Kunde" Binding="{Binding Kunde}"/>
+                        <DataGridTextColumn Header="Bearbeiter" Binding="{Binding Bearbeiter}"/>
+                        <DataGridTemplateColumn Header="Kategorie" Width="SizeToCells" IsReadOnly="True" SortMemberPath="Kategorie" CanUserSort="true">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <Run Text="{Binding ParentKategorie, Mode=OneWay}" FontWeight="Bold"></Run>
+                                        <Run>-</Run>
+                                        <Run Text="{Binding Kategorie, Mode=OneWay}"></Run>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
                 </DataGrid>
             </materialDesign:Card>
         </Grid>
