@@ -38,7 +38,7 @@
                 </Border>
             </materialDesign:Card>
             <materialDesign:Card Grid.Row="1" Margin="5 0 5 5" FontSize="14" >
-                <DataGrid Grid.Row="1" VerticalAlignment="Top" ItemsSource="{Binding Tickets}" AutoGenerateColumns="False">
+                <DataGrid Grid.Row="1" VerticalAlignment="Top" ItemsSource="{Binding Tickets}" IsReadOnly="True" AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTemplateColumn Header="Status" Width="SizeToCells" IsReadOnly="True">
                             <DataGridTemplateColumn.CellTemplate>
