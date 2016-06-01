@@ -17,6 +17,16 @@ namespace Ticketr.UI.Components.EditTicketView
         public EditTicketViewModel()
         {
             mitarbeiter = App.TicketSystem.Mitarbeiter;
+            App.TicketSystem.ReloadKategorien();
+            foreach (Kategorie kategorie in App.TicketSystem.Kategorien)
+            {
+                kategorien.Add(new KategorieViewModel(kategorie, false));
+                foreach (Kategorie subKategorie in kategorie.SubKategorien)
+                {
+                    kategorien.Add(new KategorieViewModel(subKategorie, true));
+                }
+            }
+            
         }
         /// <summary>
         /// Gibt alle Prioritäten zurück
@@ -28,6 +38,15 @@ namespace Ticketr.UI.Components.EditTicketView
                 return Enum.GetValues(typeof(Prioritaet)).Cast<Prioritaet>();
             }
         }
+        private List<KategorieViewModel> kategorien = new List<KategorieViewModel>();
+        public List<KategorieViewModel> Kategorien
+        {
+            get
+            {
+                return kategorien;  
+            }
+        }
+
         /// <summary>
         /// Gibt die selektierte Priorität, des Users, zurück und legt diese fest.
         /// </summary>

@@ -9,6 +9,13 @@
              xmlns:StyleAlias="clr-namespace:Ticketr.Businesslogik;assembly=Ticketr.Businesslogik"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DesignHeight="700" d:DesignWidth="2000">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ComboBox.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid Background="#EEEEEE">
         <materialDesign:Card Margin="20" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <Grid>
@@ -39,7 +46,28 @@
                     <TextBlock Margin="5,10" Grid.Row="0" Text="Priorität"></TextBlock>
                     <ComboBox ItemsSource="{Binding Prioritäten}" SelectedItem="{Binding Path=SelectedPriority}" Grid.Row="1" Width="200" Height="30" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="5"></ComboBox>
                     <TextBlock Margin="5" Grid.Row="2" Text="Kategorie"></TextBlock>
-                    <ComboBox Grid.Row="3" IsEditable="True" Width="200" Height="30" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="5"></ComboBox>
+                    <ComboBox Grid.Row="3" ItemsSource="{Binding Kategorien}" IsEditable="True" Width="200" Height="30" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="5">
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="ComboBoxItem" BasedOn="{StaticResource MaterialDesignComboBoxItemStyle}">
+                                <Setter Property="IsEnabled" Value="{Binding IsSubItem}" />
+                            </Style>
+                        </ComboBox.ItemContainerStyle>
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSubItem}" Value="false">
+                                                    <Setter Property="FontWeight" Value="Bold"></Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                     <TextBlock Margin="5" Grid.Row="4" Text="Status" ToolTip="Deaktiviert"></TextBlock>
                     <ComboBox Grid.Row="5" IsEnabled="False" ToolTip="Deaktiviert" IsEditable="True" Width="200" Height="30" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="5"></ComboBox>
                     <TextBlock Margin="5" Grid.Row="6" Text="Bearbeitender"></TextBlock>
