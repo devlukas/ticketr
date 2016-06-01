@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using Ticketr.UI.Components.EditTicketView;
 using Ticketr.UI.Models;
 
 namespace Ticketr.UI.Components.Dashboard
@@ -13,6 +14,13 @@ namespace Ticketr.UI.Components.Dashboard
     /// </summary>
     public class DashboardViewModel : ViewModel
     {
+        /// <summary>
+        /// Initialisiert das DashboardViewModel
+        /// </summary>
+        public DashboardViewModel()
+        {
+            editTicketViewModel = new EditTicketViewModel(this);
+        }
         /// <summary>
         /// Öffnet die TickketView
         /// </summary>
@@ -98,5 +106,14 @@ namespace Ticketr.UI.Components.Dashboard
             get { return App.TicketSystem.CurrentUser.ProfilePicture; }
         }
 
+        private EditTicketViewModel editTicketViewModel;
+        
+        /// <summary>
+        /// Gibt das EditTicketViewModel zurück
+        /// </summary>
+        public EditTicketViewModel EditTicketViewModel
+        {
+            get { return editTicketViewModel; }
+        }
     }
 }

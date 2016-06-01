@@ -199,7 +199,13 @@ namespace Ticketr.Businesslogik
                 Kategorie = new Schnittstellen.Dto.Kategorie
                 {
                     Id = ticket.Kategorie.Id
-                }
+                },
+                Kunde =  new Schnittstellen.Dto.Kunde()
+                {
+                    Id =  ticket.Kunde.Id
+                },
+                Prioritaet = (Schnittstellen.Dto.Prioritaet)ticket.Prioritaet
+
             };
 
             int id = ticket.Id;

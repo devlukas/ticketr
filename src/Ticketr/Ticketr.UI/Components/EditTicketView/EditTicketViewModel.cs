@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Ticketr.Businesslogik;
+using Ticketr.UI.Components.Dashboard;
 using Ticketr.UI.Models;
 
 namespace Ticketr.UI.Components.EditTicketView
@@ -13,9 +14,14 @@ namespace Ticketr.UI.Components.EditTicketView
     /// </summary>
     public class EditTicketViewModel : ViewModel
     {
+        private readonly DashboardViewModel dashboardViewModel;
 
-        public EditTicketViewModel()
+        /// <summary>
+        /// Initialsiert das EditTicketViewModel
+        /// </summary>
+        public EditTicketViewModel(DashboardViewModel dashboardViewModel)
         {
+            this.dashboardViewModel = dashboardViewModel;
             mitarbeiter = App.TicketSystem.Mitarbeiter;
             App.TicketSystem.ReloadKategorien();
             foreach (Kategorie kategorie in App.TicketSystem.Kategorien)
@@ -26,7 +32,8 @@ namespace Ticketr.UI.Components.EditTicketView
                     kategorien.Add(new KategorieViewModel(subKategorie, true));
                 }
             }
-            
+            kunden = App.TicketSystem.Kunden;
+
         }
         /// <summary>
         /// Gibt alle Prioritäten zurück
@@ -38,12 +45,20 @@ namespace Ticketr.UI.Components.EditTicketView
                 return Enum.GetValues(typeof(Prioritaet)).Cast<Prioritaet>();
             }
         }
+
         private List<KategorieViewModel> kategorien = new List<KategorieViewModel>();
+
+        /// <summary>
+        /// Gibt alle Kategorien und Subkategorien zurück
+        /// </summary>
+        /// <remarks>
+        /// Es folgt die Kategorie, danach folgen alle Subkategorien.
+        /// </remarks>
         public List<KategorieViewModel> Kategorien
         {
             get
             {
-                return kategorien;  
+                return kategorien;
             }
         }
 
@@ -65,6 +80,48 @@ namespace Ticketr.UI.Components.EditTicketView
             }
         }
 
-        private List<Mitarbeiter> mitarbeiter;
+        private readonly List<Mitarbeiter> mitarbeiter;
+
+        /// <summary>
+        /// Gibt alle Kunden zurück
+        /// </summary>
+        public List<Kunde> Kunden
+        {
+            get
+            {
+                return kunden;
+            }
+        }
+
+        private readonly List<Kunde> kunden;
+        /// <summary>
+        /// Gibt die Selektierte Kategorie zurück und legt diese fest.
+        /// </summary>
+        public KategorieViewModel SelectedKategorie { get; set; }
+
+        /// <summary>
+        /// Gibt den Titel zurück und legt diesen fest.
+        /// </summary>
+        public string Titel { get; set; }
+
+        /// <summary>
+        /// Gibt die Beschreibung zurück und legt diese fest.
+        /// </summary>
+        public string Beschreibung { get; set; }
+
+        /// <summary>
+        /// Gibt den Selektierten Mitarbeiter zurück und legt diesen fest.
+        /// </summary>
+        public Mitarbeiter SelectedMitarbeiter { get; set; }
+
+        /// <summary>
+        /// Gibt den selektieren Kunde zurück und legt diesen fest.
+        /// </summary>
+        public Kunde SelectedKunde { get; set; }
+
+        public DashboardViewModel DashboardViewModel
+        {
+            get { return dashboardViewModel; }
+        }
     }
 }

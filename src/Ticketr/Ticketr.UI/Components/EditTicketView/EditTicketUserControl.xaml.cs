@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Ticketr.Businesslogik;
 using Ticketr.UI.Components.EditTicketView;
 
 namespace Ticketr.UI.Components
@@ -24,7 +25,27 @@ namespace Ticketr.UI.Components
         public EditTicketUserControl()
         {
             InitializeComponent();
-            DataContext = new EditTicketViewModel();
+        }
+
+        private void SpeichernButton_Click(object sender, RoutedEventArgs e)
+        {
+            EditTicketViewModel editTicketViewModel = (EditTicketViewModel)((Button) sender).DataContext;
+            if (editTicketViewModel.SelectedKategorie != null)
+            {
+                Ticket ticket = new Ticket()
+                {
+                    Prioritaet = editTicketViewModel.SelectedPriority,
+                    Kategorie = editTicketViewModel.SelectedKategorie.Kategorie,
+                    Bearbeiter = editTicketViewModel.SelectedMitarbeiter,
+                    Abgeschlossen = false,
+                    Beschreibung = editTicketViewModel.Beschreibung,
+                    Bezeichnung = editTicketViewModel.Titel,
+                    Kunde = editTicketViewModel.SelectedKunde
+                };
+                App.TicketSystem.SaveTicket(ticket);
+                editTicketViewModel.DashboardViewModel.OpenTicketMenu();
+            }
+
         }
     }
 }

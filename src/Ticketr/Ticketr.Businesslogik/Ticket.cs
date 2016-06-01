@@ -168,6 +168,11 @@ namespace Ticketr.Businesslogik
 
 #endregion
 
+        public Ticket()
+        {
+            
+        }
+
         public Ticket(Schnittstellen.Dto.Ticket ticket)
         {
             prioritaet = (Prioritaet)ticket.Prioritaet;
