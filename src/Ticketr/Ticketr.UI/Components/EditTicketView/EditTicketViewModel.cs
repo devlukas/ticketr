@@ -23,7 +23,9 @@ namespace Ticketr.UI.Components.EditTicketView
         {
             this.loading = true;
             this.dashboardViewModel = dashboardViewModel;
-
+            
+            LoadKunden();
+            LoadMitarbeiter();
             LoadCategories();
 
         }
@@ -42,7 +44,7 @@ namespace Ticketr.UI.Components.EditTicketView
 
 
 
-        public async Task LoadCategories()
+        public async void LoadCategories()
         {
             await App.TicketSystem.ReloadKategorien();
             foreach (Kategorie kategorie in App.TicketSystem.Kategorien)
@@ -55,6 +57,28 @@ namespace Ticketr.UI.Components.EditTicketView
             }
 
             RaisePropertyChanged("Kategorien");
+        }
+
+        public async void LoadMitarbeiter()
+        {
+            await App.TicketSystem.ReloadMitarbeiter();
+            this.mitarbeiter = App.TicketSystem.Mitarbeiter.Select(m => new PersonDropdownItemViewModel
+            {
+                Id = m.PersonId,
+                MitarbeiterId = m.Id,
+                Name = m.Name,
+                Vorname = m.Vorname
+            }).ToList();
+            RaisePropertyChanged("Mitarbeiter");
+
+            //Ladet die Profilbilder der Mitarbeiter im Hintergrund asynchron ins Dropdown
+            LoadMitarbeiterPicturesAsync();
+        }
+
+        public async void LoadKunden()
+        {
+            await App.TicketSystem.ReloadKunden();
+            RaisePropertyChanged("Kunden");
         }
 
         /// <summary>
@@ -94,28 +118,60 @@ namespace Ticketr.UI.Components.EditTicketView
         /// <summary>
         /// Gibt alle Mitarbeiter zurück
         /// </summary>
-        public List<Mitarbeiter> Mitarbeiter
+        public List<PersonDropdownItemViewModel> Mitarbeiter
         {
             get
             {
+                
+
                 return mitarbeiter;
+
             }
         }
 
-        private readonly List<Mitarbeiter> mitarbeiter;
+        private List<PersonDropdownItemViewModel> mitarbeiter;
+
+
+        /// <summary>
+        /// Ladet die Profilbilder der Mitarbeiter im Hintergrund asynchron ins Dropdown
+        /// </summary>
+        public async void LoadMitarbeiterPicturesAsync()
+        {
+            if (mitarbeiter != null)
+            {
+                foreach (PersonDropdownItemViewModel person in mitarbeiter)
+                {
+                    try
+                    {
+                        person.ProfilePicture =
+                        await App.TicketSystem.Mitarbeiter.FirstOrDefault(mt => mt.PersonId == person.Id).GetProfilePicture();
+                        person.RaisePropertyChanged("ProfilePicture");
+                    }
+                    catch (Exception) { }
+
+                }
+            }
+
+        }
 
         /// <summary>
         /// Gibt alle Kunden zurück
         /// </summary>
-        public List<Kunde> Kunden
+        public List<PersonDropdownItemViewModel> Kunden
         {
             get
             {
-                return kunden;
+                return App.TicketSystem.Kunden.Select(k => new PersonDropdownItemViewModel
+                {
+                    Id = k.PersonId,
+                    Name = k.Name,
+                    Vorname = k.Vorname,
+                    KundeId = k.Id
+                }).ToList();
             }
         }
 
-        private readonly List<Kunde> kunden;
+        private readonly List<PersonDropdownItemViewModel> kunden;
         /// <summary>
         /// Gibt die Selektierte Kategorie zurück und legt diese fest.
         /// </summary>
@@ -134,12 +190,12 @@ namespace Ticketr.UI.Components.EditTicketView
         /// <summary>
         /// Gibt den Selektierten Mitarbeiter zurück und legt diesen fest.
         /// </summary>
-        public Mitarbeiter SelectedMitarbeiter { get; set; }
+        public PersonDropdownItemViewModel SelectedMitarbeiter { get; set; }
 
         /// <summary>
         /// Gibt den selektieren Kunde zurück und legt diesen fest.
         /// </summary>
-        public Kunde SelectedKunde { get; set; }
+        public PersonDropdownItemViewModel SelectedKunde { get; set; }
 
         public DashboardViewModel DashboardViewModel
         {

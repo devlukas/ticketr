@@ -41,14 +41,14 @@
             <materialDesign:Card Grid.Row="1" Margin="5 0 5 5" FontSize="14" >
                 <DataGrid Grid.Row="1" VerticalAlignment="Top" ItemsSource="{Binding Tickets}" IsReadOnly="True" AutoGenerateColumns="False">
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn Header="Status" Width="SizeToCells" IsReadOnly="True">
+                        <DataGridTemplateColumn Header="Status" Width="SizeToCells" IsReadOnly="True" MinWidth="60">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <materialDesign:PackIcon VerticalAlignment="Center" Kind="{Binding StatusIcon}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                        <DataGridTextColumn Header="Nummer" Binding="{Binding Id}"/>
                         <DataGridTextColumn Header="Titel" Binding="{Binding Bezeichnung}"/>
                         <DataGridTextColumn Header="Erfassung" Binding="{Binding Erfassung}"/>
                         <DataGridTextColumn Header="Kunde" Binding="{Binding Kunde}"/>

@@ -36,11 +36,11 @@ namespace Ticketr.UI.Components
                 {
                     Prioritaet = editTicketViewModel.SelectedPriority,
                     Kategorie = editTicketViewModel.SelectedKategorie.Kategorie,
-                    Bearbeiter = editTicketViewModel.SelectedMitarbeiter,
+                    Bearbeiter = App.TicketSystem.Mitarbeiter.FirstOrDefault(m => m.Id == editTicketViewModel.SelectedMitarbeiter.MitarbeiterId),
                     Abgeschlossen = false,
                     Beschreibung = editTicketViewModel.Beschreibung,
                     Bezeichnung = editTicketViewModel.Titel,
-                    Kunde = editTicketViewModel.SelectedKunde
+                    Kunde = App.TicketSystem.Kunden.FirstOrDefault(k => k.Id == editTicketViewModel.SelectedKunde.KundeId)
                 };
                 App.TicketSystem.SaveTicket(ticket);
                 editTicketViewModel.DashboardViewModel.OpenTicketMenu();

@@ -146,9 +146,10 @@ namespace Ticketr.Businesslogik
         /// <summary>
         /// Lädt alle Mitarbeiter neu
         /// </summary>
-        public void ReloadMitarbeiter()
+        public async Task ReloadMitarbeiter()
         {
-            this.mitarbeiter = service.GetAllMitarbeiter().Select(m => new Mitarbeiter(m)).ToList();
+            List<Schnittstellen.Dto.Mitarbeiter> loadedMitarbeiter = await service.GetAllMitarbeiter();
+            this.mitarbeiter = loadedMitarbeiter.Select(m => new Mitarbeiter(m)).ToList();
         }
 
         /// <summary>
@@ -169,9 +170,9 @@ namespace Ticketr.Businesslogik
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Ticket GetTicketDetail(int id)
+        public async Task<Ticket> GetTicketDetail(int id)
         {
-            Schnittstellen.Dto.Ticket ticket = service.GetTicketDetail(id);
+            Schnittstellen.Dto.Ticket ticket = await service.GetTicketDetail(id);
             return new Ticket(ticket);
         }
 

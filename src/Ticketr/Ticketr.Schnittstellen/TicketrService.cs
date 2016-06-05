@@ -49,11 +49,11 @@ namespace Ticketr.Schnittstellen
         /// Gibt alle vorhandenen Mitarbeiter zurück
         /// </summary>
         /// <returns></returns>
-        public List<Mitarbeiter> GetAllMitarbeiter()
+        public async Task<List<Mitarbeiter>> GetAllMitarbeiter()
         {
             using (WebClient webClient = NewWebClient())
             {
-                string response = webClient.DownloadString(new Uri(BaseUrl, "getAllMitarbeiter"));
+                string response = await webClient.DownloadStringTaskAsync(new Uri(BaseUrl, "getAllMitarbeiter"));
                 return JsonConvert.DeserializeObject<List<Mitarbeiter>>(response);
             }
         }
@@ -89,11 +89,11 @@ namespace Ticketr.Schnittstellen
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Ticket GetTicketDetail(int id)
+        public async Task<Ticket> GetTicketDetail(int id)
         {
             using (WebClient webClient = NewWebClient())
             {
-                string response = webClient.DownloadString(new Uri(BaseUrl, String.Format("getTicketDetail?id={0}", id)));
+                string response = await webClient.DownloadStringTaskAsync(new Uri(BaseUrl, String.Format("getTicketDetail?id={0}", id)));
                 return JsonConvert.DeserializeObject<Ticket>(response);
             }
         }

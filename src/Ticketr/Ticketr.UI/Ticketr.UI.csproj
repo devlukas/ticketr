@@ -124,6 +124,7 @@
     </Compile>
     <Compile Include="Components\EditTicketView\EditTicketViewModel.cs" />
     <Compile Include="Components\EditTicketView\KategorieViewModel.cs" />
+    <Compile Include="Components\EditTicketView\PersonDropdownItemViewModel.cs" />
     <Compile Include="Components\Login\LoginViewModel.cs" />
     <Compile Include="Components\Login\LoginViewUserControl.xaml.cs">
       <DependentUpon>LoginViewUserControl.xaml</DependentUpon>
@@ -146,7 +147,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainWindowViewModel.cs" />
-    <Compile Include="Models\NotifyTaskCompletion.cs" />
     <Compile Include="Models\ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
