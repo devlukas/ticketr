@@ -73,7 +73,6 @@ namespace Ticketr.Businesslogik
         {
             get
             {
-                ReloadMitarbeiter();
                 return mitarbeiter;
             }
         }
@@ -85,7 +84,6 @@ namespace Ticketr.Businesslogik
         {
             get
             {
-                ReloadKunden();
                 return kunden;
             }
         }
@@ -97,7 +95,6 @@ namespace Ticketr.Businesslogik
         {
             get
             {
-                ReloadTickets();
                 return tickets;
             }
         }
@@ -126,13 +123,13 @@ namespace Ticketr.Businesslogik
         /// Loggt einen Benutzer im System ein
         /// </summary>
         /// <returns></returns>
-        public bool Login(string eMail, string password)
+        public async Task<bool> Login(string eMail, string password)
         {
-            bool authenticated = service.Login(eMail, password);
+            bool authenticated = await service.Login(eMail, password);
 
             if (authenticated)
             {
-                currentUser = new Mitarbeiter(service.GetCurrentMitarbeiterDetail());
+                currentUser = new Mitarbeiter(await service.GetCurrentMitarbeiterDetail());
             }
 
             return authenticated;
@@ -141,9 +138,9 @@ namespace Ticketr.Businesslogik
         /// <summary>
         /// Lädt alle Tickets neu
         /// </summary>
-        public void ReloadTickets()
+        public async Task ReloadTickets()
         {
-            this.tickets = service.GetTickets().Select(t => new Ticket(t)).ToList();
+            this.tickets = (await service.GetTickets()).Select(t => new Ticket(t)).ToList();
         }
 
         /// <summary>
@@ -157,14 +154,14 @@ namespace Ticketr.Businesslogik
         /// <summary>
         /// Lädt alle Kunden neu
         /// </summary>
-        public void ReloadKunden()
+        public async Task ReloadKunden()
         {
-            this.kunden = service.GetAllKunden().Select(k => new Kunde(k)).ToList();
+            this.kunden = (await service.GetAllKunden()).Select(k => new Kunde(k)).ToList();
         }
 
-        public void ReloadKategorien()
+        public async Task ReloadKategorien()
         {
-            this.kategorien = service.GetKategorien().Select(k => new Kategorie(k)).ToList();
+            this.kategorien = (await service.GetKategorien()).Select(k => new Kategorie(k)).ToList();
         }
 
         /// <summary>

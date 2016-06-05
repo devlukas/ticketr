@@ -17,6 +17,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             <materialDesign:Card Margin="5 5 5 1" FontSize="14" Panel.ZIndex="2">
                 <Border Padding="5" Grid.Row="0" Background="#F2F2F2"  Height="50">
@@ -66,6 +67,24 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </materialDesign:Card>
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                <materialDesign:PackIcon Kind="Sync" Height="40" Width="40" Margin="5 25 0 0" RenderTransformOrigin="0.5, 0.5" Visibility="{Binding LoadProcessVisibility}">
+                    <materialDesign:PackIcon.RenderTransform>
+                        <RotateTransform CenterX="0" CenterY="0"/>
+                    </materialDesign:PackIcon.RenderTransform>
+                    <materialDesign:PackIcon.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="(Rectangle.RenderTransform).(RotateTransform.Angle)"  From="0" To="360" Duration="0:0:1" RepeatBehavior="Forever"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </materialDesign:PackIcon.Triggers>
+                </materialDesign:PackIcon>
+                <Label FontSize="20" Margin="0 25" Visibility="{Binding LoadProcessVisibility}">Daten werden geladen...</Label>
+            </StackPanel>
+        
         </Grid>
         
     </Grid>

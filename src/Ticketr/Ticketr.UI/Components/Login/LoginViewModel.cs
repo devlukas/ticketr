@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Ticketr.UI.Models;
 
 namespace Ticketr.UI.Components.Login
@@ -22,6 +23,19 @@ namespace Ticketr.UI.Components.Login
 
         public string Email { get; set; }
 
+
+        private bool loginInProcess;
+
+        public Visibility LoginProcessVisibility
+        {
+            get { return loginInProcess ? Visibility.Visible : Visibility.Hidden; }
+        }
+
+        public bool LoginButtonEnabled
+        {
+            get { return !loginInProcess; }
+        }
+
         /// <summary>
         /// Loggt den User ein mit dem angegeben Passwort und dem Email Property des LoginViewModels ein.
         /// <see cref="Email"/>
@@ -29,9 +43,10 @@ namespace Ticketr.UI.Components.Login
         /// <param name="password">Das Passwort des Users</param>
         /// <returns>
         /// Ob das Login funktioniert hat</returns>
-        public bool Login(string password)
+        public async Task<bool> Login(string password)
         {
-            return App.TicketSystem.Login(Email, password);
+            LoginInProcess = true;
+            return await App.TicketSystem.Login(Email, password);
         }
 
         /// <summary>
@@ -44,6 +59,18 @@ namespace Ticketr.UI.Components.Login
             {
                 errorMessage = value;
                 RaisePropertyChanged("ErrorMessage");
+            }
+        }
+
+        public bool LoginInProcess
+        {
+            get { return loginInProcess; }
+            set
+            {
+                loginInProcess = value;
+                RaisePropertyChanged("LoginInProcess");
+                RaisePropertyChanged("LoginButtonEnabled");
+                RaisePropertyChanged("LoginProcessVisibility");
             }
         }
 

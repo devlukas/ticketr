@@ -21,9 +21,30 @@ namespace Ticketr.UI.Components.EditTicketView
         /// </summary>
         public EditTicketViewModel(DashboardViewModel dashboardViewModel)
         {
+            this.loading = true;
             this.dashboardViewModel = dashboardViewModel;
-            mitarbeiter = App.TicketSystem.Mitarbeiter;
-            App.TicketSystem.ReloadKategorien();
+
+            LoadCategories();
+
+        }
+
+        private bool loading;
+
+        public bool Loading
+        {
+            get { return loading; }
+            set
+            {
+                loading = value;
+                RaisePropertyChanged("Loading");
+            }
+        }
+
+
+
+        public async Task LoadCategories()
+        {
+            await App.TicketSystem.ReloadKategorien();
             foreach (Kategorie kategorie in App.TicketSystem.Kategorien)
             {
                 kategorien.Add(new KategorieViewModel(kategorie, false));
@@ -32,9 +53,10 @@ namespace Ticketr.UI.Components.EditTicketView
                     kategorien.Add(new KategorieViewModel(subKategorie, true));
                 }
             }
-            kunden = App.TicketSystem.Kunden;
 
+            RaisePropertyChanged("Kategorien");
         }
+
         /// <summary>
         /// Gibt alle Prioritäten zurück
         /// </summary>
@@ -123,5 +145,6 @@ namespace Ticketr.UI.Components.EditTicketView
         {
             get { return dashboardViewModel; }
         }
+
     }
 }

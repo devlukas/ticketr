@@ -20,6 +20,7 @@ namespace Ticketr.UI.Components.Dashboard
         public DashboardViewModel()
         {
             editTicketViewModel = new EditTicketViewModel(this);
+            GetProfilePicture();
         }
         /// <summary>
         /// Öffnet die TickketView
@@ -98,12 +99,27 @@ namespace Ticketr.UI.Components.Dashboard
                 return string.Format("{0} {1}", App.TicketSystem.CurrentUser.Vorname, App.TicketSystem.CurrentUser.Name);
             }
         }
+
+
+        private byte[] userImage;
+
+
         /// <summary>
         /// Gibt das Benutzerbild zurück, in dem der Ticketr Service angesprochen wird.
         /// </summary>
         public byte[] UserImage
         {
-            get { return App.TicketSystem.CurrentUser.ProfilePicture; }
+            get
+            {
+                return userImage;
+            }
+        }
+
+
+        public async Task GetProfilePicture()
+        {
+            userImage = await App.TicketSystem.CurrentUser.GetProfilePicture();
+            RaisePropertyChanged("UserImage");
         }
 
         private EditTicketViewModel editTicketViewModel;

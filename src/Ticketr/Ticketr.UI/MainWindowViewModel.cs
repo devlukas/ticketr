@@ -37,10 +37,6 @@ namespace Ticketr.UI
                 return selectedViewModel;
             }
         }
-        public bool Login(string username, string password)
-        {
-            return App.TicketSystem.Login(username, password);
-        }
 
        
     }

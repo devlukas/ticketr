@@ -22,7 +22,8 @@ namespace Ticketr.Schnittstellen
             }
         }
 
-        private WebClient webClient = null;
+
+        private NetworkCredential credentials;
 
 
         public bool Authorized
@@ -31,23 +32,17 @@ namespace Ticketr.Schnittstellen
         }
 
 
-        public TicketrService()
-        {
-            webClient = new WebClient();
-            webClient.Encoding = Encoding.UTF8;
-        }
-
-
         /// <summary>
-        /// Logt einen Benutzer anhand dem Angegebenen Passwort und Benutzernamen ein
+        /// Logt einen Benutzer anhand dem Angegebenen Passwort und Benutzernamen async ein
         /// </summary>
         /// <param name="eMail"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public bool Login(string eMail, string password)
+        public Task<bool> Login(string eMail, string password)
         {
-            webClient.Credentials = new NetworkCredential(eMail, password);
-            return Authorize();
+            credentials = new NetworkCredential(eMail, password);
+            return AuthorizeAsync();
+            
         }
 
         /// <summary>
@@ -56,28 +51,37 @@ namespace Ticketr.Schnittstellen
         /// <returns></returns>
         public List<Mitarbeiter> GetAllMitarbeiter()
         {
-            string response = webClient.DownloadString(new Uri(BaseUrl, "getAllMitarbeiter"));
-            return JsonConvert.DeserializeObject<List<Mitarbeiter>>(response);
+            using (WebClient webClient = NewWebClient())
+            {
+                string response = webClient.DownloadString(new Uri(BaseUrl, "getAllMitarbeiter"));
+                return JsonConvert.DeserializeObject<List<Mitarbeiter>>(response);
+            }
         }
 
         /// <summary>
         /// Gibt alle vorhandenen Kunden zurück
         /// </summary>
         /// <returns></returns>
-        public List<Kunde> GetAllKunden()
+        public async Task<List<Kunde>> GetAllKunden()
         {
-            string response = webClient.DownloadString(new Uri(BaseUrl, "getAllKunden"));
-            return JsonConvert.DeserializeObject<List<Kunde>>(response);
+            using (WebClient webClient = NewWebClient())
+            {
+                string response = await webClient.DownloadStringTaskAsync(new Uri(BaseUrl, "getAllKunden"));
+                return JsonConvert.DeserializeObject<List<Kunde>>(response);
+            }
         }
 
         /// <summary>
         /// Gibt (momentan noch :D ) alle Tickets zurück
         /// </summary>
         /// <returns></returns>
-        public List<Ticket> GetTickets()
+        public async Task<List<Ticket>> GetTickets()
         {
-            string response = webClient.DownloadString(new Uri(BaseUrl, "getTickets"));
-            return JsonConvert.DeserializeObject<List<Ticket>>(response);
+            using (WebClient webClient = NewWebClient())
+            {
+                string response = await webClient.DownloadStringTaskAsync(new Uri(BaseUrl, "getTickets"));
+                return JsonConvert.DeserializeObject<List<Ticket>>(response);
+            }
         }
 
         /// <summary>
@@ -87,8 +91,11 @@ namespace Ticketr.Schnittstellen
         /// <returns></returns>
         public Ticket GetTicketDetail(int id)
         {
-            string response = webClient.DownloadString(new Uri(BaseUrl, String.Format("getTicketDetail?id={0}", id)));
-            return JsonConvert.DeserializeObject<Ticket>(response);
+            using (WebClient webClient = NewWebClient())
+            {
+                string response = webClient.DownloadString(new Uri(BaseUrl, String.Format("getTicketDetail?id={0}", id)));
+                return JsonConvert.DeserializeObject<Ticket>(response);
+            }
         }
 
 
@@ -97,10 +104,13 @@ namespace Ticketr.Schnittstellen
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Mitarbeiter GetMitarbeiterDetail(int id)
+        public async Task<Mitarbeiter> GetMitarbeiterDetail(int id)
         {
-            string response = webClient.DownloadString(new Uri(BaseUrl, String.Format("getMitarbeiterDetail?id={0}", id)));
-            return JsonConvert.DeserializeObject<Mitarbeiter>(response);
+            using (WebClient webClient = NewWebClient())
+            {
+                string response = await webClient.DownloadStringTaskAsync(new Uri(BaseUrl, String.Format("getMitarbeiterDetail?id={0}", id)));
+                return JsonConvert.DeserializeObject<Mitarbeiter>(response);
+            }
         }
 
         /// <summary>
@@ -109,16 +119,19 @@ namespace Ticketr.Schnittstellen
         /// <param name="mitarbeiter"></param>
         public int AddMitarbeiter(Mitarbeiter mitarbeiter)
         {
-            //sets all property names to lowercase (otherwise PHP dont understand)
-            var settings = new JsonSerializerSettings();
-            settings.ContractResolver = new LowercaseContractResolver();
+            using (WebClient webClient = NewWebClient())
+            {
+                //sets all property names to lowercase (otherwise PHP dont understand)
+                var settings = new JsonSerializerSettings();
+                settings.ContractResolver = new LowercaseContractResolver();
 
-            string data = JsonConvert.SerializeObject(mitarbeiter, settings);
-            string response = webClient.UploadString(new Uri(BaseUrl, "addMitarbeiter"), data);
+                string data = JsonConvert.SerializeObject(mitarbeiter, settings);
+                string response = webClient.UploadString(new Uri(BaseUrl, "addMitarbeiter"), data);
 
-            //Gets the Id of the created Ticket
-            dynamic added = JsonConvert.DeserializeObject<dynamic>(response);
-            return added.mitarbeiterId;
+                //Gets the Id of the created Ticket
+                dynamic added = JsonConvert.DeserializeObject<dynamic>(response);
+                return added.mitarbeiterId;
+            }
         }
 
 
@@ -128,16 +141,19 @@ namespace Ticketr.Schnittstellen
         /// <param name="kunde"></param>
         public int AddKunde(Kunde kunde)
         {
-            //sets all property names to lowercase (otherwise PHP dont understand)
-            var settings = new JsonSerializerSettings();
-            settings.ContractResolver = new LowercaseContractResolver();
+            using (WebClient webClient = NewWebClient())
+            {
+                //sets all property names to lowercase (otherwise PHP dont understand)
+                var settings = new JsonSerializerSettings();
+                settings.ContractResolver = new LowercaseContractResolver();
 
-            string data = JsonConvert.SerializeObject(kunde, settings);
-            string response = webClient.UploadString(new Uri(BaseUrl, "addKunde"), data);
+                string data = JsonConvert.SerializeObject(kunde, settings);
+                string response = webClient.UploadString(new Uri(BaseUrl, "addKunde"), data);
 
-            //Gets the Id of the created Ticket
-            dynamic added = JsonConvert.DeserializeObject<dynamic>(response);
-            return added.kundeId;
+                //Gets the Id of the created Ticket
+                dynamic added = JsonConvert.DeserializeObject<dynamic>(response);
+                return added.kundeId;
+            }
         }
 
 
@@ -146,10 +162,13 @@ namespace Ticketr.Schnittstellen
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Mitarbeiter GetCurrentMitarbeiterDetail()
+        public async Task<Mitarbeiter> GetCurrentMitarbeiterDetail()
         {
-            string response = webClient.DownloadString(new Uri(BaseUrl, "getCurrentMitarbeiterDetail"));
-            return JsonConvert.DeserializeObject<Mitarbeiter>(response);
+            using (WebClient webClient = NewWebClient())
+            {
+                string response = await webClient.DownloadStringTaskAsync(new Uri(BaseUrl, "getCurrentMitarbeiterDetail"));
+                return JsonConvert.DeserializeObject<Mitarbeiter>(response);
+            }
         }
 
 
@@ -157,10 +176,13 @@ namespace Ticketr.Schnittstellen
         /// Gibt alle möglichen Kategorien zurück
         /// </summary>
         /// <returns></returns>
-        public List<Kategorie> GetKategorien()
+        public async Task<List<Kategorie>> GetKategorien()
         {
-            string response = webClient.DownloadString(new Uri(BaseUrl, "getKategorien"));
-            return JsonConvert.DeserializeObject<List<Kategorie>>(response);
+            using (WebClient webClient = NewWebClient())
+            {
+                string response = await webClient.DownloadStringTaskAsync(new Uri(BaseUrl, "getKategorien"));
+                return JsonConvert.DeserializeObject<List<Kategorie>>(response);
+            }
         }
 
 
@@ -169,16 +191,19 @@ namespace Ticketr.Schnittstellen
         /// </summary>
         public int AddTicket(Ticket ticket)
         {
-            //sets all property names to lowercase (otherwise PHP dont understand)
-            var settings = new JsonSerializerSettings();
-            settings.ContractResolver = new LowercaseContractResolver();
+            using (WebClient webClient = NewWebClient())
+            {
+                //sets all property names to lowercase (otherwise PHP dont understand)
+                var settings = new JsonSerializerSettings();
+                settings.ContractResolver = new LowercaseContractResolver();
 
-            string data = JsonConvert.SerializeObject(ticket, settings);
-            string response = webClient.UploadString(new Uri(BaseUrl, "createTicket"), data);
+                string data = JsonConvert.SerializeObject(ticket, settings);
+                string response = webClient.UploadString(new Uri(BaseUrl, "createTicket"), data);
 
-            //Gets the Id of the created Ticket
-            dynamic added = JsonConvert.DeserializeObject<dynamic>(response);
-            return added.ticketId;
+                //Gets the Id of the created Ticket
+                dynamic added = JsonConvert.DeserializeObject<dynamic>(response);
+                return added.ticketId;
+            }
         }
 
         /// <summary>
@@ -187,12 +212,15 @@ namespace Ticketr.Schnittstellen
         /// <param name="ticket"></param>
         public void UpdateTicket(Ticket ticket)
         {
-            //sets all property names to lowercase (otherwise PHP dont understand)
-            var settings = new JsonSerializerSettings();
-            settings.ContractResolver = new LowercaseContractResolver();
+            using (WebClient webClient = NewWebClient())
+            {
+                //sets all property names to lowercase (otherwise PHP dont understand)
+                var settings = new JsonSerializerSettings();
+                settings.ContractResolver = new LowercaseContractResolver();
 
-            string data = JsonConvert.SerializeObject(ticket, settings);
-            webClient.UploadString(new Uri(BaseUrl, "updateTicket"), data);
+                string data = JsonConvert.SerializeObject(ticket, settings);
+                webClient.UploadString(new Uri(BaseUrl, "updateTicket"), data);
+            }
         }
 
         /// <summary>
@@ -200,9 +228,15 @@ namespace Ticketr.Schnittstellen
         /// </summary>
         /// <param name="personId"></param>
         /// <returns></returns>
-        public byte[] GetProfilePicture(int personId)
+        public async Task<byte[]> GetProfilePicture(int personId)
         {
-            return webClient.DownloadData(new Uri(BaseUrl, String.Format("getPersonPicture?id={0}", personId)));
+            using (WebClient webClient = NewWebClient())
+            {
+                return
+                    await
+                        webClient.DownloadDataTaskAsync(new Uri(BaseUrl,
+                            String.Format("getPersonPicture?id={0}", personId)));
+            }
         }
 
 
@@ -213,7 +247,11 @@ namespace Ticketr.Schnittstellen
         /// <param name="personId"></param>
         public void SetProfilePicture(byte[] profilePicture, int personId)
         {
-            webClient.UploadData(new Uri(BaseUrl, String.Format("setPersonPicture?personId={0}", personId)), profilePicture);
+            using (WebClient webClient = NewWebClient())
+            {
+                webClient.UploadData(new Uri(BaseUrl, String.Format("setPersonPicture?personId={0}", personId)),
+                    profilePicture);
+            }
         }
 
 
@@ -223,7 +261,10 @@ namespace Ticketr.Schnittstellen
         /// <returns></returns>
         public string GetServiceInformations()
         {
-            return webClient.DownloadString(new Uri(BaseUrl, "info"));
+            using (WebClient webClient = NewWebClient())
+            {
+                return webClient.DownloadString(new Uri(BaseUrl, "info"));
+            }
         }
 
         /// <summary>
@@ -234,7 +275,10 @@ namespace Ticketr.Schnittstellen
         {
             try
             {
-                webClient.DownloadString(new Uri(BaseUrl, "info"));
+                using (WebClient webClient = NewWebClient())
+                {
+                    webClient.DownloadString(new Uri(BaseUrl, "info"));
+                }
             }
             catch (WebException ex)
             {
@@ -249,6 +293,44 @@ namespace Ticketr.Schnittstellen
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Autorisiert den Benutzer, sofern die Credentails bereits gesetzt sind
+        /// </summary>
+        /// <returns></returns>
+        private async Task<bool> AuthorizeAsync()
+        {
+            try
+            {
+                using (WebClient webClient = NewWebClient())
+                {
+                    await webClient.DownloadStringTaskAsync(new Uri(BaseUrl, "info"));
+                }
+            }
+            catch (WebException ex)
+            {
+                if (((HttpWebResponse)ex.Response).StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    return false;
+                }
+                else
+                {
+                    throw new Exception("Unbekannter Fehler bei der Anfrage");
+                }
+            }
+
+            return true;
+
+        }
+
+        private WebClient NewWebClient()
+        {
+            WebClient client = new WebClient();
+            client.Encoding = Encoding.UTF8;
+            client.Credentials = this.credentials;
+
+            return client;
         }
 
     }

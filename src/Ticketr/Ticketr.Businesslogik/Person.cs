@@ -110,19 +110,15 @@ namespace Ticketr.Businesslogik
             this.eMail = person.EMail;
             this.aenderungsDatum = person.AenderungsDatum;
             this.erstellDatum = person.ErstellDatum;
-            Ticketr.Schnittstellen.Dto.Mitarbeiter m = TicketSystem.Service.GetMitarbeiterDetail(1);
             
         }
 
         /// <summary>
         /// Gibt das Profilbild für die Person zurück
         /// </summary>
-        public byte[] ProfilePicture
+        public async Task<byte[]> GetProfilePicture()
         {
-            get
-            {
-                return TicketSystem.Service.GetProfilePicture(id);
-            }
+            return await TicketSystem.Service.GetProfilePicture(id);
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Ticketr.UI.Components.Dashboard;
@@ -19,12 +20,18 @@ namespace Ticketr.UI.Components
 
         private void LoginButton_OnClick(object sender, RoutedEventArgs e)
         {
+            Login(sender);
+        }
+
+
+        private async void Login(object sender)
+        {
             LoginViewModel loginViewModel = (LoginViewModel)((Button)sender).DataContext;
 
             string userPassword = PasswordTextBox.Password;
             try
             {
-                bool login = loginViewModel.Login(userPassword);
+                bool login = await loginViewModel.Login(userPassword);
                 if (login)
                 {
                     App.MainWindowViewModel.SetSelectedView(new DashboardViewModel(), new DashboardViewUserControl());
