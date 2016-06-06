@@ -27,10 +27,10 @@ namespace Ticketr.UI.Components
 
         }
 
-        private void BenutzerButton_Click(object sender, RoutedEventArgs e)
+        private void KundenButton_Click(object sender, RoutedEventArgs e)
         {
             DashboardViewModel dashboardViewModel = (DashboardViewModel)((Button)sender).DataContext;
-            dashboardViewModel.OpenBenutzerMenu();
+            dashboardViewModel.OpenKundenMenu();
 
         }
 
@@ -38,6 +38,12 @@ namespace Ticketr.UI.Components
         {
             DashboardViewModel dashboardViewModel = (DashboardViewModel)((Button)sender).DataContext;
             dashboardViewModel.OpenTicketMenu();
+        }
+
+        private void MitarbeiterButton_Click(object sender, RoutedEventArgs e)
+        {
+            DashboardViewModel dashboardViewModel = (DashboardViewModel)((Button)sender).DataContext;
+            dashboardViewModel.OpenMitarbeiterView();
         }
     }
 }

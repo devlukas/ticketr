@@ -28,17 +28,20 @@ namespace Ticketr.UI.Components.Dashboard
         public void OpenTicketMenu()
         {
             TicketViewWidth = "*";
-            BenutzerViewWidth = "0";
+            KundenViewWidth = "0";
             EditTicketViewWidth = "0";
+            MitarbeiterViewWidth = "0";
         }
         /// <summary>
         /// Öffnet die Benutzerview
         /// </summary>
-        public void OpenBenutzerMenu()
+        public void OpenKundenMenu()
         {
             TicketViewWidth = "0";
             EditTicketViewWidth = "0";
-            BenutzerViewWidth = "*";
+            KundenViewWidth = "*";
+            MitarbeiterViewWidth = "0";
+
         }
         /// <summary>
         /// Öffnet die EditTicketView
@@ -46,8 +49,18 @@ namespace Ticketr.UI.Components.Dashboard
         public void OpenEditTicketView()
         {
             TicketViewWidth = "0";
-            BenutzerViewWidth = "0";
+            KundenViewWidth = "0";
             EditTicketViewWidth = "*";
+            MitarbeiterViewWidth = "0";
+
+        }
+
+        public void OpenMitarbeiterView()
+        {
+            TicketViewWidth = "0";
+            KundenViewWidth = "0";
+            EditTicketViewWidth = "0";
+            MitarbeiterViewWidth = "*";
         }
         private string ticketViewWidth;
         /// <summary>
@@ -63,17 +76,31 @@ namespace Ticketr.UI.Components.Dashboard
             }
         }
 
-        private string benutzerViewWidth;
+        private string kundenViewWidth;
         /// <summary>
-        /// Gibt die Breite der BenutzerColumn zurück und legt diese fest
+        /// Gibt die Breite der KundenColumn zurück und legt diese fest
         /// </summary>
-        public string BenutzerViewWidth
+        public string KundenViewWidth
         {
-            get { return benutzerViewWidth; }
+            get { return kundenViewWidth; }
             private set
             {
-                benutzerViewWidth = value;
-                RaisePropertyChanged("BenutzerViewWidth");
+                kundenViewWidth = value;
+                RaisePropertyChanged("KundenViewWidth");
+            }
+        }
+
+        private string mitarbeiterViewWidth;
+        /// <summary>
+        /// Gibt die Breite der MitarbeiterColumn zurück und legt diese fest
+        /// </summary>
+        public string MitarbeiterViewWidth
+        {
+            get { return mitarbeiterViewWidth; }
+            private set
+            {
+                mitarbeiterViewWidth = value;
+                RaisePropertyChanged("MitarbeiterViewWidth");
             }
         }
         private string editTicketViewWidth;

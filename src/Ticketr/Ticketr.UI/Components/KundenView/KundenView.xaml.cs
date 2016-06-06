@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Ticketr.UI.Components
 {
     /// <summary>
-    /// Interaction logic for BenutzerView.xaml
+    /// Interaction logic for KundenView.xaml
     /// </summary>
-    public partial class BenutzerView : UserControl
+    public partial class KundenView : UserControl
     {
-        public BenutzerView()
+        public KundenView()
         {
             InitializeComponent();
         }

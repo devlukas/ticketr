@@ -33,31 +33,70 @@
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Rectangle Width="5" Fill="{DynamicResource AccentColorBrush}"></Rectangle>
+                    <Rectangle Width="5" Fill="{DynamicResource AccentColorBrush}">
+                        <Rectangle.Style>
+                            <Style TargetType="Rectangle">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding TicketViewWidth}" Value="*">
+                                        <Setter Property="Visibility" Value="Visible"></Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding TicketViewWidth}" Value="0">
+                                        <Setter Property="Visibility" Value="Hidden"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
                     <materialDesign:PackIcon Kind="Home" Height="24" Width="24" Grid.Column="1" Margin="10,0,0,0" Foreground="White"/>
                     <TextBlock Text="Tickets" Grid.Column="2" HorizontalAlignment="Center" Margin="10,0,0,0" Foreground="White" VerticalAlignment="Center"></TextBlock>
                 </Grid>
             </Button>
-            <Button Click="BenutzerButton_Click" Grid.Row="3" Height="30" Padding="0"  Background="Transparent" BorderBrush="Transparent">
+            <Button Click="KundenButton_Click" Grid.Row="3" Height="30" Padding="0"  Background="Transparent" BorderBrush="Transparent">
                 <Grid Width="170" HorizontalAlignment="Stretch">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Rectangle Width="5" Fill="{DynamicResource AccentColorBrush}"></Rectangle>
+                    <Rectangle Width="5" Fill="{DynamicResource AccentColorBrush}">
+                        <Rectangle.Style>
+                            <Style TargetType="Rectangle">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding KundenViewWidth}" Value="*">
+                                        <Setter Property="Visibility" Value="Visible"></Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding KundenViewWidth}" Value="0">
+                                        <Setter Property="Visibility" Value="Hidden"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
                     <materialDesign:PackIcon Kind="AccountMultiple" Height="24" Width="24" Grid.Column="1" Margin="10,0,0,0" Foreground="White"/>
                     <TextBlock Text="Kunden" Grid.Column="2" HorizontalAlignment="Center" Margin="10,0,0,0" Foreground="White" VerticalAlignment="Center"></TextBlock>
                 </Grid>
             </Button>
-            <Button Click="BenutzerButton_Click" Grid.Row="4" Height="30" Padding="0"  Background="Transparent" BorderBrush="Transparent">
+            <Button Click="MitarbeiterButton_Click" Grid.Row="4" Height="30" Padding="0"  Background="Transparent" BorderBrush="Transparent">
                 <Grid Width="170" HorizontalAlignment="Stretch">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Rectangle Width="5" Fill="{DynamicResource AccentColorBrush}"></Rectangle>
+                    <Rectangle Width="5" Fill="{DynamicResource AccentColorBrush}">
+                        <Rectangle.Style>
+                            <Style TargetType="Rectangle">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding MitarbeiterViewWidth}" Value="*">
+                                        <Setter Property="Visibility" Value="Visible"></Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding MitarbeiterViewWidth}" Value="0">
+                                        <Setter Property="Visibility" Value="Hidden"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
                     <materialDesign:PackIcon Kind="Laptop" Height="24" Width="24" Grid.Column="1" Margin="10,0,0,0" Foreground="White"/>
                     <TextBlock Text="Mitarbeiter" Grid.Column="2" HorizontalAlignment="Center" Margin="10,0,0,0" Foreground="White" VerticalAlignment="Center"></TextBlock>
                 </Grid>

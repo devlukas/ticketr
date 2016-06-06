@@ -10,12 +10,13 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
             <ColumnDefinition Width="{Binding TicketViewWidth}"></ColumnDefinition>
-            <ColumnDefinition Width="{Binding BenutzerViewWidth}"></ColumnDefinition>
+            <ColumnDefinition Width="{Binding KundenViewWidth}"></ColumnDefinition>
             <ColumnDefinition Width="{Binding EditTicketViewWidth}"></ColumnDefinition>
+            <ColumnDefinition Width="{Binding MitarbeiterViewWidth}"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <component:MenuView DataContext="{Binding}"  Grid.Column="0" Width="170"></component:MenuView>
         <component:TicketView Grid.Column="1" HorizontalAlignment="Stretch"></component:TicketView>
-        <component:BenutzerView Grid.Column="2"></component:BenutzerView>
+        <component:KundenView Grid.Column="2"></component:KundenView>
         <component:EditTicketUserControl Grid.Column="3" DataContext="{Binding EditTicketViewModel}"></component:EditTicketUserControl>
     </Grid>
 </UserControl>
