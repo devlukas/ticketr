@@ -4,7 +4,7 @@
         function getAllKunden() {
 
             $sql = "SELECT person.vorname, person.name, person.id as personId,
-                    person.eMail, person.erstellDatum, person.aenderungsDatum,
+                    person.eMail, person.telefon, person.erstellDatum, person.aenderungsDatum,
                     kunde.id as kundeId, kunde.erstellDatum as kundeSeit
                     FROM kunde
                     INNER JOIN person ON person.id = kunde.person_id";
@@ -22,6 +22,7 @@
                 $kunde["person"]["name"] = $row["name"];
                 $kunde["person"]["vorname"] = $row["vorname"];
                 $kunde["person"]["email"] = $row["eMail"];
+                $kunde["person"]["telefon"] = $row["telefon"];
                 $kunde["person"]["erstellDatum"] = $row["erstellDatum"];
                 $kunde["person"]["aenderungsDatum"] = $row["aenderungsDatum"];
                 
@@ -36,7 +37,7 @@
         function getAllMitarbeiter() {
 
             $sql = "SELECT person.vorname, person.name, person.id as personId,
-                    person.eMail, person.erstellDatum, person.aenderungsDatum,
+                    person.eMail, person.telefon, person.erstellDatum, person.aenderungsDatum,
                     mitarbeiter.id as mitarbeiterId, mitarbeiter.erstellDatum as mitarbeiterSeit
                     FROM mitarbeiter
                     INNER JOIN person ON person.id = mitarbeiter.person_id";
@@ -54,6 +55,7 @@
                 $mitarbeiter["person"]["name"] = $row["name"];
                 $mitarbeiter["person"]["vorname"] = $row["vorname"];
                 $mitarbeiter["person"]["email"] = $row["eMail"];
+                $mitarbeiter["person"]["telefon"] = $row["telefon"];
                 $mitarbeiter["person"]["erstellDatum"] = $row["erstellDatum"];
                 $mitarbeiter["person"]["aenderungsDatum"] = $row["aenderungsDatum"];
                 
@@ -64,15 +66,62 @@
         }
 
         //Gibt die Daten für die Detailansicht eines Kunden zurück
-        function getKundeDetail() {
-
+        function getKundeDetail($id) {
+            $sql = "SELECT 
+                        kunde.id, kunde.erstellDatum, person.name, person.vorname, person.id as personId, person.eMail, person.telefon,
+                        person.erstellDatum as personErstelldatum, person.aenderungsDatum as personAenderungsdatum, COUNT(ticket.id) as ticketCount
+                    FROM kunde
+                    INNER JOIN person ON kunde.person_id = person.id
+                    INNER JOIN ticket ON kunde.id = ticket.kunde_id
+                    WHERE kunde.id = $id";
+                    
+            $result = $this->query($sql);
+            $row =mysqli_fetch_assoc($result);
+                
+            $kunde = array();
+            
+            $kunde["id"] = $row["id"];
+            $kunde["ticketsCount"] = $row["ticketCount"];
+            $kunde["erstellDatum"] = $row["erstellDatum"];
+            $kunde["person"]["id"] = $row["personId"];
+            $kunde["person"]["name"] = $row["name"];
+            $kunde["person"]["vorname"] = $row["vorname"];
+            $kunde["person"]["eMail"] = $row["eMail"];
+            $kunde["person"]["telefon"] = $row["telefon"];
+            $kunde["person"]["erstellDatum"] = $row["personErstelldatum"];
+            $kunde["person"]["aenderungsDatum"] = $row["personAenderungsdatum"];
+            
+            return $kunde;
         }
+        
+        //Ändert die Angaben einer Person
+        function updatePerson($data)
+        {
+            $id = $data["id"];
+            $name = $data["name"];
+            $vorname = $data["vorname"];
+            $email = $data["eMail"];
+            $telefon = $data["telefon"];
+            
+            $sql = "
+                UPDATE person 
+                SET
+                    name = '$name',
+                    vorname = '$vorname',
+                    eMail = '$email', 
+                    telefon = '$telefon',
+                    aenderungsDatum = NOW()
+                WHERE id = $id";
+                
+            return $this->query($sql);
+        }
+        
 
         //Gibt die Daten für die Detailansicht eines Benutzers zurück
         function getMitarbeiterDetail($id) {
             
             $sql = "SELECT 
-                        mitarbeiter.id, mitarbeiter.erstellDatum, person.name, person.vorname, person.id as personId, person.eMail, 
+                        mitarbeiter.id, mitarbeiter.erstellDatum, person.name, person.vorname, person.id as personId, person.eMail, person.telefon,
                         person.erstellDatum as personErstelldatum, person.aenderungsDatum as personAenderungsdatum, COUNT(ticket.id) as ticketCount
                     FROM mitarbeiter
                     INNER JOIN person ON mitarbeiter.person_id = person.id
@@ -82,19 +131,20 @@
             $result = $this->query($sql);
             $row =mysqli_fetch_assoc($result);
                 
-            $ticket = array();
+            $mitarbeiter = array();
             
-            $ticket["id"] = $row["id"];
-            $ticket["ticketsCount"] = $row["ticketCount"];
-            $ticket["erstellDatum"] = $row["erstellDatum"];
-            $ticket["person"]["id"] = $row["personId"];
-            $ticket["person"]["name"] = $row["name"];
-            $ticket["person"]["vorname"] = $row["vorname"];
-            $ticket["person"]["eMail"] = $row["eMail"];
-            $ticket["person"]["erstellDatum"] = $row["personErstelldatum"];
-            $ticket["person"]["aenderungsDatum"] = $row["personAenderungsdatum"];
+            $mitarbeiter["id"] = $row["id"];
+            $mitarbeiter["ticketsCount"] = $row["ticketCount"];
+            $mitarbeiter["erstellDatum"] = $row["erstellDatum"];
+            $mitarbeiter["person"]["id"] = $row["personId"];
+            $mitarbeiter["person"]["name"] = $row["name"];
+            $mitarbeiter["person"]["vorname"] = $row["vorname"];
+            $mitarbeiter["person"]["eMail"] = $row["eMail"];
+            $mitarbeiter["person"]["telefon"] = $row["telefon"];
+            $mitarbeiter["person"]["erstellDatum"] = $row["personErstelldatum"];
+            $mitarbeiter["person"]["aenderungsDatum"] = $row["personAenderungsdatum"];
             
-            return $ticket;
+            return $mitarbeiter;
         }
 
         //fügt einen neuen Mitarbeiter hinzu und gibt die erstellte Mitarbeiter-ID zurück
@@ -110,7 +160,7 @@
             if (!empty($name) && !empty($vorname) && !empty($email) && !empty($passwort)) {
                 $pwHash = hash('sha256', $passwort);
                 //add Person
-                $sqlPerson = "INSERT INTO person (name, vorname, email, erstellDatum, aenderungsDatum) VALUES ('$name', '$vorname', '$email', NOW(), NOW())";
+                $sqlPerson = "INSERT INTO person (name, vorname, email, telefon, erstellDatum, aenderungsDatum) VALUES ('$name', '$vorname', '$email', NOW(), NOW())";
                 $result = $this->query($sqlPerson);
 
                 //get id of new inserted person
@@ -149,10 +199,27 @@
         }
         
         //löscht einen Mitarbeiter
-        function deleteMitarbeiter()
+        function deleteMitarbeiter($mitarbeiterId)
         { 
-            $mitarbeiterId = $_POST["id"];
+            $mitarbeiterDetail = $this->getMitarbeiterDetail($mitarbeiterId);
+            
             $sql = "DELETE FROM mitarbeiter WHERE id = $mitarbeiterId";
+            $this->query($sql);
+            
+            $sql = "DELETE FROM person WHERE id = " . $mitarbeiterDetail["person"]["id"];
+            $this->query($sql);
+        }
+        
+        //löscht einen Kunden
+        function deleteKunde($kundeId)
+        {
+            $kundeDetail = $this->getKundeDetail($kundeId);
+            
+            $sql = "DELETE FROM kunde WHERE id = $kundeId";
+            $this->query($sql);
+            
+            $sql = "DELETE FROM person WHERE id = " . $kundeDetail["person"]["id"];
+            $this->query($sql);
         }
 
         //Fügt einen neuen Kunden hinzu
@@ -165,10 +232,11 @@
             $name = $this->realString($data["person"]["name"]);
             $vorname = $this->realString($data["person"]["vorname"]);
             $email = $this->realString($data["person"]["email"]);
+            $telefon = $this->realString($data["person"]["telefon"]);
 
-            if (!empty($name) && !empty($vorname) && !empty($email)) {
+            if (!empty($name) && !empty($vorname) && !empty($email) && !empty($telefon)) {
                 //add Person
-                $sqlPerson = "INSERT INTO person (name, vorname, email, erstellDatum, aenderungsDatum) VALUES ('$name', '$vorname', '$email', NOW(), NOW())";
+                $sqlPerson = "INSERT INTO person (name, vorname, email, telefon, erstellDatum, aenderungsDatum) VALUES ('$name', '$vorname', '$telefon', '$vorname', NOW(), NOW())";
                 $result = $this->query($sqlPerson);
 
                 //get id of new inserted person
@@ -182,6 +250,9 @@
                 
                 return $json;
             }
+            else{
+                var_dump(http_response_code(500));
+            }
         }
         
         //Gibt alle Tickets zurück
@@ -190,7 +261,7 @@
             $sql = "
                   SELECT 
                     ticket.id, ticket.erstellDatum, ticket.aenderungsDatum, ticket.kategorie_id, kategorie.name as kategorieName,
-                    ticket.bezeichnung, ticket.beschreibung, ticket.abgeschlossen, ticket.prioritaet,
+                    ticket.bezeichnung, ticket.beschreibung, ticket.loesung, ticket.abgeschlossen, ticket.prioritaet,
                     ticket.bearbeiter_id as bearbeiterMitarbeiterId, bearbeiterP.id as bearbeiterPersonId, bearbeiterP.name as bearbeiterName,  bearbeiterP.vorname as bearbeiterVorname, 
                     ticket.kunde_id as kundeId, kundeP.id as kundePersonId, kundeP.name as kundeName, kundeP.vorname as kundeVorname,
                     COUNT(kommentar.id) as 'kommentarCount'
@@ -217,6 +288,7 @@
                     $ticket["aenderungsDatum"] = $row["aenderungsDatum"];
                     $ticket["bezeichnung"] = $row["bezeichnung"];
                     $ticket["beschreibung"] = $row["beschreibung"];
+                    $ticket["loesung"] = $ticketRow["loesung"];
                     $ticket["abgeschlossen"] = ($row["abgeschlossen"] == "1" ? true : false);
                     $ticket["kategorie"]["id"] = $row["kategorie_id"];
                     $ticket["kategorie"]["name"] = $row["kategorieName"];
@@ -251,7 +323,7 @@
             $ticketSql = "
                 SELECT 
                     ticket.id, ticket.erstellDatum, ticket.aenderungsDatum, ticket.kategorie_id, kategorie.name as kategorieName,
-                    ticket.bezeichnung, ticket.beschreibung, ticket.abgeschlossen, ticket.prioritaet,
+                    ticket.bezeichnung, ticket.beschreibung, ticket.loesung, ticket.abgeschlossen, ticket.prioritaet,
                     ticket.bearbeiter_id as bearbeiterMitarbeiterId, bearbeiterP.id as bearbeiterPersonId, bearbeiterP.name as bearbeiterName,  bearbeiterP.vorname as bearbeiterVorname, 
                     ticket.kunde_id as kundeId, kundeP.id as kundePersonId, kundeP.name as kundeName, kundeP.vorname as kundeVorname
                 FROM ticket
@@ -288,6 +360,7 @@
             $ticket["aenderungsDatum"] = $ticketRow["aenderungsDatum"];
             $ticket["bezeichnung"] = $ticketRow["bezeichnung"];
             $ticket["beschreibung"] = $ticketRow["beschreibung"];
+            $ticket["loesung"] = $ticketRow["loesung"];
             $ticket["abgeschlossen"] = ($row["abgeschlossen"] == "1" ? true : false);
             $ticket["prioritaet"] = $ticketRow["prioritaet"];
             $ticket["kategorie"]["id"] = $ticketRow["kategorie_id"];
@@ -329,7 +402,8 @@
             global $db;
             
             $bezeichnung = $ticket["bezeichnung"];
-            $beschreibung = $ticket["beschreibung"];
+            $beschreibung = isset($ticket["beschreibung"]) ? $ticket["beschreibung"] : "";
+            $loesung = isset($ticket["loesung"]) ? $ticket["loesung"] : "";
             $kundeId = $ticket["kunde"]["id"];
             $bearbeiterId = $ticket["bearbeiter"]["id"];
             $prioritaet = $ticket["prioritaet"];
@@ -337,7 +411,7 @@
             
             $sql = "INSERT INTO ticket 
                     (bezeichnung, beschreibung, kunde_id, bearbeiter_id, abgeschlossen, prioritaet, kategorie_id, erstellDatum, aenderungsDatum)
-                    VALUES ('$bezeichnung', '$beschreibung', $kundeId, $bearbeiterId, 0, $prioritaet ,$kategorieId, NOW(), NOW())";
+                    VALUES ('$bezeichnung', '$beschreibung', '$loesung' $kundeId, $bearbeiterId, 0, $prioritaet ,$kategorieId, NOW(), NOW())";
                        
             $this->query($sql);
             
@@ -352,6 +426,7 @@
             $id = $ticket["id"];
             $bezeichnung = $ticket["bezeichnung"];
             $beschreibung = $ticket["beschreibung"];
+            $loesung = $ticket["loesung"];
             $kundeId = $ticket["kunde"]["id"];
             $bearbeiterId = $ticket["bearbeiter"]["id"];
             $prioritaet = $ticket["prioritaet"];
@@ -363,6 +438,7 @@
                 SET 
                     bezeichnung = '$bezeichnung',
                     beschreibung = '$beschreibung ',
+                    loesung = '$loesung ',
                     kunde_id = $kundeId,
                     bearbeiter_id = $bearbeiterId,
                     prioritaet = $prioritaet,
@@ -373,6 +449,33 @@
                 
             
             return $this->query($sql);
+        }
+        
+        //Fügt einem Ticket einen Kommentar hinzu
+        function addKommentar($data)
+        {
+            $mitarbeiterId = $this->getCurrentMitarbeiterId();
+            $ticketId = $data["ticket"]["id"];
+            $text = $data["text"];
+            
+            $sql = "INSERT INTO kommentar (ticket_id, bearbeiter_id, text, erstellDatum) VALUES ('$ticketId', '$mitarbeiterId', '$text', NOW())";
+            
+            return $this->query($sql);
+        }
+        
+        
+        //löscht ein ticket und dessen Kommentare
+        function deleteTicket($id){
+            $sql = "DELETE FROM kommentar WHERE ticket_id = $id";
+            $this->query($sql);
+            
+            $sql = "DELETE FROM ticket WHERE id = $id";
+            $this->query($sql);
+        }
+        
+        function deleteKommentar($id){
+            $sql = "DELETE FROM kommentar WHERE id = $id";
+            $this->query($sql);
         }
         
         //Gibt alle, im System verfügbaren, Kategorien zurück

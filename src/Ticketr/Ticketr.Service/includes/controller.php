@@ -28,7 +28,8 @@ class Controller {
 
     //Gibt die Daten für die Detailansicht eines Kunden zurück
     function getKundeDetail() {
-
+        $reponse = $this->repo->getKundeDetail($_GET["id"]);
+        $this->repo->printJson($reponse);
     }
     
 
@@ -76,21 +77,38 @@ class Controller {
     
     //löscht einen Mitarbeiter
     function deleteMitarbeiter(){
-        echo $this->repo->deleteMitarbeiter();
+        
+        $mitarbeiterId = $_POST["id"];
+        echo $this->repo->deleteMitarbeiter($mitarbeiterId);
+    }
+    
+    //Löscht einen Kunden
+    function deleteKunde(){
+        
+        $kundeId = $_POST["id"];
+        echo $this->repo->deleteKunde($kundeId);
     }
     
 
     //Fügt einen neuen Kunden hinzu
-    function addKunde() 
-    {
+    function addKunde() {
         //Gets the json in post-Body
         $data = json_decode(file_get_contents('php://input'), true);
         
         header('Content-Type: application/json');
         echo $this->repo->addKunde($data);
-
     }
     
+    //$Ändert die Angaben einer Person
+    function updatePerson(){
+        //Gets the json in post-Body
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        $response = $this->repo->updatePerson($data);
+       
+        header('Content-Type: application/json');
+        echo $response;
+    }
     
     //Gibt alle Tickets zurück
     function getTickets(){
@@ -105,9 +123,32 @@ class Controller {
         $this->repo->printJson($response);
     }
     
+    //löscht ein Ticket und dessen Kommentare
+    function deleteTicket(){
+        $ticketId = $_POST["id"];
+        echo $this->repo->deleteTicket($ticketId);
+    }
+    
+    //löscht ein Kommentar
+    function deleteKommentar(){
+        $commentId = $_POST["id"];
+        echo $this->repo->deleteKommentar($commentId);
+    }
+    
+    //fügt einem Artikel einen Kommentar hinzu
+    function addKommentar()
+    {
+        //Gets the json in post-Body
+        $data = json_decode(file_get_contents('php://input'), true);
+        $response = $this->repo->addKommentar($data);
+        
+        header('Content-Type: application/json');
+        echo $response;
+        
+    }
+    
     //Erstellt ein neues Ticket
     function createTicket(){
-        
         //Gets the json in post-Body
         $data = json_decode(file_get_contents('php://input'), true);
         $response = $this->repo->createTicket($data);
@@ -118,7 +159,6 @@ class Controller {
     
     //Bearbeitet ein neues Ticket
     function updateTicket(){
-        
         //Gets the json in post-Body
         $data = json_decode(file_get_contents('php://input'), true);
 

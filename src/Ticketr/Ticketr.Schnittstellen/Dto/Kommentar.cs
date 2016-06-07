@@ -15,5 +15,7 @@ namespace Ticketr.Schnittstellen.Dto
         public DateTime ErstellDatum { get; set; }
 
         public Mitarbeiter Mitarbeiter { get; set; }
+
+        public Ticket Ticket { get; set; }
     }
 }
