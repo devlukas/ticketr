@@ -33,6 +33,11 @@ namespace Ticketr.Businesslogik
         private string eMail;
 
         /// <summary>
+        /// Telefon der Person
+        /// </summary>
+        private string telefon;
+
+        /// <summary>
         /// Erstelldatum der Person
         /// </summary>
         private DateTime erstellDatum;
@@ -110,7 +115,8 @@ namespace Ticketr.Businesslogik
             this.eMail = person.EMail;
             this.aenderungsDatum = person.AenderungsDatum;
             this.erstellDatum = person.ErstellDatum;
-            
+            this.telefon = person.Telefon;
+
         }
 
         /// <summary>
@@ -127,6 +133,8 @@ namespace Ticketr.Businesslogik
         /// <param name="pictureFile"></param>
         public void UploadProfilePicture(string fileName)
         {
+            //TODO Der Serivce kann das bereits, es existiert aber noch keine Client-Methode
+
             throw new NotImplementedException();
         }
     }

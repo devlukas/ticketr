@@ -20,6 +20,8 @@ namespace Ticketr.Businesslogik
 
         private string beschreibung;
 
+        private string loesung;
+
         private DateTime erstellDatum;
 
         private DateTime aenderungsDatum;
@@ -73,6 +75,19 @@ namespace Ticketr.Businesslogik
             set
             {
                 beschreibung = value;
+            }
+        }
+
+        public string Loesung
+        {
+            get
+            {
+                return loesung;
+            }
+
+            set
+            {
+                loesung = value;
             }
         }
 
@@ -190,6 +205,7 @@ namespace Ticketr.Businesslogik
             erstellDatum = ticket.ErstellDatum;
             bezeichnung = ticket.Bezeichnung;
             beschreibung = ticket.Beschreibung;
+            loesung = ticket.Loesung;
             id = ticket.Id;
         }
     }

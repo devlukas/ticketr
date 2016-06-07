@@ -14,6 +14,8 @@ namespace Ticketr.Schnittstellen.Dto
 
         public string Beschreibung { get; set; }
 
+        public string Loesung { get; set; }
+
         public int KommentarCount { get; set; }
 
         public DateTime ErstellDatum { get; set; }

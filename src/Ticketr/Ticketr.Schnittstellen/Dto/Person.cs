@@ -16,6 +16,8 @@ namespace Ticketr.Schnittstellen.Dto
 
         public string EMail { get; set; }
 
+        public string Telefon { get; set; }
+
         public DateTime ErstellDatum { get; set; }
 
         public DateTime AenderungsDatum { get; set; }

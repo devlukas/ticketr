@@ -254,6 +254,109 @@ namespace Ticketr.Schnittstellen
             }
         }
 
+        /// <summary>
+        /// Ändert die Angaben einer Person
+        /// </summary>
+        public void UpdatePerson(Person person)
+        {
+            using (WebClient webClient = NewWebClient())
+            {
+                //sets all property names to lowercase (otherwise PHP dont understand)
+                var settings = new JsonSerializerSettings();
+                settings.ContractResolver = new LowercaseContractResolver();
+
+                string data = JsonConvert.SerializeObject(person, settings);
+                webClient.UploadString(new Uri(BaseUrl, "updatePerson"), data);
+            }
+        }
+
+        /// <summary>
+        /// Löscht den angegebenen Kunden
+        /// </summary>
+        /// <param name="id"></param>
+        public void DeleteKunde(int id)
+        {
+            using (WebClient webClient = NewWebClient())
+            {
+                //sets all property names to lowercase (otherwise PHP dont understand)
+                var settings = new JsonSerializerSettings();
+                settings.ContractResolver = new LowercaseContractResolver();
+
+                string data = JsonConvert.SerializeObject(new {Id = id}, settings);
+                webClient.UploadString(new Uri(BaseUrl, "deleteKunde"), data);
+            }
+        }
+
+
+        /// <summary>
+        /// Löscht den angegebenen Mitarbeiter
+        /// </summary>
+        /// <param name="id"></param>
+        public void DeleteMitarbeiter(int id)
+        {
+            using (WebClient webClient = NewWebClient())
+            {
+                //sets all property names to lowercase (otherwise PHP dont understand)
+                var settings = new JsonSerializerSettings();
+                settings.ContractResolver = new LowercaseContractResolver();
+
+                string data = JsonConvert.SerializeObject(new { Id = id }, settings);
+                webClient.UploadString(new Uri(BaseUrl, "deleteMitarbeiter"), data);
+            }
+        }
+
+        /// <summary>
+        /// Löscht ein Ticket und dessen angehängte Kommentare
+        /// </summary>
+        /// <param name="id"></param>
+        public void DeleteTicket(int id)
+        {
+            using (WebClient webClient = NewWebClient())
+            {
+                //sets all property names to lowercase (otherwise PHP dont understand)
+                var settings = new JsonSerializerSettings();
+                settings.ContractResolver = new LowercaseContractResolver();
+
+                string data = JsonConvert.SerializeObject(new { Id = id }, settings);
+                webClient.UploadString(new Uri(BaseUrl, "deleteTicket"), data);
+            }
+        }
+
+
+        /// <summary>
+        /// Fügt einem Ticket ein Kommentar hinzu
+        /// </summary>
+        /// <param name="kommentar"></param>
+        public void AddKommentar(Kommentar kommentar)
+        {
+            using (WebClient webClient = NewWebClient())
+            {
+                //sets all property names to lowercase (otherwise PHP dont understand)
+                var settings = new JsonSerializerSettings();
+                settings.ContractResolver = new LowercaseContractResolver();
+
+                string data = JsonConvert.SerializeObject(kommentar, settings);
+                webClient.UploadString(new Uri(BaseUrl, "addKommentar"), data);
+            }
+        }
+
+        /// <summary>
+        /// Löscht einen Kommentar
+        /// </summary>
+        /// <param name="id"></param>
+        public void DeleteKommentar(int id)
+        {
+            using (WebClient webClient = NewWebClient())
+            {
+                //sets all property names to lowercase (otherwise PHP dont understand)
+                var settings = new JsonSerializerSettings();
+                settings.ContractResolver = new LowercaseContractResolver();
+
+                string data = JsonConvert.SerializeObject(new { Id = id }, settings);
+                webClient.UploadString(new Uri(BaseUrl, "deleteKommentar"), data);
+            }
+        }
+
 
         /// <summary>
         /// Gibt die Service Infos (in HTML) zurück
