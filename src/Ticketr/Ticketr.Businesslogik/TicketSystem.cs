@@ -226,10 +226,10 @@ namespace Ticketr.Businesslogik
         /// <summary>
         /// Löscht das angegebene Ticket
         /// </summary>
-        /// <param name="ticket"></param>
-        public void RemoveTicket(Ticket ticket)
+        /// <param name="id"></param>
+        public void RemoveTicket(int id)
         {
-            service.DeleteTicket(ticket.Id);
+            service.DeleteTicket(id);
         }
 
 

@@ -278,12 +278,10 @@ namespace Ticketr.Schnittstellen
         {
             using (WebClient webClient = NewWebClient())
             {
-                //sets all property names to lowercase (otherwise PHP dont understand)
-                var settings = new JsonSerializerSettings();
-                settings.ContractResolver = new LowercaseContractResolver();
+                var reqparm = new System.Collections.Specialized.NameValueCollection();
+                reqparm.Add("id", id.ToString());
 
-                string data = JsonConvert.SerializeObject(new {Id = id}, settings);
-                webClient.UploadString(new Uri(BaseUrl, "deleteKunde"), data);
+                webClient.UploadValues(new Uri(BaseUrl, "deleteKunde"), "POST", reqparm);
             }
         }
 
@@ -296,12 +294,10 @@ namespace Ticketr.Schnittstellen
         {
             using (WebClient webClient = NewWebClient())
             {
-                //sets all property names to lowercase (otherwise PHP dont understand)
-                var settings = new JsonSerializerSettings();
-                settings.ContractResolver = new LowercaseContractResolver();
+                var reqparm = new System.Collections.Specialized.NameValueCollection();
+                reqparm.Add("id", id.ToString());
 
-                string data = JsonConvert.SerializeObject(new { Id = id }, settings);
-                webClient.UploadString(new Uri(BaseUrl, "deleteMitarbeiter"), data);
+                webClient.UploadValues(new Uri(BaseUrl, "deleteMitarbeiter"), "POST", reqparm);
             }
         }
 
@@ -313,12 +309,10 @@ namespace Ticketr.Schnittstellen
         {
             using (WebClient webClient = NewWebClient())
             {
-                //sets all property names to lowercase (otherwise PHP dont understand)
-                var settings = new JsonSerializerSettings();
-                settings.ContractResolver = new LowercaseContractResolver();
+                var reqparm = new System.Collections.Specialized.NameValueCollection();
+                reqparm.Add("id", id.ToString());
 
-                string data = JsonConvert.SerializeObject(new { Id = id }, settings);
-                webClient.UploadString(new Uri(BaseUrl, "deleteTicket"), data);
+                webClient.UploadValues(new Uri(BaseUrl, "deleteTicket"), "POST", reqparm);
             }
         }
 
@@ -348,12 +342,10 @@ namespace Ticketr.Schnittstellen
         {
             using (WebClient webClient = NewWebClient())
             {
-                //sets all property names to lowercase (otherwise PHP dont understand)
-                var settings = new JsonSerializerSettings();
-                settings.ContractResolver = new LowercaseContractResolver();
+                var reqparm = new System.Collections.Specialized.NameValueCollection();
+                reqparm.Add("id", id.ToString());
 
-                string data = JsonConvert.SerializeObject(new { Id = id }, settings);
-                webClient.UploadString(new Uri(BaseUrl, "deleteKommentar"), data);
+                webClient.UploadValues(new Uri(BaseUrl, "deleteKommentar"), "POST", reqparm);
             }
         }
 

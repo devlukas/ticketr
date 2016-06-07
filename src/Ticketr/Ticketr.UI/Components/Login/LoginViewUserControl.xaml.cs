@@ -34,6 +34,7 @@ namespace Ticketr.UI.Components
                 bool login = await loginViewModel.Login(userPassword);
                 if (login)
                 {
+                    App.TicketSystem.RemoveTicket(12);
                     App.MainWindowViewModel.SetSelectedView(new DashboardViewModel(), new DashboardViewUserControl());
                 }
                 else
