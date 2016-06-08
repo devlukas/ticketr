@@ -23,6 +23,10 @@ namespace Ticketr.UI.Components
         public KundenView()
         {
             InitializeComponent();
+            KundenViewModel kundenViewModel = new KundenViewModel();
+            kundenViewModel.LoadItems();
+            DataContext = kundenViewModel;
+
         }
     }
 }

@@ -5,8 +5,55 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Ticketr.UI.Components"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             xmlns:component="clr-namespace:Ticketr.UI.Components"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             d:DesignHeight="300" d:DesignWidth="800">
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <materialDesign:Card Height="50" FontSize="14" Panel.ZIndex="2" Background="White">
+            <Grid Width="Auto" HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Width="Auto" Padding="0" VerticalAlignment="Center" Margin="0,0,10,0" Background="Transparent" BorderBrush="Transparent">
+                    <materialDesign:PackIcon Kind="Magnify" Height="30" Width="30"  Foreground="#444"></materialDesign:PackIcon>
+                </Button>
+                <TextBox Grid.Column="1" VerticalAlignment="Center" Width="600" Text="{Binding SearchField}"  materialDesign:TextFieldAssist.Hint="Suchen"></TextBox>
+            </Grid>
+        </materialDesign:Card>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+            <StackPanel.Style>
+                <Style TargetType="StackPanel">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"></Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsLoading}" Value="False">
+                            <Setter Property="Visibility" Value="Hidden"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
+            <materialDesign:PackIcon Kind="Sync" Height="40" Width="40" Margin="5 25 0 0" RenderTransformOrigin="0.5, 0.5">
+                <materialDesign:PackIcon.RenderTransform>
+                    <RotateTransform CenterX="0" CenterY="0"/>
+                </materialDesign:PackIcon.RenderTransform>
+                <materialDesign:PackIcon.Triggers>
+                    <EventTrigger RoutedEvent="Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(Rectangle.RenderTransform).(RotateTransform.Angle)"  From="0" To="360" Duration="0:0:1" RepeatBehavior="Forever"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </materialDesign:PackIcon.Triggers>
+            </materialDesign:PackIcon>
+            <Label FontSize="20" Margin="0 25">Daten werden geladen...</Label>
+        </StackPanel>
     </Grid>
 </UserControl>

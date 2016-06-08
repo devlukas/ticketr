@@ -125,6 +125,8 @@
     <Compile Include="Components\EditTicketView\EditTicketViewModel.cs" />
     <Compile Include="Components\EditTicketView\KategorieViewModel.cs" />
     <Compile Include="Components\EditTicketView\PersonDropdownItemViewModel.cs" />
+    <Compile Include="Components\KundenView\KundenViewModel.cs" />
+    <Compile Include="Components\KundenView\KundeViewModel.cs" />
     <Compile Include="Components\Login\LoginViewModel.cs" />
     <Compile Include="Components\Login\LoginViewUserControl.xaml.cs">
       <DependentUpon>LoginViewUserControl.xaml</DependentUpon>
