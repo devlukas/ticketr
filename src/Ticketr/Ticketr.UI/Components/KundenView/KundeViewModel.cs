@@ -16,5 +16,15 @@ namespace Ticketr.UI.Components
         {
             this.kunde = kunde;
         }
+
+        public string FormattedName
+        {
+            get { return string.Format("{0} {1}", kunde.Vorname, kunde.Name); }
+        }
+
+        public string PositionsBezeichnung
+        {
+            get { return kunde.Position.Name; }
+        }
     }
 }

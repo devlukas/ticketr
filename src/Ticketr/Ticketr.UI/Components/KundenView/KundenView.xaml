@@ -34,7 +34,7 @@
                             <Setter Property="Visibility" Value="Visible"></Setter>
                         </DataTrigger>
                         <DataTrigger Binding="{Binding IsLoading}" Value="False">
-                            <Setter Property="Visibility" Value="Hidden"></Setter>
+                            <Setter Property="Visibility" Value="Collapsed"></Setter>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -55,5 +55,50 @@
             </materialDesign:PackIcon>
             <Label FontSize="20" Margin="0 25">Daten werden geladen...</Label>
         </StackPanel>
+        <ItemsControl Grid.Row="2" ItemsSource="{Binding Kunden}" Margin="0,20">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <!-- KundeItem -->
+                    <Grid Height="50" Name="KundeItem">
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <!-- Text -->
+                            <StackPanel Grid.Row="0" Orientation="Vertical" VerticalAlignment="Center" Margin="20,0,0,0">
+                                <TextBlock Text="{Binding FormattedName}" FontSize="16"></TextBlock>
+                                <TextBlock Text="{Binding PositionsBezeichnung}"></TextBlock>
+                            </StackPanel>
+                            <!-- Icons -->
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,30,0">
+                                <StackPanel.Style>
+                                    <Style TargetType="StackPanel">
+                                        <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=KundeItem,Path=IsMouseOver}" Value="True">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </StackPanel.Style>
+                                <Button ToolTip="Bearbeiten" Width="Auto" Padding="0"  Background="Transparent" BorderBrush="Transparent" Margin="0,0,5,0">
+                                    <materialDesign:PackIcon Kind="BorderColor" Foreground="#6F6F6F" Width="20" Height="20"></materialDesign:PackIcon>
+                                </Button>
+                                <Button ToolTip="Löschen" Width="Auto" Padding="0" Background="Transparent" BorderBrush="Transparent">
+                                    <materialDesign:PackIcon Kind="Delete" Foreground="#6F6F6F" Width="20" Height="20"></materialDesign:PackIcon>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                        <Rectangle Grid.Row="1" Fill="#e6e6e6" Height="1"></Rectangle>
+                    </Grid>
+                    
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </UserControl>

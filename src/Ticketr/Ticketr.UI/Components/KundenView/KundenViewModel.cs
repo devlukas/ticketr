@@ -41,6 +41,15 @@ namespace Ticketr.UI.Components
             }
         }
 
-        public List<KundeViewModel> Kunden { get; private set; }
+        private List<KundeViewModel> kunden;
+        public List<KundeViewModel> Kunden
+        {
+            get { return kunden; }
+            private set
+            {
+                kunden = value;
+                RaisePropertyChanged("Kunden");
+            }
+        }
     }
 }
