@@ -15,6 +15,7 @@ namespace Ticketr.Businesslogik
         //erstellDatum des Kunden
         private DateTime erstellDatum;
 
+        private Position position;
 
         public int Id
         {
@@ -26,12 +27,17 @@ namespace Ticketr.Businesslogik
             get { return erstellDatum; }
         }
 
+        public Position Position
+        {
+            get { return position; }
+        }
 
         public Kunde(Schnittstellen.Dto.Kunde kunde) 
             : base(kunde.Person)
         {
             this.id = kunde.Id;
             this.erstellDatum = kunde.ErstellDatum;
+            this.position = new Position(kunde.Position);
         }
 
     }

@@ -46,6 +46,7 @@
     <Compile Include="Kunde.cs" />
     <Compile Include="Mitarbeiter.cs" />
     <Compile Include="Person.cs" />
+    <Compile Include="Position.cs" />
     <Compile Include="Prioritaet.cs" />
     <Compile Include="Ticket.cs" />
     <Compile Include="TicketSystem.cs" />

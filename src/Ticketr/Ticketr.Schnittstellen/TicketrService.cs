@@ -72,6 +72,19 @@ namespace Ticketr.Schnittstellen
         }
 
         /// <summary>
+        /// Gibt alle vorhandenen Positionen zurück
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<Position>> GetPositionen()
+        {
+            using (WebClient webClient = NewWebClient())
+            {
+                string response = await webClient.DownloadStringTaskAsync(new Uri(BaseUrl, "getPositionen"));
+                return JsonConvert.DeserializeObject<List<Position>>(response);
+            }
+        }
+
+        /// <summary>
         /// Gibt (momentan noch :D ) alle Tickets zurück
         /// </summary>
         /// <returns></returns>

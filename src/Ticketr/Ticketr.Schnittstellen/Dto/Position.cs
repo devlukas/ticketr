@@ -6,14 +6,11 @@ using System.Threading.Tasks;
 
 namespace Ticketr.Schnittstellen.Dto
 {
-    public class Kunde
+    public class Position
     {
         public int Id { get; set; }
 
-        public DateTime ErstellDatum { get; set; }
+        public string Name { get; set; }
 
-        public Person Person { get; set; }
-
-        public Position Position { get; set; }
     }
 }

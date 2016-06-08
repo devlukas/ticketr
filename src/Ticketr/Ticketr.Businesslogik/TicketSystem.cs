@@ -34,6 +34,10 @@ namespace Ticketr.Businesslogik
         /// </summary>
         private List<Kategorie> kategorien;
 
+        /// <summary>
+        /// Alle Positionen
+        /// </summary>
+        private List<Position> positionen;
 
         /// <summary>
         /// Der aktuell eingeloggte Benutzer
@@ -107,7 +111,14 @@ namespace Ticketr.Businesslogik
             get { return kategorien; }
         }
 
-#endregion
+        public List<Position> Positionen
+        {
+            get
+            {
+                return positionen;
+            }
+        }
+#endregion 
 
 
         public TicketSystem()
@@ -116,6 +127,7 @@ namespace Ticketr.Businesslogik
             mitarbeiter = new List<Mitarbeiter>();
             kunden = new List<Kunde>();
             tickets = new List<Ticket>();
+            positionen = new List<Position>();
         }
 
 
@@ -163,6 +175,11 @@ namespace Ticketr.Businesslogik
         public async Task ReloadKategorien()
         {
             this.kategorien = (await service.GetKategorien()).Select(k => new Kategorie(k)).ToList();
+        }
+
+        public async Task ReloadPositionen()
+        {
+            this.positionen = (await service.GetPositionen()).Select(p => new Position(p)).ToList();
         }
 
         /// <summary>

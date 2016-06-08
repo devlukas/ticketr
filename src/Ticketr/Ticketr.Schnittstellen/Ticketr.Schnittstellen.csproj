@@ -50,6 +50,7 @@
     <Compile Include="Dto\Kunde.cs" />
     <Compile Include="Dto\Mitarbeiter.cs" />
     <Compile Include="Dto\Person.cs" />
+    <Compile Include="Dto\Position.cs" />
     <Compile Include="Dto\Prioritaet.cs" />
     <Compile Include="Dto\Ticket.cs" />
     <Compile Include="LowercaseContractResolver.cs" />
