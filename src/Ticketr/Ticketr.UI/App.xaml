@@ -34,7 +34,7 @@
             </LinearGradientBrush>
             <SolidColorBrush x:Key="CheckmarkFill" Color="{DynamicResource Primary500}"/>
             <SolidColorBrush x:Key="RightArrowFill" Color="{DynamicResource Primary500}"/>
-            <SolidColorBrush x:Key="IdealForegroundColorBrush" Color="{DynamicResource Primary500Foreground}"/>
+            <SolidColorBrush x:Key="IdealForegroundColorBrush" Color="White"/>
             <SolidColorBrush x:Key="IdealForegroundDisabledBrush" Color="{DynamicResource Primary500}" Opacity="0.4"/>
             <SolidColorBrush x:Key="ErrorColor" Color="#F44336"></SolidColorBrush>
         </ResourceDictionary>
