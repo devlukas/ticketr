@@ -276,5 +276,40 @@ namespace Ticketr.Businesslogik
             service.DeleteMitarbeiter(mitarbeiterId);
         }
 
+        /// <summary>
+        /// Fügt den angegebene Kunde dem System hinzu oder aktualisiert ihn.
+        /// </summary>
+        /// <param name="kunde">Kunde, der hinzugefügt werden sollte</param>
+        /// <returns>Gibt die neu erstellte Id des Kunden zurück</returns>
+        public int SaveKunde(Kunde kunde)
+        {
+            Ticketr.Schnittstellen.Dto.Kunde kundeDto = new Ticketr.Schnittstellen.Dto.Kunde()
+            { 
+                ErstellDatum = DateTime.Now, 
+                Person = new Ticketr.Schnittstellen.Dto.Person(){
+                    EMail = kunde.EMail,
+                    ErstellDatum = DateTime.Now,
+                    Name = kunde.Name,
+                    Telefon = kunde.Telefon
+                },
+                Position = new Ticketr.Schnittstellen.Dto.Position()
+                {
+                    Name = kunde.Position.Name
+                }
+            };
+
+            int id = kunde.Id;
+
+            if (id == 0)
+            {
+                id = service.AddKunde(kundeDto);
+            }
+            else
+            {
+                // Todo : Update Kunde
+            }
+
+            return id;
+        }
     }
 }
