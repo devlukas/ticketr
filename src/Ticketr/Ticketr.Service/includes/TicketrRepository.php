@@ -345,21 +345,9 @@
                 
             $ticketResult = $this->query($ticketSql);
             $ticketRow = mysqli_fetch_assoc($ticketResult);
+           
             
-            //-------Load Comments---------------
-            
-            $commentsSql = "
-                SELECT 
-                kommentar.id, kommentar.text, kommentar.erstellDatum, mitarbeiter.id as mitarbeiterId, 
-                person.name as personName, person.vorname as personVorname, person.id as personId 
-                FROM kommentar
-                INNER JOIN mitarbeiter ON kommentar.bearbeiter_id = mitarbeiter.id
-                INNER JOIN person ON mitarbeiter.person_id = person.id
-                WHERE kommentar.id = $id";
-            
-            $commentResult = $this->query($commentsSql);
-            
-            
+
             //---Create JSON-Object----------
 
             $ticket = array();
@@ -385,7 +373,30 @@
             $ticket["kunde"]["person"]["vorname"] = $ticketRow["kundeVorname"];
             $ticket["kunde"]["person"]["name"] = $ticketRow["kundeName"];
             
-            $ticket["kommentare"] = array();
+            //Kommentare laden
+            $ticket["kommentare"] = $this->getComments($id);
+            
+            //histories laden
+            $ticket["history"] = $this->getTicketHistory($id);
+                
+            return $ticket;
+        }
+        
+        //gibt die kommentare für ein ticket zurück
+        function getComments($ticketId)
+        {
+            $commentsSql = "
+                SELECT 
+                kommentar.id, kommentar.text, kommentar.erstellDatum, mitarbeiter.id as mitarbeiterId, 
+                person.name as personName, person.vorname as personVorname, person.id as personId 
+                FROM kommentar
+                INNER JOIN mitarbeiter ON kommentar.bearbeiter_id = mitarbeiter.id
+                INNER JOIN person ON mitarbeiter.person_id = person.id
+                WHERE kommentar.ticket_id = $ticketId";
+            
+            $commentResult = $this->query($commentsSql);
+            
+            $comments = array();
             
             while ($commentRow = mysqli_fetch_array($commentResult)) 
             {
@@ -399,10 +410,52 @@
                 $comment["mitarbeiter"]["person"]["name"] = $commentRow["personName"];
                 $comment["mitarbeiter"]["person"]["vorname"] = $commentRow["personVorname"];
                 
-                array_push($ticket["kommentare"],  $comment);
+                array_push($comments,  $comment);
             }
+            
+            return $comments;
+        }
+        
+        
+        //Gibt die History eines Tickets zurück
+        function getTicketHistory($ticketId){
+            
+            $historySql = "
+                SELECT 
+                person.name, person.vorname, person.id as personId, mitarbeiter.id as mitarbeiterId, ticket_history.id, 
+                ticket_history.datum
+                FROM ticket_history
+                INNER JOIN mitarbeiter ON mitarbeiter.id = ticket_history.bearbeiter_id
+                INNER JOIN person ON person.id = mitarbeiter.person_id
+                WHERE ticket_history.ticket_id = $ticketId";
                 
-            return $ticket;
+            $historyResult = $this->query($historySql);
+             
+            $histories = array();
+            
+            while ($historyRow = mysqli_fetch_array($historyResult)) 
+            {
+                $history = array();
+                
+                $history["id"] = $historyRow["id"];
+                $history["datum"] = $historyRow["datum"];
+                $history["mitarbeiter"]["id"] = $historyRow["mitarbeiterId"];
+                $history["mitarbeiter"]["person"]["id"] = $historyRow["personId"];
+                $history["mitarbeiter"]["person"]["name"] = $historyRow["name"];
+                $history["mitarbeiter"]["person"]["name"] = $historyRow["vorname"];
+                
+                array_push($histories,  $history);
+            }
+            
+            return $histories;
+        }
+        
+        //Fügt einem Ticket ein History-Eintrag hinzu (mitarbeiter = der aktuelle)
+        function addTicketHistory($ticketId){
+            $mitarbeiterId = getCurrentMitarbeiterId();
+            $sql = "INSERT INTO ticket_history (ticket_id, bearbeiter_id, datum) VALUES ($ticket_id, $mitarbeiterId, NOW())";
+            
+            $this->query($sql);
         }
         
         //Erstellt ein neues Ticket
@@ -423,6 +476,9 @@
                     VALUES ('$bezeichnung', '$beschreibung', '$loesung' $kundeId, $bearbeiterId, 0, $prioritaet ,$kategorieId, NOW(), NOW())";
                        
             $this->query($sql);
+            
+            //Fügt einen History Eintrag hinzu
+            addTicketHistory($db->insert_id);
             
             $json = "{ \"ticketId\":".$db->insert_id."}";
             
@@ -456,6 +512,8 @@
                     abgeschlossen = $abgeschlossen 
                 WHERE id = $id";
                 
+            //Fügt einen History Eintrag hinzu
+            addTicketHistory($id);
             
             return $this->query($sql);
         }
