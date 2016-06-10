@@ -184,6 +184,28 @@ class Controller {
         $this->repo->printJson($response);
     }
     
+    //Gibt alle Kundenpositionen zurück
+    function getPositionen(){
+        $response = $this->repo->getPositionen();
+        $this->repo->printJson($response);
+    }
+    
+    //Löscht eine position
+    function deletePosition(){
+        $id = $_POST["id"];
+        echo $this->repo->deletePosition($id);
+    }
+    
+    //Fügt eine Position hinzu
+    function addPosition(){
+        //Gets the json in post-Body
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        $response = $this->repo->addPosition($data);
+        
+        $this->repo->printJson($response);
+    }
+    
     function info()
     {
         echo "<h1>M120 Ticktr Service</h1>";

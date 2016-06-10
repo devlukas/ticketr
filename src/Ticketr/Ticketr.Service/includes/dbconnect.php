@@ -3,13 +3,13 @@
 	$dbHost = "localhost";
 	
 	//MySQL-User
-	$dbUser = "root";
+	$dbUser = "web322";
 	
 	//MySQL-Password
-	$dbPassword = "";
+	$dbPassword = "RadioBob2015!";
 	
 	//Database Name
-	$dbName = "ticketr";
+	$dbName = "usr_web322_6";
 
 	//open db connection
 	$db = mysqli_connect($dbHost, $dbUser, $dbPassword, $dbName);

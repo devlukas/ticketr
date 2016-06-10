@@ -5,9 +5,11 @@
 
             $sql = "SELECT person.vorname, person.name, person.id as personId,
                     person.eMail, person.telefon, person.erstellDatum, person.aenderungsDatum,
-                    kunde.id as kundeId, kunde.erstellDatum as kundeSeit
+                    kunde.id as kundeId, kunde.erstellDatum as kundeSeit, position.id as positionId, 
+                    position.name as positionName
                     FROM kunde
-                    INNER JOIN person ON person.id = kunde.person_id";
+                    INNER JOIN person ON person.id = kunde.person_id
+                    INNER JOIN position ON position.id = kunde.position_id";
 
             $result = $this->query($sql);
             
@@ -18,6 +20,8 @@
                 
                 $kunde["id"] = $row["kundeId"];
                 $kunde["erstellDatum"] = $row["kundeSeit"];
+                $kunde["position"]["id"] = $row["positionId"];
+                $kunde["position"]["name"] = $row["positionName"];
                 $kunde["person"]["id"] = $row["personId"];
                 $kunde["person"]["name"] = $row["name"];
                 $kunde["person"]["vorname"] = $row["vorname"];
@@ -69,10 +73,12 @@
         function getKundeDetail($id) {
             $sql = "SELECT 
                         kunde.id, kunde.erstellDatum, person.name, person.vorname, person.id as personId, person.eMail, person.telefon,
-                        person.erstellDatum as personErstelldatum, person.aenderungsDatum as personAenderungsdatum, COUNT(ticket.id) as ticketCount
+                        person.erstellDatum as personErstelldatum, person.aenderungsDatum as personAenderungsdatum, COUNT(ticket.id) as ticketCount,
+                         position.id as positionId, position.name as positionName
                     FROM kunde
                     INNER JOIN person ON kunde.person_id = person.id
                     INNER JOIN ticket ON kunde.id = ticket.kunde_id
+                    INNER JOIN position ON position.id = kunde.position_id
                     WHERE kunde.id = $id";
                     
             $result = $this->query($sql);
@@ -83,6 +89,8 @@
             $kunde["id"] = $row["id"];
             $kunde["ticketsCount"] = $row["ticketCount"];
             $kunde["erstellDatum"] = $row["erstellDatum"];
+            $kunde["position"]["id"] = $row["positionId"];
+            $kunde["position"]["name"] = $row["positionName"];
             $kunde["person"]["id"] = $row["personId"];
             $kunde["person"]["name"] = $row["name"];
             $kunde["person"]["vorname"] = $row["vorname"];
@@ -233,6 +241,7 @@
             $vorname = $this->realString($data["person"]["vorname"]);
             $email = $this->realString($data["person"]["email"]);
             $telefon = $this->realString($data["person"]["telefon"]);
+            $positionId = $this->realString($data["position"]["id"]);
 
             if (!empty($name) && !empty($vorname) && !empty($email) && !empty($telefon)) {
                 //add Person
@@ -243,7 +252,7 @@
                 $personId = $db->insert_id;
 
                 //add Mitabeiter
-                $sqlKunde = "INSERT INTO kunde (person_id, erstellDatum) VALUES ($personId, NOW())";
+                $sqlKunde = "INSERT INTO kunde (person_id, erstellDatum, position_id) VALUES ($personId, NOW(), $positionId)";
                 $result = $this->query($sqlKunde);
 
                 $json = "{ \"kundeId\":".$db->insert_id."}";
@@ -526,6 +535,42 @@
             }
             
             return $parentCategories;
+        }
+        
+        //Gibt alle Kundenpostionen zurück
+        function getPositionen(){
+            $sql = "SELECT * FROM position";
+            
+            $result = $this->query($sql);
+            
+            $positionen = array();
+                 
+            //-----read categories from database-----
+            
+            while ($row = mysqli_fetch_array($result)) 
+            {
+                $position = array();
+                
+                $position["id"] = $row["id"];
+                $position["name"] = $row["name"];  
+                        
+                array_push($positionen, $position);    
+            }
+            
+            return $positionen;
+        }
+        
+        //fügt eine position hinzu
+        function addPosition($data){
+            $name = $data["name"];
+            $sql = "INSERT INTO postion (name) VALUES ('$name')";
+            return $this->query($sql);
+        }
+        
+        //löscht eine Position
+        function deletePosition($id){
+            $sql = "DELETE FROM position WHERE id = $id";
+            return $this->query($sql);
         }
         
         
