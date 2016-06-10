@@ -452,8 +452,8 @@
         
         //Fügt einem Ticket ein History-Eintrag hinzu (mitarbeiter = der aktuelle)
         function addTicketHistory($ticketId){
-            $mitarbeiterId = getCurrentMitarbeiterId();
-            $sql = "INSERT INTO ticket_history (ticket_id, bearbeiter_id, datum) VALUES ($ticket_id, $mitarbeiterId, NOW())";
+            $mitarbeiterId = $this->getCurrentMitarbeiterId();
+            $sql = "INSERT INTO ticket_history (ticket_id, bearbeiter_id, datum) VALUES ($ticketId, $mitarbeiterId, NOW())";
             
             $this->query($sql);
         }
@@ -472,15 +472,17 @@
             $kategorieId = $ticket["kategorie"]["id"];
             
             $sql = "INSERT INTO ticket 
-                    (bezeichnung, beschreibung, kunde_id, bearbeiter_id, abgeschlossen, prioritaet, kategorie_id, erstellDatum, aenderungsDatum)
-                    VALUES ('$bezeichnung', '$beschreibung', '$loesung' $kundeId, $bearbeiterId, 0, $prioritaet ,$kategorieId, NOW(), NOW())";
+                    (bezeichnung, beschreibung, loesung, kunde_id, bearbeiter_id, abgeschlossen, prioritaet, kategorie_id, erstellDatum, aenderungsDatum)
+                    VALUES ('$bezeichnung', '$beschreibung', '$loesung', $kundeId, $bearbeiterId, 0, $prioritaet ,$kategorieId, NOW(), NOW())";
                        
             $this->query($sql);
             
-            //Fügt einen History Eintrag hinzu
-            addTicketHistory($db->insert_id);
+            $ticketId = $db->insert_id;
             
-            $json = "{ \"ticketId\":".$db->insert_id."}";
+            //Fügt einen History Eintrag hinzu
+            $this->addTicketHistory($ticketId);
+            
+            $json = "{ \"ticketId\":". $ticketId ."}";
             
             return $json;
         }
@@ -503,7 +505,7 @@
                 SET 
                     bezeichnung = '$bezeichnung',
                     beschreibung = '$beschreibung ',
-                    loesung = '$loesung ',
+                    loesung = '$loesung',
                     kunde_id = $kundeId,
                     bearbeiter_id = $bearbeiterId,
                     prioritaet = $prioritaet,
@@ -513,7 +515,7 @@
                 WHERE id = $id";
                 
             //Fügt einen History Eintrag hinzu
-            addTicketHistory($id);
+            $this->addTicketHistory($id);
             
             return $this->query($sql);
         }
