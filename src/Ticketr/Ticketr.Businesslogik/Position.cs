@@ -11,8 +11,8 @@ namespace Ticketr.Businesslogik
         
         public Position(Schnittstellen.Dto.Position position)
         {
-            this.id = id;
-            this.name = name;
+            this.id = position.Id;
+            this.name = position.Name;
         }
 
         private int id;
