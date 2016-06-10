@@ -633,7 +633,12 @@
             return $this->query($sql);
         }
         
-        
+        //Ändert die Position eines Kunden
+        function setKundenPosition($kundeId, $positionId){
+            $sql = "UPDATE kunde SET position_id = $positionId WHERE id = $kundeId";
+             return $this->query($sql);
+        }
+
         //Gibt die PersonId des aktuell angemeldeten Benutzers zurück
         function getCurrentPersonId()
         {

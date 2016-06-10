@@ -203,7 +203,14 @@ class Controller {
 
         $response = $this->repo->addPosition($data);
         
-        $this->repo->printJson($response);
+        echo $this->repo->printJson($response);
+    }
+    
+    function setKundenPosition(){
+        $kundeId = $_GET["kundeId"];
+        $positionId = $_GET["positionId"];
+        
+        echo $this->repo->setKundenPosition($kundeId, $positionId);
     }
     
     function info()
