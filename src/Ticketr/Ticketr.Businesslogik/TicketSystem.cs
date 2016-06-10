@@ -249,7 +249,32 @@ namespace Ticketr.Businesslogik
             service.DeleteTicket(id);
         }
 
+        /// <summary>
+        /// Löscht den Kunde mit der angegebenen Id
+        /// </summary>
+        /// <param name="kundeId">Die Id des Kunden</param>
+        public void RemoveKunde(int kundeId)
+        {
+            service.DeleteKunde(kundeId);
+        }
 
+        /// <summary>
+        /// Löscht den Kommentar mit der angegebenen Id
+        /// </summary>
+        /// <param name="kommentarId">Die Id des Kommentares</param>
+        public void RemoveKommentar(int kommentarId)
+        {
+            service.DeleteKommentar(kommentarId);
+        }
+
+        /// <summary>
+        /// Löscht den Mitarbeiter mit der angegebenen Id
+        /// </summary>
+        /// <param name="mitarbeiterId">Die Id des Mitarbeiters</param>
+        public void RemoveMitarbeiter(int mitarbeiterId)
+        {
+            service.DeleteMitarbeiter(mitarbeiterId);
+        }
 
     }
 }
