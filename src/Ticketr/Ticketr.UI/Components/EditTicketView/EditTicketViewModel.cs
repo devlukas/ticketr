@@ -27,7 +27,14 @@ namespace Ticketr.UI.Components.EditTicketView
             LoadKunden();
             LoadMitarbeiter();
             LoadCategories();
+        }
 
+        public EditTicketViewModel(DashboardViewModel dashboardViewModel, Ticket ticket) : this(dashboardViewModel)
+        {
+            this.Id = ticket.Id;
+            this.Loesung = ticket.Loesung;
+            this.Beschreibung = ticket.Beschreibung;
+            this.Titel = ticket.Bezeichnung;
         }
 
         private bool loading;
@@ -41,6 +48,7 @@ namespace Ticketr.UI.Components.EditTicketView
                 RaisePropertyChanged("Loading");
             }
         }
+  
 
 
 
@@ -69,10 +77,19 @@ namespace Ticketr.UI.Components.EditTicketView
                 Name = m.Name,
                 Vorname = m.Vorname
             }).ToList();
+
             RaisePropertyChanged("Mitarbeiter");
+
+            SetCurrentUserAsBearbeiter();
 
             //Ladet die Profilbilder der Mitarbeiter im Hintergrund asynchron ins Dropdown
             LoadMitarbeiterPicturesAsync();
+        }
+
+        public void SetCurrentUserAsBearbeiter()
+        {
+            SelectedMitarbeiter = mitarbeiter.FirstOrDefault(m => m.MitarbeiterId == App.TicketSystem.CurrentUser.Id);
+            RaisePropertyChanged("SelectedMitarbeiter");
         }
 
         public async void LoadKunden()
@@ -172,6 +189,16 @@ namespace Ticketr.UI.Components.EditTicketView
         }
 
         private readonly List<PersonDropdownItemViewModel> kunden;
+
+
+        public string SiteTitle
+        {
+            get { return Id > 0 ? "Ticket Bearbeiten" : "Ticket Erstellen"; }
+        }
+
+
+        public int Id { get; set; }
+
         /// <summary>
         /// Gibt die Selektierte Kategorie zurück und legt diese fest.
         /// </summary>
@@ -186,6 +213,11 @@ namespace Ticketr.UI.Components.EditTicketView
         /// Gibt die Beschreibung zurück und legt diese fest.
         /// </summary>
         public string Beschreibung { get; set; }
+
+        /// <summary>
+        /// Gibt die Loesung zurück oder legt dieses fest
+        /// </summary>
+        public string Loesung { get; set; }
 
         /// <summary>
         /// Gibt den Selektierten Mitarbeiter zurück und legt diesen fest.

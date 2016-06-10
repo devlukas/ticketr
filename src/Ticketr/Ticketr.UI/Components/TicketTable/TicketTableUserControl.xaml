@@ -39,7 +39,7 @@
                 </Border>
             </materialDesign:Card>
             <materialDesign:Card Grid.Row="1" Margin="5 0 5 5" FontSize="14" >
-                <DataGrid Grid.Row="1" VerticalAlignment="Top" ItemsSource="{Binding Tickets}" IsReadOnly="True" AutoGenerateColumns="False">
+                <DataGrid Grid.Row="1" VerticalAlignment="Top" ItemsSource="{Binding Tickets}" IsReadOnly="True" AutoGenerateColumns="False" PreviewMouseDown="TicketTableClick" MouseLeftButtonDown="TicketTableClick">
                     <DataGrid.Columns>
                         <DataGridTemplateColumn Header="Status" Width="SizeToCells" IsReadOnly="True" MinWidth="60">
                             <DataGridTemplateColumn.CellTemplate>
@@ -53,17 +53,7 @@
                         <DataGridTextColumn Header="Erfassung" Binding="{Binding Erfassung}"/>
                         <DataGridTextColumn Header="Kunde" Binding="{Binding Kunde}"/>
                         <DataGridTextColumn Header="Bearbeiter" Binding="{Binding Bearbeiter}"/>
-                        <DataGridTemplateColumn Header="Kategorie" Width="SizeToCells" IsReadOnly="True" SortMemberPath="Kategorie" CanUserSort="true">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock>
-                                        <Run Text="{Binding ParentKategorie, Mode=OneWay}" FontWeight="Bold"></Run>
-                                        <Run>-</Run>
-                                        <Run Text="{Binding Kategorie, Mode=OneWay}"></Run>
-                                    </TextBlock>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Kategorie" Binding="{Binding Kategorie}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </materialDesign:Card>

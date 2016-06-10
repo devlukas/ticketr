@@ -49,7 +49,7 @@ namespace Ticketr.UI.Components.EditTicketView
         {
             get
             {
-                return isSubItem ? String.Format("\t{0}", kategorie.Name) : kategorie.Name;
+                return isSubItem ? String.Format("    {0}", kategorie.Name) : kategorie.Name;
             }
         }
         
