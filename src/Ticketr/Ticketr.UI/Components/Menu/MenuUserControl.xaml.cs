@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Ticketr.UI.Components.Dashboard;
+using Ticketr.UI.Components.TicketTable;
 
 namespace Ticketr.UI.Components
 {

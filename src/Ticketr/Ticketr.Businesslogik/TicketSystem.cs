@@ -211,6 +211,7 @@ namespace Ticketr.Businesslogik
                 },
                 Bezeichnung = ticket.Bezeichnung,
                 Beschreibung = ticket.Beschreibung,
+                Loesung = ticket.Loesung,
                 Kategorie = new Schnittstellen.Dto.Kategorie
                 {
                     Id = ticket.Kategorie.Id
@@ -244,9 +245,9 @@ namespace Ticketr.Businesslogik
         /// Löscht das angegebene Ticket
         /// </summary>
         /// <param name="id"></param>
-        public void RemoveTicket(int id)
+        public async Task RemoveTicket(int id)
         {
-            service.DeleteTicket(id);
+            await service.DeleteTicket(id);
         }
 
         /// <summary>

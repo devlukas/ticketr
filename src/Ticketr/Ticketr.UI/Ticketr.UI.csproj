@@ -112,6 +112,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Components\EditTicketView\KommentarViewModel.cs" />
     <Compile Include="Components\KundenView\KundenView.xaml.cs">
       <DependentUpon>KundenView.xaml</DependentUpon>
     </Compile>

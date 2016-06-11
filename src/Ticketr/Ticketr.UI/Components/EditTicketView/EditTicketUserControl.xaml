@@ -99,11 +99,19 @@
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Label Margin="0,10,0,0" Grid.Row="0" FontWeight="Bold">Priorität</Label>
+                    <StackPanel Orientation="Horizontal" Grid.Row="0">
+                        <materialDesign:PackIcon Margin="0,15,0,0" Kind="FlagOutlineVariant" ></materialDesign:PackIcon>
+                        <Label Margin="0,10,0,0" FontWeight="Bold">Priorität</Label>
+                    </StackPanel>
+
                     <ComboBox ItemsSource="{Binding Prioritäten}" Text="--- Bitte wählen ---" SelectedItem="{Binding Path=SelectedPriority}" Grid.Row="1" Width="200" Height="30" IsEditable="True" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="5"></ComboBox>
-                    <Label Margin="0,10,0,0" Grid.Row="2" FontWeight="Bold">Kategorie</Label>
+                    <StackPanel Orientation="Horizontal" Grid.Row="2">
+                        <materialDesign:PackIcon Margin="0,15,0,0" Kind="CubeOutline" ></materialDesign:PackIcon>
+                        <Label Margin="0,10,0,0" FontWeight="Bold">Kategorie</Label>
+                    </StackPanel>
                     <ComboBox SelectedItem="{Binding SelectedKategorie}" Text="--- Bitte wählen ---" SelectedValuePath="Name" Grid.Row="3" TextSearch.TextPath="Name" IsTextSearchEnabled="True" ItemsSource="{Binding Kategorien}" IsEditable="True" Width="200" Height="30" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="5">
                         <ComboBox.ItemContainerStyle>
                             <Style TargetType="ComboBoxItem" BasedOn="{StaticResource MaterialDesignComboBoxItemStyle}">
@@ -126,9 +134,18 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <Label Margin="0,10,0,0" Grid.Row="4" FontWeight="Bold">Status</Label>
-                    <ComboBox Grid.Row="5" IsEnabled="False" ToolTip="Deaktiviert" IsEditable="True" Width="200" Height="30" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="5"></ComboBox>
-                    <Label Margin="0,10,0,0" Grid.Row="6" FontWeight="Bold">Bearbeitender</Label>
+
+                    <StackPanel Orientation="Horizontal" Grid.Row="4">
+                        <materialDesign:PackIcon Margin="0,15,0,0" Kind="Clock" ></materialDesign:PackIcon>
+                        <Label Margin="0,10,0,0" FontWeight="Bold">Status</Label>
+                    </StackPanel>
+                    <ComboBox Grid.Row="5" IsEnabled="{Binding StatusEnabled}" ToolTip="Deaktiviert" IsEditable="True" Width="200" Height="30" ItemsSource="{Binding AllStatus}" SelectedItem="{Binding SelectedStatus}" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="5"></ComboBox>
+
+                    <StackPanel Orientation="Horizontal" Grid.Row="6">
+                        <materialDesign:PackIcon Margin="0,15,0,0" Kind="AccountOutline" ></materialDesign:PackIcon>
+                        <Label Margin="0,10,0,0" FontWeight="Bold">Bearbeitender</Label>
+                    </StackPanel>
+                    
                     <!-- Todo: Textsearch von Vornamen -->
                     <ComboBox SelectedItem="{Binding SelectedMitarbeiter}" Grid.Row="7" ItemsSource="{Binding Mitarbeiter}" TextSearch.TextPath="FullName" IsTextSearchEnabled="True" IsEditable="True" Width="200" Height="30" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="5">
                         <ComboBox.ItemTemplate>
@@ -140,7 +157,11 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <Label Margin="0,10,0,0" Grid.Row="8" FontWeight="Bold">Kunde</Label>
+                    <StackPanel Orientation="Horizontal" Grid.Row="8">
+                        <materialDesign:PackIcon Margin="0,15,0,0" Kind="AccountOutline" ></materialDesign:PackIcon>
+                        <Label Margin="0,10,0,0" Grid.Row="8" FontWeight="Bold">Kunde</Label>
+                    </StackPanel>
+                    
                     <!-- Todo: Textsearch von Vornamen -->
                     <ComboBox SelectedItem="{Binding SelectedKunde}" Text="--- Bitte wählen ---" Grid.Row="9" ItemsSource="{Binding Kunden}" TextSearch.TextPath="FullName" IsTextSearchEnabled="True" IsEditable="True" Width="200" Height="30" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="5">
                         <ComboBox.ItemTemplate>
@@ -152,7 +173,36 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <Button Click="SpeichernButton_Click" Margin="10" Grid.Row="10" Content="Speichern" Foreground="White" VerticalAlignment="Bottom"></Button>
+                    <Grid Grid.Row="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Horizontal" Grid.Row="0">
+                            <materialDesign:PackIcon Margin="0,15,0,0" Kind="InformationOutline" ></materialDesign:PackIcon>
+                            <Label Margin="0,10,0,0" FontWeight="Bold">Metainfo</Label>
+                        </StackPanel>
+                        <Label Margin="0,5,0,0" Grid.Row="1" Grid.Column="0">Nummer:</Label>
+                        <Label Margin="0,5,0,0" Grid.Row="1" Grid.Column="1" Content="{Binding Id}"></Label>
+                        <Label Margin="0,5,0,0" Grid.Row="2" Grid.Column="0">Erstellt:</Label>
+                        <Label Margin="0,5,0,0" Grid.Row="2" Grid.Column="1" Content="{Binding Erstelldatum}"></Label>
+                        <Label Margin="0,5,0,0" Grid.Row="3" Grid.Column="0">Letzte Änderung:</Label>
+                        <Label Margin="0,5,0,0" Grid.Row="3" Grid.Column="1" Content="{Binding Aenderungsdatum}"></Label>
+                        
+                    </Grid>
+                    <StackPanel Grid.Row="11" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Click="DeleteButton_Click" Margin="0,10" Foreground="White" Background="DarkRed" BorderBrush="DarkRed" VerticalAlignment="Bottom">
+                            <materialDesign:PackIcon Kind="Delete" ></materialDesign:PackIcon>
+                        </Button>
+                        <Button Click="SpeichernButton_Click" Margin="10,0,0,10" Content="Speichern" Foreground="White" VerticalAlignment="Bottom"></Button>
+                    </StackPanel>
+                    
                 </Grid>
             </Grid>
         </materialDesign:Card>

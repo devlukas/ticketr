@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using Ticketr.UI.Components.EditTicketView;
+using Ticketr.UI.Components.TicketTable;
 using Ticketr.UI.Models;
 
 namespace Ticketr.UI.Components.Dashboard
@@ -30,6 +31,9 @@ namespace Ticketr.UI.Components.Dashboard
             KundenViewWidth = "0";
             EditTicketViewWidth = "0";
             MitarbeiterViewWidth = "0";
+
+            TicketTableViewModel = new TicketTableViewModel();
+            TicketTableViewModel.LoadItems();
         }
         /// <summary>
         /// Öffnet die Benutzerview
@@ -162,5 +166,17 @@ namespace Ticketr.UI.Components.Dashboard
                 RaisePropertyChanged("EditTicketViewModel");
             }
         }
+
+        public TicketTableViewModel TicketTableViewModel
+        {
+            get { return ticketTableViewModel; }
+            set
+            {
+                ticketTableViewModel = value;
+                RaisePropertyChanged("TicketTableViewModel");
+            }
+        }
+
+        private TicketTableViewModel ticketTableViewModel;
     }
 }

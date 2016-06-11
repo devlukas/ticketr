@@ -13,7 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Ticketr.Businesslogik;
+using Ticketr.UI.Components.Dashboard;
 using Ticketr.UI.Components.EditTicketView;
+using Ticketr.UI.Components.TicketTable;
 
 namespace Ticketr.UI.Components
 {
@@ -32,6 +34,12 @@ namespace Ticketr.UI.Components
             EditTicketViewModel editTicketViewModel = (EditTicketViewModel)((Button) sender).DataContext;
             editTicketViewModel.SaveTicket();
 
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            EditTicketViewModel editTicketViewModel = (EditTicketViewModel)((Button)sender).DataContext;
+            editTicketViewModel.DeleteTicket();
         }
     }
 }

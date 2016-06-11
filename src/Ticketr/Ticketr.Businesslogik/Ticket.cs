@@ -208,5 +208,32 @@ namespace Ticketr.Businesslogik
             loesung = ticket.Loesung;
             id = ticket.Id;
         }
+
+        /// <summary>
+        /// Fügt dem Ticket einen neuen Kommentar hinzu
+        /// </summary>
+        /// <param name="kommentar"></param>
+        public async Task AddKommentar(Kommentar kommentar)
+        {
+            Schnittstellen.Dto.Kommentar comment = new Schnittstellen.Dto.Kommentar
+            {
+                Text = kommentar.Text,
+                Ticket = new Schnittstellen.Dto.Ticket
+                {
+                    Id = this.Id
+                }
+            };
+
+            await TicketSystem.Service.AddKommentar(comment);
+        }
+
+        /// <summary>
+        /// Löscht einen Kommentar
+        /// </summary>
+        /// <param name="kommentarId"></param>
+        public async Task DeleteKommentar(int kommentarId)
+        {
+            await TicketSystem.Service.DeleteKommentar(kommentarId);
+        }
     }
 }

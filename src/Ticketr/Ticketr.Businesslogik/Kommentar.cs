@@ -11,9 +11,36 @@ namespace Ticketr.Businesslogik
     {
         private Schnittstellen.Dto.Kommentar kommentar;
 
+        private Mitarbeiter verfasser;
+
+        private string text;
+
+        private DateTime datum;
+
+
         public Kommentar(Schnittstellen.Dto.Kommentar kommentar)
         {
             this.kommentar = kommentar;
+            this.verfasser = new Mitarbeiter(kommentar.Mitarbeiter);
+            this.text = kommentar.Text;
+            this.datum = kommentar.ErstellDatum;
+        }
+
+
+        public Mitarbeiter Verfasser
+        {
+            get { return verfasser; }
+        }
+
+        public string Text
+        {
+            get { return text; }
+            set { text = value; }
+        }
+
+        public DateTime Datum
+        {
+            get { return datum; }
         }
     }
 }

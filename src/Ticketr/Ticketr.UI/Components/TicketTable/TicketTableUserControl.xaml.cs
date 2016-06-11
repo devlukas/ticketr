@@ -27,11 +27,6 @@ namespace Ticketr.UI.Components
     {
         public TicketTableUserControl()
         {
-            TicketTableViewModel viewModel = new TicketTableViewModel();
-            viewModel.LoadItems();
-
-            this.DataContext = viewModel;
-
             InitializeComponent();
         }
 

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Ticketr.Businesslogik;
 using Ticketr.UI.Components.Dashboard;
+using Ticketr.UI.Components.TicketTable;
 using Ticketr.UI.Models;
 
 namespace Ticketr.UI.Components.EditTicketView
@@ -135,6 +136,11 @@ namespace Ticketr.UI.Components.EditTicketView
             }
         }
 
+        public bool StatusEnabled
+        {
+            get { return Id > 0; }
+        }
+
         /// <summary>
         /// Gibt alle Prioritäten zurück
         /// </summary>
@@ -160,6 +166,17 @@ namespace Ticketr.UI.Components.EditTicketView
             {
                 return kategorien;
             }
+        }
+
+        public List<string> AllStatus
+        {
+            get { return new List<string> { "Abgeschlossen", "Offen"}; }
+        }
+
+        public string SelectedStatus
+        {
+            get { return this.ticket.Abgeschlossen ? "Abgeschlossen" : "Offen"; }
+            set { this.ticket.Abgeschlossen = (value == "Abgeschlossen"); }
         }
 
         /// <summary>
@@ -272,6 +289,16 @@ namespace Ticketr.UI.Components.EditTicketView
             set { this.ticket.Loesung = value; }
         }
 
+        public string Erstelldatum
+        {
+            get { return this.ticket.ErstellDatum.ToString("dd.MM.yyyy HH:mm:ss"); }
+        }
+
+        public string Aenderungsdatum
+        {
+            get { return this.ticket.AenderungsDatum.ToString("dd.MM.yyyy HH:mm:ss"); }
+        }
+
         /// <summary>
         /// Gibt den Selektierten Mitarbeiter zurück und legt diesen fest.
         /// </summary>
@@ -308,8 +335,26 @@ namespace Ticketr.UI.Components.EditTicketView
         public async Task SaveTicket()
         {
             this.Loading = true;
-            await App.TicketSystem.SaveTicket(ticket);
+            int ticketId = await App.TicketSystem.SaveTicket(ticket);
+
+            DashboardViewModel dashboardViewModel = App.MainWindowViewModel.SelectedViewModel as DashboardViewModel;
+
+            //Reload Ticket Page
+            if (dashboardViewModel != null)
+                dashboardViewModel.EditTicketViewModel = new EditTicketViewModel(ticketId);
+
             this.Loading = false;
+        }
+
+        public async Task DeleteTicket()
+        {
+            this.Loading = true;
+            await App.TicketSystem.RemoveTicket(Id);
+            this.Loading = false;
+
+            DashboardViewModel dashboardViewModel = App.MainWindowViewModel.SelectedViewModel as DashboardViewModel;
+            dashboardViewModel.OpenTicketMenu();
+
         }
 
 
