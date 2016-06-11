@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:Ticketr.UI.Components"
              xmlns:component="clr-namespace:Ticketr.UI.Components"
              mc:Ignorable="d" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DesignHeight="800" d:DesignWidth="1000">
     
     <Grid>
@@ -22,8 +23,12 @@
             <!-- Statistics -->
         </Grid>
         <Label Grid.Row="1" HorizontalAlignment="Left" FontSize="30" Margin="30 6">Tickets</Label>
-        <Button Width="150" HorizontalAlignment="Right" Grid.Row="1" Click="TicketErstellenButtonClick" Margin="30 0" Content="Ticket erstellen">
+        <Button Grid.Row="1" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                        Click="TicketErstellenButtonClick" Margin="30 0"  HorizontalAlignment="Right"
+                        ToolTip="Ticket hinzufügen">
+            <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" Foreground="White" />
         </Button>
+
         <component:TicketTableUserControl Grid.Row="2" Margin="20,3"></component:TicketTableUserControl>
     </Grid>
 </UserControl>
