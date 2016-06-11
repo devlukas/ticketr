@@ -109,7 +109,18 @@ namespace Ticketr.UI.Components.EditTicketView
         public async Task LoadKunden()
         {
             await App.TicketSystem.ReloadKunden();
+
+            this.kunden = App.TicketSystem.Kunden.Select(k => new PersonDropdownItemViewModel
+            {
+                Id = k.PersonId,
+                Name = k.Name,
+                Vorname = k.Vorname,
+                KundeId = k.Id
+            }).ToList();
+
             RaisePropertyChanged("Kunden");
+
+            RaisePropertyChanged("SelectedKunde");
         }
 
         private bool loading;
@@ -200,19 +211,10 @@ namespace Ticketr.UI.Components.EditTicketView
         /// </summary>
         public List<PersonDropdownItemViewModel> Kunden
         {
-            get
-            {
-                return App.TicketSystem.Kunden.Select(k => new PersonDropdownItemViewModel
-                {
-                    Id = k.PersonId,
-                    Name = k.Name,
-                    Vorname = k.Vorname,
-                    KundeId = k.Id
-                }).ToList();
-            }
+            get { return kunden; }
         }
 
-        private readonly List<PersonDropdownItemViewModel> kunden;
+        private List<PersonDropdownItemViewModel> kunden;
 
 
         public string SiteTitle
@@ -240,7 +242,7 @@ namespace Ticketr.UI.Components.EditTicketView
 
                 return null;
             }
-            set { this.ticket.Kategorie = App.TicketSystem.Kategorien.FirstOrDefault(k => k.Id == value.Id); }
+            set { this.ticket.Kategorie = App.TicketSystem.Kategorien.SelectMany(k => k.SubKategorien).FirstOrDefault(k => k.Id == value.Id); }
         }
 
         /// <summary>
@@ -278,12 +280,12 @@ namespace Ticketr.UI.Components.EditTicketView
             {
                 if (this.mitarbeiter != null && this.ticket.Bearbeiter != null)
                 {
-                    return this.mitarbeiter.FirstOrDefault(k => k.Id == this.ticket.Bearbeiter.Id);
+                    return this.mitarbeiter.FirstOrDefault(k => k.MitarbeiterId == this.ticket.Bearbeiter.Id);
                 }
 
                 return null;
             }
-            set { this.ticket.Bearbeiter = App.TicketSystem.Mitarbeiter.FirstOrDefault(k => k.Id == value.Id); }
+            set { this.ticket.Bearbeiter = App.TicketSystem.Mitarbeiter.FirstOrDefault(k => k.Id == value.MitarbeiterId); }
         }
 
         /// <summary>
@@ -295,12 +297,12 @@ namespace Ticketr.UI.Components.EditTicketView
             {
                 if (this.kunden != null && this.ticket.Kunde != null)
                 {
-                    return this.kunden.FirstOrDefault(k => k.Id == this.ticket.Kunde.Id);
+                    return this.kunden.FirstOrDefault(k => k.KundeId == this.ticket.Kunde.Id);
                 }
 
                 return null;
             }
-            set { this.ticket.Kunde = App.TicketSystem.Kunden.FirstOrDefault(k => k.Id == value.Id); }
+            set { this.ticket.Kunde = App.TicketSystem.Kunden.FirstOrDefault(k => k.Id == value.KundeId); }
         }
 
         public async Task SaveTicket()

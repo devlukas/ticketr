@@ -278,7 +278,7 @@ namespace Ticketr.Schnittstellen
                 settings.ContractResolver = new LowercaseContractResolver();
 
                 string data = JsonConvert.SerializeObject(ticket, settings);
-                await webClient.UploadStringTaskAsync(new Uri(BaseUrl, "updateTicket"), data);
+                string response = await webClient.UploadStringTaskAsync(new Uri(BaseUrl, "updateTicket"), data);
             }
         }
 
