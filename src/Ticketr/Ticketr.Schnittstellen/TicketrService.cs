@@ -85,6 +85,52 @@ namespace Ticketr.Schnittstellen
         }
 
         /// <summary>
+        /// Fügt dem System eine neue Kunden-Position hinzu
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        public async Task AddPosition(Position position)
+        {
+            using (WebClient webClient = NewWebClient())
+            {
+                //sets all property names to lowercase (otherwise PHP dont understand)
+                var settings = new JsonSerializerSettings();
+                settings.ContractResolver = new LowercaseContractResolver();
+
+                string data = JsonConvert.SerializeObject(position, settings);
+                await webClient.UploadStringTaskAsync(new Uri(BaseUrl, "createTicket"), data);
+            }
+        }
+
+        /// <summary>
+        /// Löscht eine Position aus dem System
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task DeletePosition(int id)
+        {
+            using (WebClient webClient = NewWebClient())
+            {
+                var reqparm = new System.Collections.Specialized.NameValueCollection();
+                reqparm.Add("id", id.ToString());
+
+                await webClient.UploadValuesTaskAsync(new Uri(BaseUrl, "deletePosition"), "POST", reqparm);
+            }
+        }
+
+        /// <summary>
+        /// Ändert die Position eines Kunden
+        /// </summary>
+        /// <returns></returns>
+        public async Task SetKundenPosition(int kundeId, int positionId)
+        {
+            using (WebClient webClient = NewWebClient())
+            {
+                await webClient.DownloadStringTaskAsync(new Uri(BaseUrl, String.Format("setKundenPosition?kundeId={0}&positionId={1}", kundeId, positionId)));
+            }
+        }
+
+        /// <summary>
         /// Gibt (momentan noch :D ) alle Tickets zurück
         /// </summary>
         /// <returns></returns>

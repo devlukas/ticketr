@@ -87,7 +87,14 @@ namespace Ticketr.Businesslogik
             get { return eMail; }
             set { eMail = value; }
         }
-
+        /// <summary>
+        /// Telefon der Person
+        /// </summary>
+        public string Telefon
+        {
+            get { return telefon; }
+            set { telefon = value; }
+        }
         /// <summary>
         /// Erstelldatum der Person
         /// </summary>

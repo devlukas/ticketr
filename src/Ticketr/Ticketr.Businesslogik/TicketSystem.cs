@@ -249,7 +249,67 @@ namespace Ticketr.Businesslogik
             service.DeleteTicket(id);
         }
 
+        /// <summary>
+        /// Löscht den Kunde mit der angegebenen Id
+        /// </summary>
+        /// <param name="kundeId">Die Id des Kunden</param>
+        public void RemoveKunde(int kundeId)
+        {
+            service.DeleteKunde(kundeId);
+        }
 
+        /// <summary>
+        /// Löscht den Kommentar mit der angegebenen Id
+        /// </summary>
+        /// <param name="kommentarId">Die Id des Kommentares</param>
+        public void RemoveKommentar(int kommentarId)
+        {
+            service.DeleteKommentar(kommentarId);
+        }
 
+        /// <summary>
+        /// Löscht den Mitarbeiter mit der angegebenen Id
+        /// </summary>
+        /// <param name="mitarbeiterId">Die Id des Mitarbeiters</param>
+        public void RemoveMitarbeiter(int mitarbeiterId)
+        {
+            service.DeleteMitarbeiter(mitarbeiterId);
+        }
+
+        /// <summary>
+        /// Fügt den angegebene Kunde dem System hinzu oder aktualisiert ihn.
+        /// </summary>
+        /// <param name="kunde">Kunde, der hinzugefügt werden sollte</param>
+        /// <returns>Gibt die neu erstellte Id des Kunden zurück</returns>
+        public int SaveKunde(Kunde kunde)
+        {
+            Ticketr.Schnittstellen.Dto.Kunde kundeDto = new Ticketr.Schnittstellen.Dto.Kunde()
+            { 
+                ErstellDatum = DateTime.Now, 
+                Person = new Ticketr.Schnittstellen.Dto.Person(){
+                    EMail = kunde.EMail,
+                    ErstellDatum = DateTime.Now,
+                    Name = kunde.Name,
+                    Telefon = kunde.Telefon
+                },
+                Position = new Ticketr.Schnittstellen.Dto.Position()
+                {
+                    Name = kunde.Position.Name
+                }
+            };
+
+            int id = kunde.Id;
+
+            if (id == 0)
+            {
+                id = service.AddKunde(kundeDto);
+            }
+            else
+            {
+                // Todo : Update Kunde
+            }
+
+            return id;
+        }
     }
 }

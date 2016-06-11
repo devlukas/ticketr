@@ -5,9 +5,11 @@
 
             $sql = "SELECT person.vorname, person.name, person.id as personId,
                     person.eMail, person.telefon, person.erstellDatum, person.aenderungsDatum,
-                    kunde.id as kundeId, kunde.erstellDatum as kundeSeit
+                    kunde.id as kundeId, kunde.erstellDatum as kundeSeit, position.id as positionId, 
+                    position.name as positionName
                     FROM kunde
-                    INNER JOIN person ON person.id = kunde.person_id";
+                    INNER JOIN person ON person.id = kunde.person_id
+                    INNER JOIN position ON position.id = kunde.position_id";
 
             $result = $this->query($sql);
             
@@ -18,6 +20,8 @@
                 
                 $kunde["id"] = $row["kundeId"];
                 $kunde["erstellDatum"] = $row["kundeSeit"];
+                $kunde["position"]["id"] = $row["positionId"];
+                $kunde["position"]["name"] = $row["positionName"];
                 $kunde["person"]["id"] = $row["personId"];
                 $kunde["person"]["name"] = $row["name"];
                 $kunde["person"]["vorname"] = $row["vorname"];
@@ -69,10 +73,12 @@
         function getKundeDetail($id) {
             $sql = "SELECT 
                         kunde.id, kunde.erstellDatum, person.name, person.vorname, person.id as personId, person.eMail, person.telefon,
-                        person.erstellDatum as personErstelldatum, person.aenderungsDatum as personAenderungsdatum, COUNT(ticket.id) as ticketCount
+                        person.erstellDatum as personErstelldatum, person.aenderungsDatum as personAenderungsdatum, COUNT(ticket.id) as ticketCount,
+                         position.id as positionId, position.name as positionName
                     FROM kunde
                     INNER JOIN person ON kunde.person_id = person.id
                     INNER JOIN ticket ON kunde.id = ticket.kunde_id
+                    INNER JOIN position ON position.id = kunde.position_id
                     WHERE kunde.id = $id";
                     
             $result = $this->query($sql);
@@ -83,6 +89,8 @@
             $kunde["id"] = $row["id"];
             $kunde["ticketsCount"] = $row["ticketCount"];
             $kunde["erstellDatum"] = $row["erstellDatum"];
+            $kunde["position"]["id"] = $row["positionId"];
+            $kunde["position"]["name"] = $row["positionName"];
             $kunde["person"]["id"] = $row["personId"];
             $kunde["person"]["name"] = $row["name"];
             $kunde["person"]["vorname"] = $row["vorname"];
@@ -233,6 +241,7 @@
             $vorname = $this->realString($data["person"]["vorname"]);
             $email = $this->realString($data["person"]["email"]);
             $telefon = $this->realString($data["person"]["telefon"]);
+            $positionId = $this->realString($data["position"]["id"]);
 
             if (!empty($name) && !empty($vorname) && !empty($email) && !empty($telefon)) {
                 //add Person
@@ -243,7 +252,7 @@
                 $personId = $db->insert_id;
 
                 //add Mitabeiter
-                $sqlKunde = "INSERT INTO kunde (person_id, erstellDatum) VALUES ($personId, NOW())";
+                $sqlKunde = "INSERT INTO kunde (person_id, erstellDatum, position_id) VALUES ($personId, NOW(), $positionId)";
                 $result = $this->query($sqlKunde);
 
                 $json = "{ \"kundeId\":".$db->insert_id."}";
@@ -336,21 +345,9 @@
                 
             $ticketResult = $this->query($ticketSql);
             $ticketRow = mysqli_fetch_assoc($ticketResult);
+           
             
-            //-------Load Comments---------------
-            
-            $commentsSql = "
-                SELECT 
-                kommentar.id, kommentar.text, kommentar.erstellDatum, mitarbeiter.id as mitarbeiterId, 
-                person.name as personName, person.vorname as personVorname, person.id as personId 
-                FROM kommentar
-                INNER JOIN mitarbeiter ON kommentar.bearbeiter_id = mitarbeiter.id
-                INNER JOIN person ON mitarbeiter.person_id = person.id
-                WHERE kommentar.id = $id";
-            
-            $commentResult = $this->query($commentsSql);
-            
-            
+
             //---Create JSON-Object----------
 
             $ticket = array();
@@ -376,7 +373,30 @@
             $ticket["kunde"]["person"]["vorname"] = $ticketRow["kundeVorname"];
             $ticket["kunde"]["person"]["name"] = $ticketRow["kundeName"];
             
-            $ticket["kommentare"] = array();
+            //Kommentare laden
+            $ticket["kommentare"] = $this->getComments($id);
+            
+            //histories laden
+            $ticket["history"] = $this->getTicketHistory($id);
+                
+            return $ticket;
+        }
+        
+        //gibt die kommentare für ein ticket zurück
+        function getComments($ticketId)
+        {
+            $commentsSql = "
+                SELECT 
+                kommentar.id, kommentar.text, kommentar.erstellDatum, mitarbeiter.id as mitarbeiterId, 
+                person.name as personName, person.vorname as personVorname, person.id as personId 
+                FROM kommentar
+                INNER JOIN mitarbeiter ON kommentar.bearbeiter_id = mitarbeiter.id
+                INNER JOIN person ON mitarbeiter.person_id = person.id
+                WHERE kommentar.ticket_id = $ticketId";
+            
+            $commentResult = $this->query($commentsSql);
+            
+            $comments = array();
             
             while ($commentRow = mysqli_fetch_array($commentResult)) 
             {
@@ -390,10 +410,52 @@
                 $comment["mitarbeiter"]["person"]["name"] = $commentRow["personName"];
                 $comment["mitarbeiter"]["person"]["vorname"] = $commentRow["personVorname"];
                 
-                array_push($ticket["kommentare"],  $comment);
+                array_push($comments,  $comment);
             }
+            
+            return $comments;
+        }
+        
+        
+        //Gibt die History eines Tickets zurück
+        function getTicketHistory($ticketId){
+            
+            $historySql = "
+                SELECT 
+                person.name, person.vorname, person.id as personId, mitarbeiter.id as mitarbeiterId, ticket_history.id, 
+                ticket_history.datum
+                FROM ticket_history
+                INNER JOIN mitarbeiter ON mitarbeiter.id = ticket_history.bearbeiter_id
+                INNER JOIN person ON person.id = mitarbeiter.person_id
+                WHERE ticket_history.ticket_id = $ticketId";
                 
-            return $ticket;
+            $historyResult = $this->query($historySql);
+             
+            $histories = array();
+            
+            while ($historyRow = mysqli_fetch_array($historyResult)) 
+            {
+                $history = array();
+                
+                $history["id"] = $historyRow["id"];
+                $history["datum"] = $historyRow["datum"];
+                $history["mitarbeiter"]["id"] = $historyRow["mitarbeiterId"];
+                $history["mitarbeiter"]["person"]["id"] = $historyRow["personId"];
+                $history["mitarbeiter"]["person"]["name"] = $historyRow["name"];
+                $history["mitarbeiter"]["person"]["name"] = $historyRow["vorname"];
+                
+                array_push($histories,  $history);
+            }
+            
+            return $histories;
+        }
+        
+        //Fügt einem Ticket ein History-Eintrag hinzu (mitarbeiter = der aktuelle)
+        function addTicketHistory($ticketId){
+            $mitarbeiterId = $this->getCurrentMitarbeiterId();
+            $sql = "INSERT INTO ticket_history (ticket_id, bearbeiter_id, datum) VALUES ($ticketId, $mitarbeiterId, NOW())";
+            
+            $this->query($sql);
         }
         
         //Erstellt ein neues Ticket
@@ -410,12 +472,17 @@
             $kategorieId = $ticket["kategorie"]["id"];
             
             $sql = "INSERT INTO ticket 
-                    (bezeichnung, beschreibung, kunde_id, bearbeiter_id, abgeschlossen, prioritaet, kategorie_id, erstellDatum, aenderungsDatum)
-                    VALUES ('$bezeichnung', '$beschreibung', '$loesung' $kundeId, $bearbeiterId, 0, $prioritaet ,$kategorieId, NOW(), NOW())";
+                    (bezeichnung, beschreibung, loesung, kunde_id, bearbeiter_id, abgeschlossen, prioritaet, kategorie_id, erstellDatum, aenderungsDatum)
+                    VALUES ('$bezeichnung', '$beschreibung', '$loesung', $kundeId, $bearbeiterId, 0, $prioritaet ,$kategorieId, NOW(), NOW())";
                        
             $this->query($sql);
             
-            $json = "{ \"ticketId\":".$db->insert_id."}";
+            $ticketId = $db->insert_id;
+            
+            //Fügt einen History Eintrag hinzu
+            $this->addTicketHistory($ticketId);
+            
+            $json = "{ \"ticketId\":". $ticketId ."}";
             
             return $json;
         }
@@ -438,7 +505,7 @@
                 SET 
                     bezeichnung = '$bezeichnung',
                     beschreibung = '$beschreibung ',
-                    loesung = '$loesung ',
+                    loesung = '$loesung',
                     kunde_id = $kundeId,
                     bearbeiter_id = $bearbeiterId,
                     prioritaet = $prioritaet,
@@ -447,6 +514,8 @@
                     abgeschlossen = $abgeschlossen 
                 WHERE id = $id";
                 
+            //Fügt einen History Eintrag hinzu
+            $this->addTicketHistory($id);
             
             return $this->query($sql);
         }
@@ -528,7 +597,48 @@
             return $parentCategories;
         }
         
+        //Gibt alle Kundenpostionen zurück
+        function getPositionen(){
+            $sql = "SELECT * FROM position";
+            
+            $result = $this->query($sql);
+            
+            $positionen = array();
+                 
+            //-----read categories from database-----
+            
+            while ($row = mysqli_fetch_array($result)) 
+            {
+                $position = array();
+                
+                $position["id"] = $row["id"];
+                $position["name"] = $row["name"];  
+                        
+                array_push($positionen, $position);    
+            }
+            
+            return $positionen;
+        }
         
+        //fügt eine position hinzu
+        function addPosition($data){
+            $name = $data["name"];
+            $sql = "INSERT INTO postion (name) VALUES ('$name')";
+            return $this->query($sql);
+        }
+        
+        //löscht eine Position
+        function deletePosition($id){
+            $sql = "DELETE FROM position WHERE id = $id";
+            return $this->query($sql);
+        }
+        
+        //Ändert die Position eines Kunden
+        function setKundenPosition($kundeId, $positionId){
+            $sql = "UPDATE kunde SET position_id = $positionId WHERE id = $kundeId";
+             return $this->query($sql);
+        }
+
         //Gibt die PersonId des aktuell angemeldeten Benutzers zurück
         function getCurrentPersonId()
         {

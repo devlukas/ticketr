@@ -16,8 +16,14 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
+    
     <Grid Background="#EEEEEE">
-        <materialDesign:Card Margin="20" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label HorizontalAlignment="Left" FontSize="30" Margin="30 6 0 0" Content="{Binding SiteTitle}"></Label>
+        <materialDesign:Card Margin="15,5,15,15" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
@@ -26,10 +32,16 @@
                 <Grid Grid.Column="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
-                    <TextBox Text="{Binding Titel}" materialDesign:TextFieldAssist.Hint="Titel" BorderBrush="{DynamicResource AccentColorBrush2}" Grid.Row="0" Margin="20"></TextBox>
-                    <TextBox Text="{Binding Beschreibung}" TextWrapping="Wrap" AcceptsReturn="True" materialDesign:TextFieldAssist.Hint="Beschreibung" BorderBrush="{DynamicResource AccentColorBrush2}" Grid.Row="1" Margin="20,0,20,20"></TextBox>
+                    <TextBox Text="{Binding Titel}" materialDesign:TextFieldAssist.Hint="Titel" BorderBrush="{DynamicResource AccentColorBrush2}" Grid.Row="0" Margin="20" FontSize="20"></TextBox>
+                    <Label Grid.Row="1" FontWeight="Bold"  Margin="16,0,20,0">Problem:</Label>
+                    <TextBox Text="{Binding Beschreibung}" TextWrapping="Wrap" AcceptsReturn="True" materialDesign:TextFieldAssist.Hint="Beschreibung des Problems" BorderBrush="{DynamicResource AccentColorBrush2}" Grid.Row="2" Margin="20,0,20,20"></TextBox>
+                    <Label Grid.Row="3" FontWeight="Bold"  Margin="16,0,20,0">Lösung:</Label>
+                    <TextBox Text="{Binding Loesung}" TextWrapping="Wrap" AcceptsReturn="True" materialDesign:TextFieldAssist.Hint="Beschreibung wie das Problem gelöst wurde." BorderBrush="{DynamicResource AccentColorBrush2}" Grid.Row="4" Margin="20,0,20,20"></TextBox>
                 </Grid>
                 <Grid Grid.Column="1" Margin="5,10,20,0">
                     <Grid.RowDefinitions>
@@ -45,10 +57,10 @@
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
-                    <TextBlock Margin="5,10" Grid.Row="0" Text="Priorität"></TextBlock>
-                    <ComboBox ItemsSource="{Binding Prioritäten}" SelectedItem="{Binding Path=SelectedPriority}" Grid.Row="1" Width="200" Height="30" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="5"></ComboBox>
-                    <TextBlock Margin="5" Grid.Row="2" Text="Kategorie"></TextBlock>
-                    <ComboBox SelectedItem="{Binding SelectedKategorie}" SelectedValuePath="Name" Grid.Row="3" TextSearch.TextPath="Name" IsTextSearchEnabled="True" ItemsSource="{Binding Kategorien}" IsEditable="True" Width="200" Height="30" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="5">
+                    <Label Margin="0,10,0,0" Grid.Row="0" FontWeight="Bold">Priorität</Label>
+                    <ComboBox ItemsSource="{Binding Prioritäten}" Text="--- Bitte wählen ---" SelectedItem="{Binding Path=SelectedPriority}" Grid.Row="1" Width="200" Height="30" IsEditable="True" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="5"></ComboBox>
+                    <Label Margin="0,10,0,0" Grid.Row="2" FontWeight="Bold">Kategorie</Label>
+                    <ComboBox SelectedItem="{Binding SelectedKategorie}" Text="--- Bitte wählen ---" SelectedValuePath="Name" Grid.Row="3" TextSearch.TextPath="Name" IsTextSearchEnabled="True" ItemsSource="{Binding Kategorien}" IsEditable="True" Width="200" Height="30" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="5">
                         <ComboBox.ItemContainerStyle>
                             <Style TargetType="ComboBoxItem" BasedOn="{StaticResource MaterialDesignComboBoxItemStyle}">
                                 <Setter Property="IsEnabled" Value="{Binding IsSubItem}" />
@@ -70,9 +82,9 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <TextBlock Margin="5" Grid.Row="4" Text="Status" ToolTip="Deaktiviert"></TextBlock>
+                    <Label Margin="0,10,0,0" Grid.Row="4" FontWeight="Bold">Status</Label>
                     <ComboBox Grid.Row="5" IsEnabled="False" ToolTip="Deaktiviert" IsEditable="True" Width="200" Height="30" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="5"></ComboBox>
-                    <TextBlock Margin="5" Grid.Row="6" Text="Bearbeitender"></TextBlock>
+                    <Label Margin="0,10,0,0" Grid.Row="6" FontWeight="Bold">Bearbeitender</Label>
                     <!-- Todo: Textsearch von Vornamen -->
                     <ComboBox SelectedItem="{Binding SelectedMitarbeiter}" Grid.Row="7" ItemsSource="{Binding Mitarbeiter}" TextSearch.TextPath="FullName" IsTextSearchEnabled="True" IsEditable="True" Width="200" Height="30" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="5">
                         <ComboBox.ItemTemplate>
@@ -84,9 +96,9 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <TextBlock Margin="5" Grid.Row="8" Text="Kunde"></TextBlock>
+                    <Label Margin="0,10,0,0" Grid.Row="8" FontWeight="Bold">Kunde</Label>
                     <!-- Todo: Textsearch von Vornamen -->
-                    <ComboBox SelectedItem="{Binding SelectedKunde}" Grid.Row="9" ItemsSource="{Binding Kunden}" TextSearch.TextPath="FullName" IsTextSearchEnabled="True" IsEditable="True" Width="200" Height="30" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="5">
+                    <ComboBox SelectedItem="{Binding SelectedKunde}" Text="--- Bitte wählen ---" Grid.Row="9" ItemsSource="{Binding Kunden}" TextSearch.TextPath="FullName" IsTextSearchEnabled="True" IsEditable="True" Width="200" Height="30" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="5">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
