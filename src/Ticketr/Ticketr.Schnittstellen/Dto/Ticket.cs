@@ -34,5 +34,7 @@ namespace Ticketr.Schnittstellen.Dto
 
         public List<Kommentar> Kommentare { get; set; }
 
+        public List<History> History { get; set; }
+
     }
 }

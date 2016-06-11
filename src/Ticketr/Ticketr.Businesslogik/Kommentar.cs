@@ -28,6 +28,8 @@ namespace Ticketr.Businesslogik
         }
 
 
+
+
         public Mitarbeiter Verfasser
         {
             get { return verfasser; }

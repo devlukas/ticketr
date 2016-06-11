@@ -38,6 +38,8 @@ namespace Ticketr.Businesslogik
 
         private List<Kommentar> kommentare;
 
+        private List<TicketHistory> histories;
+
         #endregion
 
         //--------------Properties------------
@@ -181,6 +183,11 @@ namespace Ticketr.Businesslogik
             }
         }
 
+        public List<TicketHistory> Histories
+        {
+            get { return histories; }
+        }
+
 #endregion
 
         public Ticket()
@@ -199,6 +206,11 @@ namespace Ticketr.Businesslogik
             {
                 kommentare = ticket.Kommentare.Select(k => new Kommentar(k)).ToList();
             }
+
+            if (ticket.History != null)
+            {
+                histories = ticket.History.Select(h => new TicketHistory(h)).ToList();
+            }
  
             kunde = new Kunde(ticket.Kunde);
             kategorie = new Kategorie(ticket.Kategorie);
@@ -206,6 +218,7 @@ namespace Ticketr.Businesslogik
             bezeichnung = ticket.Bezeichnung;
             beschreibung = ticket.Beschreibung;
             loesung = ticket.Loesung;
+
             id = ticket.Id;
         }
 

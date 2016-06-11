@@ -15,14 +15,8 @@ namespace Ticketr.UI.Components.EditTicketView
         public KommentarViewModel(Kommentar kommentar)
         {
             this.kommentar = kommentar;
-            LoadProfilePicture();
         }
 
-        public async void LoadProfilePicture()
-        {
-            profilePicture = await this.kommentar.Verfasser.GetProfilePicture();
-            RaisePropertyChanged("ProfilePicture");
-        }
 
         public string Text
         {
@@ -30,9 +24,9 @@ namespace Ticketr.UI.Components.EditTicketView
             set { kommentar.Text = value; }
         }
 
-        public DateTime Erstelldatum
+        public string Erstelldatum
         {
-            get { return this.kommentar.Datum; }
+            get { return this.kommentar.Datum.ToString("dd.MM.yyyy HH:mm:ss"); }
         }
 
         public string Verfasser
@@ -45,11 +39,21 @@ namespace Ticketr.UI.Components.EditTicketView
         public byte[] ProfilePicture
         {
             get { return profilePicture; }
+            set
+            {
+                profilePicture = value;
+                RaisePropertyChanged("ProfilePicture");
+            }
         }
 
         public Kommentar Kommentar
         {
             get { return kommentar; }
+        }
+
+        public int PersonId
+        {
+            get { return this.Kommentar.Verfasser.PersonId; }
         }
     }
 }

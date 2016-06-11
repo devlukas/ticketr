@@ -215,6 +215,17 @@ namespace Ticketr.UI.Components.EditTicketView
                         person.ProfilePicture =
                         await App.TicketSystem.Mitarbeiter.FirstOrDefault(mt => mt.PersonId == person.Id).GetProfilePicture();
                         person.RaisePropertyChanged("ProfilePicture");
+
+                        //Update Histroy and Comment Pictures
+                        Kommentare.Where(k => k.PersonId == person.Id).ToList().ForEach(k =>
+                        {
+                            k.ProfilePicture = person.ProfilePicture;
+                        });
+
+                        History.Where(k => k.PersonId == person.Id).ToList().ForEach(k =>
+                        {
+                            k.ProfilePicture = person.ProfilePicture;
+                        });
                     }
                     catch (Exception) { }
 
@@ -310,6 +321,19 @@ namespace Ticketr.UI.Components.EditTicketView
                 return null;
             }
         }
+
+        public List<HistoryViewModel> History
+        {
+            get
+            {
+                if (this.ticket.Histories != null)
+                {
+                    return this.ticket.Histories.Select(h => new HistoryViewModel(h)).ToList();
+                }
+                return null;
+            }
+        }
+
 
         /// <summary>
         /// Gibt den Selektierten Mitarbeiter zurück und legt diesen fest.
