@@ -17,6 +17,7 @@ namespace Ticketr.Businesslogik
 
         private DateTime datum;
 
+        public Kommentar() { }
 
         public Kommentar(Schnittstellen.Dto.Kommentar kommentar)
         {

@@ -299,6 +299,18 @@ namespace Ticketr.UI.Components.EditTicketView
             get { return this.ticket.AenderungsDatum.ToString("dd.MM.yyyy HH:mm:ss"); }
         }
 
+        public List<KommentarViewModel> Kommentare
+        {
+            get
+            {
+                if (this.ticket.Kommentare != null)
+                {
+                    return this.ticket.Kommentare.Select(k => new KommentarViewModel(k)).ToList();
+                }
+                return null;
+            }
+        }
+
         /// <summary>
         /// Gibt den Selektierten Mitarbeiter zurück und legt diesen fest.
         /// </summary>
@@ -355,6 +367,24 @@ namespace Ticketr.UI.Components.EditTicketView
             DashboardViewModel dashboardViewModel = App.MainWindowViewModel.SelectedViewModel as DashboardViewModel;
             dashboardViewModel.OpenTicketMenu();
 
+        }
+
+        public string Kommentar { get; set; }
+
+        public async Task AddComment()
+        {
+            this.Loading = true;
+            await ticket.AddKommentar(new Kommentar
+            {
+                Text = Kommentar
+            });
+            this.Loading = false;
+
+            DashboardViewModel dashboardViewModel = App.MainWindowViewModel.SelectedViewModel as DashboardViewModel;
+
+            //Reload Ticket Page
+            if (dashboardViewModel != null)
+                dashboardViewModel.EditTicketViewModel = new EditTicketViewModel(Id);
         }
 
 
