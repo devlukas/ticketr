@@ -89,14 +89,29 @@
                                 <Button ToolTip="Bearbeiten" Width="Auto" Padding="0"  Background="Transparent" BorderBrush="Transparent" Margin="0,0,5,0">
                                     <materialDesign:PackIcon Kind="BorderColor" Foreground="#6F6F6F" Width="20" Height="20"></materialDesign:PackIcon>
                                 </Button>
-                                <Button ToolTip="Löschen" Width="Auto" Padding="0" Background="Transparent" BorderBrush="Transparent">
-                                    <materialDesign:PackIcon Kind="Delete" Foreground="#6F6F6F" Width="20" Height="20"></materialDesign:PackIcon>
-                                </Button>
+                                <materialDesign:DialogHost HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <materialDesign:DialogHost.DialogContent>
+                                        <StackPanel Margin="16">
+                                            <TextBlock>Wollen Sie diese Kunden wirklich löschen?</TextBlock>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                                                <Button Foreground="#f44336" Click="KundeButtonLöschen_Click" Style="{StaticResource MaterialDesignFlatButton}" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
+                                                    LÖSCHEN
+                                                </Button>
+                                                <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
+                                                    ABBRECHEN
+                                                </Button>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </materialDesign:DialogHost.DialogContent>
+                                    <Button ToolTip="Löschen" Width="Auto" Padding="0"  Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Background="Transparent" BorderBrush="Transparent">
+                                        <materialDesign:PackIcon Kind="Delete" Foreground="#6F6F6F" Width="20" Height="20"></materialDesign:PackIcon>
+                                    </Button>
+                                </materialDesign:DialogHost>
                             </StackPanel>
                         </Grid>
                         <Rectangle Grid.Row="1" Fill="#e6e6e6" Height="1"></Rectangle>
                     </Grid>
-                    
+
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

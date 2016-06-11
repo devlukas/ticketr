@@ -28,5 +28,11 @@ namespace Ticketr.UI.Components
             DataContext = kundenViewModel;
 
         }
+
+        private void KundeButtonLöschen_Click(object sender, RoutedEventArgs e)
+        {
+            KundeViewModel kundeViewModel = (KundeViewModel) ((Button) sender).DataContext;
+            kundeViewModel.Remove();
+        }
     }
 }

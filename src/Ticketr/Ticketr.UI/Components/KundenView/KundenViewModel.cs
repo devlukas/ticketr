@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +27,7 @@ namespace Ticketr.UI.Components
         {
             IsLoading = true;
             await App.TicketSystem.ReloadKunden();
-            Kunden = App.TicketSystem.Kunden.Select(k => new KundeViewModel(k)).ToList();
+            Kunden = new ObservableCollection<KundeViewModel>(App.TicketSystem.Kunden.Select(k => new KundeViewModel(k, this)));
             IsLoading = false;
         }
 
@@ -41,8 +42,8 @@ namespace Ticketr.UI.Components
             }
         }
 
-        private List<KundeViewModel> kunden;
-        public List<KundeViewModel> Kunden
+        private ObservableCollection<KundeViewModel> kunden;
+        public ObservableCollection<KundeViewModel> Kunden
         {
             get { return kunden; }
             private set
