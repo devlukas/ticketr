@@ -199,7 +199,7 @@ namespace Ticketr.Businesslogik
         /// </summary>
         /// <param name="ticket"></param>
         /// <returns></returns>
-        public int SaveTicket(Ticket ticket)
+        public async Task<int> SaveTicket(Ticket ticket)
         {
             var ticketDto = new Schnittstellen.Dto.Ticket
             {
@@ -229,11 +229,11 @@ namespace Ticketr.Businesslogik
             if (ticket.Id == 0)
             {
                 //Neue Id zurückgeben
-                id = service.AddTicket(ticketDto);
+                id = await service.AddTicket(ticketDto);
             }
             else //Sonst -> update
             {
-                service.UpdateTicket(ticketDto);
+                await service.UpdateTicket(ticketDto);
             }
 
             return id;

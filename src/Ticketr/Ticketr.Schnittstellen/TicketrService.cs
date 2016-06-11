@@ -248,7 +248,7 @@ namespace Ticketr.Schnittstellen
         /// <summary>
         /// Fügt ein Ticket im System hinzu und gibt die Id des erstellten Tickets zurück
         /// </summary>
-        public int AddTicket(Ticket ticket)
+        public async Task<int> AddTicket(Ticket ticket)
         {
             using (WebClient webClient = NewWebClient())
             {
@@ -257,7 +257,7 @@ namespace Ticketr.Schnittstellen
                 settings.ContractResolver = new LowercaseContractResolver();
 
                 string data = JsonConvert.SerializeObject(ticket, settings);
-                string response = webClient.UploadString(new Uri(BaseUrl, "createTicket"), data);
+                string response = await webClient.UploadStringTaskAsync(new Uri(BaseUrl, "createTicket"), data);
 
                 //Gets the Id of the created Ticket
                 dynamic added = JsonConvert.DeserializeObject<dynamic>(response);
@@ -269,7 +269,7 @@ namespace Ticketr.Schnittstellen
         /// Updatet das angegebene Ticket
         /// </summary>
         /// <param name="ticket"></param>
-        public void UpdateTicket(Ticket ticket)
+        public async Task UpdateTicket(Ticket ticket)
         {
             using (WebClient webClient = NewWebClient())
             {
@@ -278,7 +278,7 @@ namespace Ticketr.Schnittstellen
                 settings.ContractResolver = new LowercaseContractResolver();
 
                 string data = JsonConvert.SerializeObject(ticket, settings);
-                webClient.UploadString(new Uri(BaseUrl, "updateTicket"), data);
+                await webClient.UploadStringTaskAsync(new Uri(BaseUrl, "updateTicket"), data);
             }
         }
 

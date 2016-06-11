@@ -30,21 +30,7 @@ namespace Ticketr.UI.Components
         private void SpeichernButton_Click(object sender, RoutedEventArgs e)
         {
             EditTicketViewModel editTicketViewModel = (EditTicketViewModel)((Button) sender).DataContext;
-            if (editTicketViewModel.SelectedKategorie != null)
-            {
-                Ticket ticket = new Ticket()
-                {
-                    Prioritaet = editTicketViewModel.SelectedPriority,
-                    Kategorie = editTicketViewModel.SelectedKategorie.Kategorie,
-                    Bearbeiter = App.TicketSystem.Mitarbeiter.FirstOrDefault(m => m.Id == editTicketViewModel.SelectedMitarbeiter.MitarbeiterId),
-                    Abgeschlossen = false,
-                    Beschreibung = editTicketViewModel.Beschreibung,
-                    Bezeichnung = editTicketViewModel.Titel,
-                    Kunde = App.TicketSystem.Kunden.FirstOrDefault(k => k.Id == editTicketViewModel.SelectedKunde.KundeId)
-                };
-                App.TicketSystem.SaveTicket(ticket);
-                editTicketViewModel.DashboardViewModel.OpenTicketMenu();
-            }
+            editTicketViewModel.SaveTicket();
 
         }
     }

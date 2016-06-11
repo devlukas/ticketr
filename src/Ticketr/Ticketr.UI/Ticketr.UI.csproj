@@ -96,7 +96,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\Ticket\TicketView.xaml">
+    <Page Include="Components\TicketView\TicketView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -134,7 +134,7 @@
       <DependentUpon>TicketTableUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\TicketTable\TicketTableViewModel.cs" />
-    <Compile Include="Components\Ticket\TicketView.xaml.cs">
+    <Compile Include="Components\TicketView\TicketView.xaml.cs">
       <DependentUpon>TicketView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\Menu\MenuUserControl.xaml.cs">

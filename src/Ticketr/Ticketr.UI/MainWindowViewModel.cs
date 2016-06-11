@@ -25,6 +25,7 @@ namespace Ticketr.UI
         public void SetSelectedView(ViewModel viewModel, UserControl usercontrol)
         {
             selectedViewModel = viewModel;
+            usercontrol.DataContext = viewModel;
             App.MainWindow.Content = usercontrol;
         }
         /// <summary>

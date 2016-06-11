@@ -14,45 +14,52 @@ namespace Ticketr.UI.Components.EditTicketView
     /// </summary>
     public class EditTicketViewModel : ViewModel
     {
-        private readonly DashboardViewModel dashboardViewModel;
+        private Ticket ticket = new Ticket();
+
+        private List<Task> loaderTasks = new List<Task>();
 
         /// <summary>
         /// Initialsiert das EditTicketViewModel
         /// </summary>
-        public EditTicketViewModel(DashboardViewModel dashboardViewModel)
+        public EditTicketViewModel()
         {
-            this.loading = true;
-            this.dashboardViewModel = dashboardViewModel;
+            Loading = true;
             
-            LoadKunden();
-            LoadMitarbeiter();
-            LoadCategories();
+            loaderTasks.Add(LoadKunden());
+            loaderTasks.Add(LoadMitarbeiter());
+            loaderTasks.Add(LoadCategories());
+
+            Task complete = Task.WhenAll(loaderTasks);
+
+            //Wenn alle Tasks geladen sind, wird der View Signalisiert, das sie jetzt alles anzeigen kann
+            complete.ContinueWith(a => Loading = false);
         }
 
-        public EditTicketViewModel(DashboardViewModel dashboardViewModel, Ticket ticket) : this(dashboardViewModel)
+        public EditTicketViewModel(int ticketId)
         {
-            this.Id = ticket.Id;
-            this.Loesung = ticket.Loesung;
-            this.Beschreibung = ticket.Beschreibung;
-            this.Titel = ticket.Bezeichnung;
+            Loading = true;
+
+            loaderTasks.Add(LoadKunden());
+            loaderTasks.Add(LoadMitarbeiter());
+            loaderTasks.Add(LoadCategories());
+            loaderTasks.Add(LoadTicket(ticketId));
+
+            Task complete = Task.WhenAll(loaderTasks);
+
+            //Wenn alle Tasks geladen sind, wird der View Signalisiert, das sie jetzt alles anzeigen kann
+            complete.ContinueWith(a => Loading = false);
         }
 
-        private bool loading;
 
-        public bool Loading
+
+        public async Task LoadTicket(int ticketId)
         {
-            get { return loading; }
-            set
-            {
-                loading = value;
-                RaisePropertyChanged("Loading");
-            }
+            this.ticket = await App.TicketSystem.GetTicketDetail(ticketId);
+            RaisePropertyChanged("");
         }
-  
 
 
-
-        public async void LoadCategories()
+        public async Task LoadCategories()
         {
             await App.TicketSystem.ReloadKategorien();
             foreach (Kategorie kategorie in App.TicketSystem.Kategorien)
@@ -65,9 +72,10 @@ namespace Ticketr.UI.Components.EditTicketView
             }
 
             RaisePropertyChanged("Kategorien");
+            RaisePropertyChanged("SelectedKategorie");
         }
 
-        public async void LoadMitarbeiter()
+        public async Task LoadMitarbeiter()
         {
             await App.TicketSystem.ReloadMitarbeiter();
             this.mitarbeiter = App.TicketSystem.Mitarbeiter.Select(m => new PersonDropdownItemViewModel
@@ -79,8 +87,14 @@ namespace Ticketr.UI.Components.EditTicketView
             }).ToList();
 
             RaisePropertyChanged("Mitarbeiter");
+            RaisePropertyChanged("SelectedMitarbeiter");
 
-            SetCurrentUserAsBearbeiter();
+            //Wenn neues Ticket
+            if (Id == 0)
+            {
+                //Automatisch aktuellen Benutzer setzen
+                SetCurrentUserAsBearbeiter();
+            }
 
             //Ladet die Profilbilder der Mitarbeiter im Hintergrund asynchron ins Dropdown
             LoadMitarbeiterPicturesAsync();
@@ -92,10 +106,22 @@ namespace Ticketr.UI.Components.EditTicketView
             RaisePropertyChanged("SelectedMitarbeiter");
         }
 
-        public async void LoadKunden()
+        public async Task LoadKunden()
         {
             await App.TicketSystem.ReloadKunden();
             RaisePropertyChanged("Kunden");
+        }
+
+        private bool loading;
+
+        public bool Loading
+        {
+            get { return loading; }
+            set
+            {
+                loading = value;
+                RaisePropertyChanged("Loading");
+            }
         }
 
         /// <summary>
@@ -130,7 +156,8 @@ namespace Ticketr.UI.Components.EditTicketView
         /// </summary>
         public Prioritaet SelectedPriority
         {
-            get; set;
+            get { return this.ticket.Prioritaet; }
+            set { this.ticket.Prioritaet = value; }
         }
         /// <summary>
         /// Gibt alle Mitarbeiter zurück
@@ -139,10 +166,7 @@ namespace Ticketr.UI.Components.EditTicketView
         {
             get
             {
-                
-
                 return mitarbeiter;
-
             }
         }
 
@@ -197,42 +221,95 @@ namespace Ticketr.UI.Components.EditTicketView
         }
 
 
-        public int Id { get; set; }
+        public int Id
+        {
+            get { return this.ticket.Id; }
+        }
+
 
         /// <summary>
         /// Gibt die Selektierte Kategorie zurück und legt diese fest.
         /// </summary>
-        public KategorieViewModel SelectedKategorie { get; set; }
+        public KategorieViewModel SelectedKategorie {
+            get
+            {
+                if (this.kategorien != null && this.ticket.Kategorie != null)
+                {
+                    return this.kategorien.FirstOrDefault(k => k.Id == this.ticket.Kategorie.Id);
+                }
+
+                return null;
+            }
+            set { this.ticket.Kategorie = App.TicketSystem.Kategorien.FirstOrDefault(k => k.Id == value.Id); }
+        }
 
         /// <summary>
         /// Gibt den Titel zurück und legt diesen fest.
         /// </summary>
-        public string Titel { get; set; }
+        public string Titel
+        {
+            get { return this.ticket.Bezeichnung; }
+            set { this.ticket.Bezeichnung = value; }
+        }
 
         /// <summary>
         /// Gibt die Beschreibung zurück und legt diese fest.
         /// </summary>
-        public string Beschreibung { get; set; }
+        public string Beschreibung
+        {
+            get { return this.ticket.Beschreibung; }
+            set { this.ticket.Beschreibung = value; }
+        }
 
         /// <summary>
         /// Gibt die Loesung zurück oder legt dieses fest
         /// </summary>
-        public string Loesung { get; set; }
+        public string Loesung
+        {
+            get { return this.ticket.Loesung; }
+            set { this.ticket.Loesung = value; }
+        }
 
         /// <summary>
         /// Gibt den Selektierten Mitarbeiter zurück und legt diesen fest.
         /// </summary>
-        public PersonDropdownItemViewModel SelectedMitarbeiter { get; set; }
+        public PersonDropdownItemViewModel SelectedMitarbeiter {
+            get
+            {
+                if (this.mitarbeiter != null && this.ticket.Bearbeiter != null)
+                {
+                    return this.mitarbeiter.FirstOrDefault(k => k.Id == this.ticket.Bearbeiter.Id);
+                }
+
+                return null;
+            }
+            set { this.ticket.Bearbeiter = App.TicketSystem.Mitarbeiter.FirstOrDefault(k => k.Id == value.Id); }
+        }
 
         /// <summary>
         /// Gibt den selektieren Kunde zurück und legt diesen fest.
         /// </summary>
-        public PersonDropdownItemViewModel SelectedKunde { get; set; }
-
-        public DashboardViewModel DashboardViewModel
+        public PersonDropdownItemViewModel SelectedKunde
         {
-            get { return dashboardViewModel; }
+            get
+            {
+                if (this.kunden != null && this.ticket.Kunde != null)
+                {
+                    return this.kunden.FirstOrDefault(k => k.Id == this.ticket.Kunde.Id);
+                }
+
+                return null;
+            }
+            set { this.ticket.Kunde = App.TicketSystem.Kunden.FirstOrDefault(k => k.Id == value.Id); }
         }
+
+        public async Task SaveTicket()
+        {
+            this.Loading = true;
+            await App.TicketSystem.SaveTicket(ticket);
+            this.Loading = false;
+        }
+
 
     }
 }

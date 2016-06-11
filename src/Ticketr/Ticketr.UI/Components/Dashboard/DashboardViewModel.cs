@@ -19,7 +19,6 @@ namespace Ticketr.UI.Components.Dashboard
         /// </summary>
         public DashboardViewModel()
         {
-            editTicketViewModel = new EditTicketViewModel(this);
             GetProfilePicture();
         }
         /// <summary>
@@ -157,6 +156,11 @@ namespace Ticketr.UI.Components.Dashboard
         public EditTicketViewModel EditTicketViewModel
         {
             get { return editTicketViewModel; }
+            set
+            {
+                editTicketViewModel = value;
+                RaisePropertyChanged("EditTicketViewModel");
+            }
         }
     }
 }

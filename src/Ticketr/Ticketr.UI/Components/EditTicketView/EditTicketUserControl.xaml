@@ -23,7 +23,51 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Label HorizontalAlignment="Left" FontSize="30" Margin="30 6 0 0" Content="{Binding SiteTitle}"></Label>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
+            <StackPanel.Style>
+                <Style>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Loading}" Value="True">
+                            <Setter Property="StackPanel.Visibility" Value="Visible"></Setter>
+                            <Setter Property="StackPanel.Height" Value="Auto"></Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Loading}" Value="False">
+                            <Setter Property="StackPanel.Visibility" Value="Hidden"></Setter>
+                            <Setter Property="StackPanel.Height" Value="0"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
+
+            <materialDesign:PackIcon Kind="Sync" Height="40" Width="40" Margin="5 25 0 0" RenderTransformOrigin="0.5, 0.5">
+                <materialDesign:PackIcon.RenderTransform>
+                    <RotateTransform CenterX="0" CenterY="0"/>
+                </materialDesign:PackIcon.RenderTransform>
+                <materialDesign:PackIcon.Triggers>
+                    <EventTrigger RoutedEvent="Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(Rectangle.RenderTransform).(RotateTransform.Angle)"  From="0" To="360" Duration="0:0:1" RepeatBehavior="Forever"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </materialDesign:PackIcon.Triggers>
+            </materialDesign:PackIcon>
+            <Label FontSize="20" Margin="0 25" >Daten werden geladen...</Label>
+        </StackPanel>
         <materialDesign:Card Margin="15,5,15,15" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <materialDesign:Card.Style>
+                <Style>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Loading}" Value="True">
+                            <Setter Property="materialDesign:Card.Visibility" Value="Hidden"></Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Loading}" Value="False">
+                            <Setter Property="materialDesign:Card.Visibility" Value="Visible"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </materialDesign:Card.Style>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
@@ -114,3 +158,4 @@
         </materialDesign:Card>
     </Grid>
 </UserControl>
+

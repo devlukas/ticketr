@@ -185,7 +185,7 @@ namespace Ticketr.Businesslogik
 
         public Ticket()
         {
-            
+
         }
 
         public Ticket(Schnittstellen.Dto.Ticket ticket)
