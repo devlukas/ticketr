@@ -30,10 +30,10 @@
                     <TextBox Grid.Column="1" VerticalAlignment="Center" Width="600" Text="{Binding SearchField}"  materialDesign:TextFieldAssist.Hint="Suchen"></TextBox>
                 </Grid>
                 <Grid HorizontalAlignment="Right">
-                    <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                    <Button Click="ButtonBase_OnClick" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
                         Margin="0 0 8 0" HorizontalAlignment="Left"
                         ToolTip="Kunde hinzufügen">
-                        <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
+                        <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" Foreground="White" />
                     </Button>
                 </Grid>
             </Grid>

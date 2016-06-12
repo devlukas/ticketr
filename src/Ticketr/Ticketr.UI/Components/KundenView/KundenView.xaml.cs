@@ -23,16 +23,18 @@ namespace Ticketr.UI.Components
         public KundenView()
         {
             InitializeComponent();
-            KundenViewModel kundenViewModel = new KundenViewModel();
-            kundenViewModel.LoadItems();
-            DataContext = kundenViewModel;
-
         }
 
         private void KundeButtonLöschen_Click(object sender, RoutedEventArgs e)
         {
             KundeViewModel kundeViewModel = (KundeViewModel) ((Button) sender).DataContext;
             kundeViewModel.Remove();
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            KundenViewModel kundenViewModel = (KundenViewModel) ((Button) sender).DataContext;
+            kundenViewModel.DashboardViewModel.OpenEditKundeView();
         }
     }
 }

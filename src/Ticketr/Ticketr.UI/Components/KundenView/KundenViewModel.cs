@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ticketr.UI.Components.Dashboard;
 using Ticketr.UI.Models;
 
 namespace Ticketr.UI.Components
@@ -43,6 +44,13 @@ namespace Ticketr.UI.Components
         }
 
         private ObservableCollection<KundeViewModel> kunden;
+        private DashboardViewModel dashboardViewModel;
+
+        public KundenViewModel(DashboardViewModel dashboardViewModel)
+        {
+            this.dashboardViewModel = dashboardViewModel;
+        }
+
         public ObservableCollection<KundeViewModel> Kunden
         {
             get { return kunden; }
@@ -51,6 +59,14 @@ namespace Ticketr.UI.Components
                 kunden = value;
                 RaisePropertyChanged("Kunden");
             }
+        }
+
+        /// <summary>
+        /// Gibt das DashboardViewModel zurück
+        /// </summary>
+        public DashboardViewModel DashboardViewModel
+        {
+            get { return dashboardViewModel; }
         }
     }
 }

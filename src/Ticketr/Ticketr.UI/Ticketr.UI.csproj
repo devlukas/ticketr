@@ -76,6 +76,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Components\EditKundeView\EditKunde.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Components\KundenView\KundenView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -112,6 +116,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Components\EditKundeView\EditKunde.xaml.cs">
+      <DependentUpon>EditKunde.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\EditKundeView\EditKundeViewModel.cs" />
     <Compile Include="Components\KundenView\KundenView.xaml.cs">
       <DependentUpon>KundenView.xaml</DependentUpon>
     </Compile>
