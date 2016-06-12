@@ -8,7 +8,7 @@
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              xmlns:StyleAlias="clr-namespace:Ticketr.Businesslogik;assembly=Ticketr.Businesslogik"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             d:DesignHeight="700" d:DesignWidth="2000">
+             d:DesignHeight="1000" d:DesignWidth="2000">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -16,11 +16,11 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <ScrollViewer Margin="0,0,0,-267">
+    <ScrollViewer>
         <Grid Background="#EEEEEE">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="600"></RowDefinition>
+                <RowDefinition Height="650"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             <Label HorizontalAlignment="Left" FontSize="30" Margin="30 6 0 0" Content="{Binding SiteTitle}"></Label>
@@ -236,10 +236,10 @@
                                             <ColumnDefinition Width="Auto"></ColumnDefinition>
                                             <ColumnDefinition></ColumnDefinition>
                                         </Grid.ColumnDefinitions>
-                                        <Image Source="{Binding ProfilePicture}" Width="50" Height="50"></Image>
+                                        <Image Source="{Binding ProfilePicture}" Width="45" Height="45"></Image>
                                         <StackPanel Grid.Column="1">
                                             <Label FontWeight="Bold" Content="{Binding Verfasser}"></Label>
-                                            <Label Content="{Binding Text}"></Label>
+                                            <TextBlock Margin="6,0,0,0" TextWrapping="Wrap" Text="{Binding Text}"></TextBlock>
                                         </StackPanel>
                                     </Grid>
                                 </DataTemplate>
@@ -264,10 +264,10 @@
                                             <ColumnDefinition Width="Auto"></ColumnDefinition>
                                             <ColumnDefinition></ColumnDefinition>
                                         </Grid.ColumnDefinitions>
-                                        <Image Source="{Binding ProfilePicture}" Width="50" Height="50"></Image>
+                                        <Image Source="{Binding ProfilePicture}" Width="45" Height="45"></Image>
                                         <StackPanel Grid.Column="1">
                                             <Label FontWeight="Bold" Content="{Binding Verfasser}"></Label>
-                                            <Label Content="{Binding Text}"></Label>
+                                            <TextBlock Margin="6,0,0,0" TextWrapping="Wrap" Text="{Binding Text}"></TextBlock>
                                         </StackPanel>
                                     </Grid>
                                 </DataTemplate>

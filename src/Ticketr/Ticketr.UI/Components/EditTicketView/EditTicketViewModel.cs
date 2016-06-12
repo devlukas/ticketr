@@ -325,7 +325,7 @@ namespace Ticketr.UI.Components.EditTicketView
             {
                 if (this.ticket.Histories != null)
                 {
-                    List<HistoryViewModel> histories = this.ticket.Histories.Select(h => new HistoryViewModel(h)).ToList();
+                    List<HistoryViewModel> histories = this.ticket.Histories.OrderByDescending(h => h.Datum).Select(h => new HistoryViewModel(h)).ToList();
                     return histories;
                 }
                 return null;
