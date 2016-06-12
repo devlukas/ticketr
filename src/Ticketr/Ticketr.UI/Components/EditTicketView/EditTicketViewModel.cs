@@ -48,7 +48,13 @@ namespace Ticketr.UI.Components.EditTicketView
             Task complete = Task.WhenAll(loaderTasks);
 
             //Wenn alle Tasks geladen sind, wird der View Signalisiert, das sie jetzt alles anzeigen kann
-            complete.ContinueWith(a => Loading = false);
+            complete.ContinueWith(a =>
+            {
+                Loading = false;
+                LoadMitarbeiterPicturesAsync();
+            });
+
+            
         }
 
 
@@ -216,16 +222,6 @@ namespace Ticketr.UI.Components.EditTicketView
                         await App.TicketSystem.Mitarbeiter.FirstOrDefault(mt => mt.PersonId == person.Id).GetProfilePicture();
                         person.RaisePropertyChanged("ProfilePicture");
 
-                        //Update Histroy and Comment Pictures
-                        Kommentare.Where(k => k.PersonId == person.Id).ToList().ForEach(k =>
-                        {
-                            k.ProfilePicture = person.ProfilePicture;
-                        });
-
-                        History.Where(k => k.PersonId == person.Id).ToList().ForEach(k =>
-                        {
-                            k.ProfilePicture = person.ProfilePicture;
-                        });
                     }
                     catch (Exception) { }
 
@@ -316,7 +312,8 @@ namespace Ticketr.UI.Components.EditTicketView
             {
                 if (this.ticket.Kommentare != null)
                 {
-                    return this.ticket.Kommentare.Select(k => new KommentarViewModel(k)).ToList();
+                    List<KommentarViewModel> comments = this.ticket.Kommentare.Select(k => new KommentarViewModel(k)).ToList();
+                    return comments;
                 }
                 return null;
             }
@@ -328,7 +325,8 @@ namespace Ticketr.UI.Components.EditTicketView
             {
                 if (this.ticket.Histories != null)
                 {
-                    return this.ticket.Histories.Select(h => new HistoryViewModel(h)).ToList();
+                    List<HistoryViewModel> histories = this.ticket.Histories.Select(h => new HistoryViewModel(h)).ToList();
+                    return histories;
                 }
                 return null;
             }

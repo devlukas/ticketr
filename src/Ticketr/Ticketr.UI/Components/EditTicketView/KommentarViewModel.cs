@@ -15,6 +15,7 @@ namespace Ticketr.UI.Components.EditTicketView
         public KommentarViewModel(Kommentar kommentar)
         {
             this.kommentar = kommentar;
+            LoadPic();
         }
 
 
@@ -44,6 +45,19 @@ namespace Ticketr.UI.Components.EditTicketView
                 profilePicture = value;
                 RaisePropertyChanged("ProfilePicture");
             }
+        }
+
+        public async void LoadPic()
+        {
+            Mitarbeiter mitarbeiter = App.TicketSystem.Mitarbeiter.FirstOrDefault(m => m.PersonId == PersonId);
+            if (mitarbeiter != null)
+                ProfilePicture =
+                    await mitarbeiter.GetProfilePicture();
+        }
+
+        public Mitarbeiter Mitarbeiter
+        {
+            get { return this.kommentar.Verfasser; }
         }
 
         public Kommentar Kommentar

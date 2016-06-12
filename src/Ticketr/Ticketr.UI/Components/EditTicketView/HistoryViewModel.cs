@@ -15,6 +15,7 @@ namespace Ticketr.UI.Components.EditTicketView
         public HistoryViewModel(TicketHistory history)
         {
             this.history = history;
+            LoadPic();
         }
 
         public async void LoadProfilePicture()
@@ -38,6 +39,11 @@ namespace Ticketr.UI.Components.EditTicketView
             get { return this.history.Mitarbeiter.FullName; }
         }
 
+        public Mitarbeiter Mitarbeiter
+        {
+            get { return this.history.Mitarbeiter; }
+        }
+
         public int PersonId
         {
             get { return this.history.Mitarbeiter.PersonId; }
@@ -53,6 +59,14 @@ namespace Ticketr.UI.Components.EditTicketView
                 profilePicture = value;
                 RaisePropertyChanged("ProfilePicture");
             }
+        }
+
+        public async void LoadPic()
+        {
+            Mitarbeiter mitarbeiter = App.TicketSystem.Mitarbeiter.FirstOrDefault(m => m.PersonId == PersonId);
+            if (mitarbeiter != null)
+                ProfilePicture =
+                    await mitarbeiter.GetProfilePicture();
         }
 
     }

@@ -47,6 +47,8 @@ namespace Ticketr.Businesslogik
         /// </summary>
         private DateTime aenderungsDatum;
 
+        private byte[] profilePicture;
+
         #endregion
 
         //-----------------Properties----------------
@@ -116,6 +118,7 @@ namespace Ticketr.Businesslogik
             get { return String.Format("{0} {1}", Vorname, Name); }
         }
 
+
         #endregion
 
 
@@ -131,12 +134,25 @@ namespace Ticketr.Businesslogik
 
         }
 
+        private Task<byte[]> pictureLoader;
+
         /// <summary>
         /// Gibt das Profilbild für die Person zurück
         /// </summary>
         public async Task<byte[]> GetProfilePicture()
         {
-            return await TicketSystem.Service.GetProfilePicture(id);
+            if (pictureLoader == null && profilePicture == null)
+            {
+                pictureLoader = TicketSystem.Service.GetProfilePicture(id);
+                profilePicture = await pictureLoader;
+            }
+
+            if (pictureLoader.Status == TaskStatus.WaitingForActivation)
+            {
+                profilePicture = await pictureLoader;
+            }
+
+            return profilePicture;
         }
 
         /// <summary>
