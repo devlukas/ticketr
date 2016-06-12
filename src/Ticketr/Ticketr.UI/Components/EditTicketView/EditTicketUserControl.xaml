@@ -238,9 +238,21 @@
                                         </Grid.ColumnDefinitions>
                                         <Image Source="{Binding ProfilePicture}" Width="45" Height="45"></Image>
                                         <StackPanel Grid.Column="1">
-                                            <Label FontWeight="Bold" Content="{Binding Verfasser}"></Label>
+                                            <Grid >
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <Label Grid.Column="0" FontWeight="Bold" Content="{Binding Verfasser}"></Label>
+                                                <Label Grid.Column="1" Content="{Binding Erstelldatum}" HorizontalAlignment="Right"></Label>
+                                                <Button ToolTip="Löschen" Padding="0" Click="DeleteComment_Click" Tag="{Binding Id}"  Background="Transparent" BorderBrush="Transparent" Height="16" Width="16">
+                                                    <materialDesign:PackIcon Kind="Delete" Foreground="DarkRed" Height="16" Width="16"></materialDesign:PackIcon>
+                                                </Button>
+                                            </Grid>
                                             <TextBlock Margin="6,0,0,0" TextWrapping="Wrap" Text="{Binding Text}"></TextBlock>
                                         </StackPanel>
+                                       
                                     </Grid>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>

@@ -17,6 +17,8 @@ namespace Ticketr.Businesslogik
 
         private DateTime datum;
 
+        private int id;
+
         public Kommentar() { }
 
         public Kommentar(Schnittstellen.Dto.Kommentar kommentar)
@@ -25,6 +27,7 @@ namespace Ticketr.Businesslogik
             this.verfasser = new Mitarbeiter(kommentar.Mitarbeiter);
             this.text = kommentar.Text;
             this.datum = kommentar.ErstellDatum;
+            this.id = kommentar.Id;
         }
 
 
@@ -44,6 +47,12 @@ namespace Ticketr.Businesslogik
         public DateTime Datum
         {
             get { return datum; }
+        }
+
+        public int Id
+        {
+            get { return id; }
+            set { id = value; }
         }
     }
 }

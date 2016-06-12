@@ -409,6 +409,18 @@ namespace Ticketr.UI.Components.EditTicketView
                 dashboardViewModel.EditTicketViewModel = new EditTicketViewModel(Id);
         }
 
+        public async Task RemoveComment(int id)
+        {
+            this.Loading = true;
+            await ticket.DeleteKommentar(id);
+            this.Loading = false;
+            DashboardViewModel dashboardViewModel = App.MainWindowViewModel.SelectedViewModel as DashboardViewModel;
+
+            //Reload Ticket Page
+            if (dashboardViewModel != null)
+                dashboardViewModel.EditTicketViewModel = new EditTicketViewModel(Id);
+        }
+
 
     }
 }

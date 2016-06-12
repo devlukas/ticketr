@@ -18,7 +18,10 @@ namespace Ticketr.UI.Components.EditTicketView
             LoadPic();
         }
 
-
+        public int Id
+        {
+            get { return kommentar.Id;}
+        }
         public string Text
         {
             get { return kommentar.Text; }

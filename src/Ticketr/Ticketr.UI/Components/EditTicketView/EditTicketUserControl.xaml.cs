@@ -47,5 +47,11 @@ namespace Ticketr.UI.Components
             EditTicketViewModel editTicketViewModel = (EditTicketViewModel)((Button)sender).DataContext;
             editTicketViewModel.AddComment();
         }
+
+        private void DeleteComment_Click(object sender, RoutedEventArgs e)
+        {
+            DashboardViewModel dashboardViewModel = App.MainWindowViewModel.SelectedViewModel as DashboardViewModel;
+            dashboardViewModel.EditTicketViewModel.RemoveComment((int) ((Button) sender).Tag);
+        }
     }
 }
