@@ -34,7 +34,7 @@ namespace Ticketr.UI.Components
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
             KundenViewModel kundenViewModel = (KundenViewModel) ((Button) sender).DataContext;
-            kundenViewModel.DashboardViewModel.OpenEditKundeView();
+            kundenViewModel.DashboardViewModel.OpenEditPersonView();
         }
     }
 }

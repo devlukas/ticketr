@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Ticketr.UI.Models;
 
-namespace Ticketr.UI.Components.EditKundeView
+namespace Ticketr.UI.Components.EditPersonView
 {
-    public class EditKundeViewModel : ViewModel
+    public class EditPersonViewModel : ViewModel
     {
     }
 }

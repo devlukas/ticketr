@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using Ticketr.UI.Components.EditKundeView;
+using Ticketr.UI.Components.EditPersonView;
 using Ticketr.UI.Components.EditTicketView;
 using Ticketr.UI.Models;
 
@@ -32,7 +32,7 @@ namespace Ticketr.UI.Components.Dashboard
             TicketViewWidth = "*";
             KundenViewWidth = "0";
             EditTicketViewWidth = "0";
-            EditKundeViewWidth = "0";
+            EditPersonViewWidth = "0";
             MitarbeiterViewWidth = "0";
         }
         /// <summary>
@@ -44,7 +44,7 @@ namespace Ticketr.UI.Components.Dashboard
             EditTicketViewWidth = "0";
             KundenViewWidth = "*";
             MitarbeiterViewWidth = "0";
-            EditKundeViewWidth = "0";
+            EditPersonViewWidth = "0";
 
         }
         /// <summary>
@@ -56,7 +56,7 @@ namespace Ticketr.UI.Components.Dashboard
             KundenViewWidth = "0";
             EditTicketViewWidth = "*";
             MitarbeiterViewWidth = "0";
-            EditKundeViewWidth = "0";
+            EditPersonViewWidth = "0";
 
         }
         /// <summary>
@@ -68,14 +68,14 @@ namespace Ticketr.UI.Components.Dashboard
             KundenViewWidth = "0";
             EditTicketViewWidth = "0";
             MitarbeiterViewWidth = "*";
-            EditKundeViewWidth = "0";
+            EditPersonViewWidth = "0";
         }
         /// <summary>
-        /// Öffnet die EditKunde View
+        /// Öffnet die EditPerosn View
         /// </summary>
-        public void OpenEditKundeView()
+        public void OpenEditPersonView()
         {
-            EditKundeViewWidth = "*";
+            EditPersonViewWidth = "*";
             TicketViewWidth = "0";
             KundenViewWidth = "0";
             EditTicketViewWidth = "0";
@@ -136,14 +136,14 @@ namespace Ticketr.UI.Components.Dashboard
             }
         }
 
-        private string editKundeViewWidth;
+        private string editPersonViewWidth;
         /// <summary>
-        /// Gibt die Breite der EditKundeColumn zurück und legt diese fest
+        /// Gibt die Breite der EditPersonView  zurück und legt diese fest
         /// </summary>
-        public string EditKundeViewWidth
+        public string EditPersonViewWidth
         {
-            get { return editKundeViewWidth; }
-            private set { editKundeViewWidth = value; }
+            get { return editPersonViewWidth; }
+            private set { editPersonViewWidth = value; }
         }
 
         /// <summary>
@@ -189,13 +189,13 @@ namespace Ticketr.UI.Components.Dashboard
             get { return editTicketViewModel; }
         }
 
-        private EditKundeViewModel editKundeViewModel;
+        private EditPersonViewModel editPersonViewModel;
         /// <summary>
         /// Gibt das EditKundeViewModel zurück
         /// </summary>
-        public EditKundeViewModel EditKundeViewModel
+        public EditPersonViewModel EditPersonViewModel
         {
-            get { return editKundeViewModel; }
+            get { return editPersonViewModel; }
         }
 
         private KundenViewModel kundenViewModel;

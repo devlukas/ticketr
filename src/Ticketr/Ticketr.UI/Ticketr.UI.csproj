@@ -76,7 +76,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Components\EditKundeView\EditKunde.xaml">
+    <Page Include="Components\EditPerson\EditPerson.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -116,10 +116,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Components\EditKundeView\EditKunde.xaml.cs">
-      <DependentUpon>EditKunde.xaml</DependentUpon>
+    <Compile Include="Components\EditPerson\EditPerson.xaml.cs">
+      <DependentUpon>EditPerson.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\EditKundeView\EditKundeViewModel.cs" />
+    <Compile Include="Components\EditPerson\EditKundeViewModel.cs" />
     <Compile Include="Components\EditTicketView\HistoryViewModel.cs" />
     <Compile Include="Components\EditTicketView\KommentarViewModel.cs" />
     <Compile Include="Components\KundenView\KundenView.xaml.cs">

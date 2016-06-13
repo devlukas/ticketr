@@ -18,9 +18,9 @@ namespace Ticketr.UI.Components
     /// <summary>
     /// Interaction logic for EditKundeView.xaml
     /// </summary>
-    public partial class EditKunde : UserControl
+    public partial class EditPerson : UserControl
     {
-        public EditKunde()
+        public EditPerson()
         {
             InitializeComponent();
         }
