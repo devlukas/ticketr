@@ -38,6 +38,8 @@ namespace Ticketr.Businesslogik
 
         private List<Kommentar> kommentare;
 
+        private List<TicketHistory> histories;
+
         #endregion
 
         //--------------Properties------------
@@ -181,11 +183,16 @@ namespace Ticketr.Businesslogik
             }
         }
 
+        public List<TicketHistory> Histories
+        {
+            get { return histories; }
+        }
+
 #endregion
 
         public Ticket()
         {
-            
+
         }
 
         public Ticket(Schnittstellen.Dto.Ticket ticket)
@@ -199,6 +206,11 @@ namespace Ticketr.Businesslogik
             {
                 kommentare = ticket.Kommentare.Select(k => new Kommentar(k)).ToList();
             }
+
+            if (ticket.History != null)
+            {
+                histories = ticket.History.Select(h => new TicketHistory(h)).ToList();
+            }
  
             kunde = new Kunde(ticket.Kunde);
             kategorie = new Kategorie(ticket.Kategorie);
@@ -206,7 +218,35 @@ namespace Ticketr.Businesslogik
             bezeichnung = ticket.Bezeichnung;
             beschreibung = ticket.Beschreibung;
             loesung = ticket.Loesung;
+
             id = ticket.Id;
+        }
+
+        /// <summary>
+        /// Fügt dem Ticket einen neuen Kommentar hinzu
+        /// </summary>
+        /// <param name="kommentar"></param>
+        public async Task AddKommentar(Kommentar kommentar)
+        {
+            Schnittstellen.Dto.Kommentar comment = new Schnittstellen.Dto.Kommentar
+            {
+                Text = kommentar.Text,
+                Ticket = new Schnittstellen.Dto.Ticket
+                {
+                    Id = this.Id
+                }
+            };
+
+            await TicketSystem.Service.AddKommentar(comment);
+        }
+
+        /// <summary>
+        /// Löscht einen Kommentar
+        /// </summary>
+        /// <param name="kommentarId"></param>
+        public async Task DeleteKommentar(int kommentarId)
+        {
+            await TicketSystem.Service.DeleteKommentar(kommentarId);
         }
     }
 }

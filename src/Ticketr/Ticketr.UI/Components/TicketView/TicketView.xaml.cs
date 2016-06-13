@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Ticketr.UI.Components.Dashboard;
+using Ticketr.UI.Components.EditTicketView;
 
 namespace Ticketr.UI.Components
 {
@@ -28,7 +29,8 @@ namespace Ticketr.UI.Components
 
         private void TicketErstellenButtonClick(object sender, RoutedEventArgs e)
         {
-            DashboardViewModel dashboardViewModel = (DashboardViewModel) ((Button) sender).DataContext;
+            DashboardViewModel dashboardViewModel = App.MainWindowViewModel.SelectedViewModel as DashboardViewModel;
+            dashboardViewModel.EditTicketViewModel = new EditTicketViewModel();
             dashboardViewModel.OpenEditTicketView();
         }
     }

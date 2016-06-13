@@ -199,7 +199,7 @@ namespace Ticketr.Businesslogik
         /// </summary>
         /// <param name="ticket"></param>
         /// <returns></returns>
-        public int SaveTicket(Ticket ticket)
+        public async Task<int> SaveTicket(Ticket ticket)
         {
             var ticketDto = new Schnittstellen.Dto.Ticket
             {
@@ -211,6 +211,7 @@ namespace Ticketr.Businesslogik
                 },
                 Bezeichnung = ticket.Bezeichnung,
                 Beschreibung = ticket.Beschreibung,
+                Loesung = ticket.Loesung,
                 Kategorie = new Schnittstellen.Dto.Kategorie
                 {
                     Id = ticket.Kategorie.Id
@@ -229,11 +230,11 @@ namespace Ticketr.Businesslogik
             if (ticket.Id == 0)
             {
                 //Neue Id zurückgeben
-                id = service.AddTicket(ticketDto);
+                id = await service.AddTicket(ticketDto);
             }
             else //Sonst -> update
             {
-                service.UpdateTicket(ticketDto);
+                await service.UpdateTicket(ticketDto);
             }
 
             return id;
@@ -244,9 +245,9 @@ namespace Ticketr.Businesslogik
         /// Löscht das angegebene Ticket
         /// </summary>
         /// <param name="id"></param>
-        public void RemoveTicket(int id)
+        public async Task RemoveTicket(int id)
         {
-            service.DeleteTicket(id);
+            await service.DeleteTicket(id);
         }
 
         /// <summary>

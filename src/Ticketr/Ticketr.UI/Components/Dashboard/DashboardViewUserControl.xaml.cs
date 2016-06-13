@@ -24,9 +24,6 @@ namespace Ticketr.UI.Components
         public DashboardViewUserControl()
         {
             InitializeComponent();
-            DashboardViewModel dashboardViewModel = new DashboardViewModel();
-            dashboardViewModel.OpenTicketMenu();
-            DataContext = dashboardViewModel;
         }
     }
 }

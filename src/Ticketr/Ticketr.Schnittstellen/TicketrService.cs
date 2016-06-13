@@ -248,7 +248,7 @@ namespace Ticketr.Schnittstellen
         /// <summary>
         /// Fügt ein Ticket im System hinzu und gibt die Id des erstellten Tickets zurück
         /// </summary>
-        public int AddTicket(Ticket ticket)
+        public async Task<int> AddTicket(Ticket ticket)
         {
             using (WebClient webClient = NewWebClient())
             {
@@ -257,7 +257,7 @@ namespace Ticketr.Schnittstellen
                 settings.ContractResolver = new LowercaseContractResolver();
 
                 string data = JsonConvert.SerializeObject(ticket, settings);
-                string response = webClient.UploadString(new Uri(BaseUrl, "createTicket"), data);
+                string response = await webClient.UploadStringTaskAsync(new Uri(BaseUrl, "createTicket"), data);
 
                 //Gets the Id of the created Ticket
                 dynamic added = JsonConvert.DeserializeObject<dynamic>(response);
@@ -269,7 +269,7 @@ namespace Ticketr.Schnittstellen
         /// Updatet das angegebene Ticket
         /// </summary>
         /// <param name="ticket"></param>
-        public void UpdateTicket(Ticket ticket)
+        public async Task UpdateTicket(Ticket ticket)
         {
             using (WebClient webClient = NewWebClient())
             {
@@ -278,7 +278,7 @@ namespace Ticketr.Schnittstellen
                 settings.ContractResolver = new LowercaseContractResolver();
 
                 string data = JsonConvert.SerializeObject(ticket, settings);
-                webClient.UploadString(new Uri(BaseUrl, "updateTicket"), data);
+                string response = await webClient.UploadStringTaskAsync(new Uri(BaseUrl, "updateTicket"), data);
             }
         }
 
@@ -364,14 +364,14 @@ namespace Ticketr.Schnittstellen
         /// Löscht ein Ticket und dessen angehängte Kommentare
         /// </summary>
         /// <param name="id"></param>
-        public void DeleteTicket(int id)
+        public async Task DeleteTicket(int id)
         {
             using (WebClient webClient = NewWebClient())
             {
                 var reqparm = new System.Collections.Specialized.NameValueCollection();
                 reqparm.Add("id", id.ToString());
 
-                webClient.UploadValues(new Uri(BaseUrl, "deleteTicket"), "POST", reqparm);
+                await webClient.UploadValuesTaskAsync(new Uri(BaseUrl, "deleteTicket"), "POST", reqparm);
             }
         }
 
@@ -380,7 +380,7 @@ namespace Ticketr.Schnittstellen
         /// Fügt einem Ticket ein Kommentar hinzu
         /// </summary>
         /// <param name="kommentar"></param>
-        public void AddKommentar(Kommentar kommentar)
+        public async Task AddKommentar(Kommentar kommentar)
         {
             using (WebClient webClient = NewWebClient())
             {
@@ -389,7 +389,7 @@ namespace Ticketr.Schnittstellen
                 settings.ContractResolver = new LowercaseContractResolver();
 
                 string data = JsonConvert.SerializeObject(kommentar, settings);
-                webClient.UploadString(new Uri(BaseUrl, "addKommentar"), data);
+                await webClient.UploadStringTaskAsync(new Uri(BaseUrl, "addKommentar"), data);
             }
         }
 
@@ -397,14 +397,14 @@ namespace Ticketr.Schnittstellen
         /// Löscht einen Kommentar
         /// </summary>
         /// <param name="id"></param>
-        public void DeleteKommentar(int id)
+        public async Task DeleteKommentar(int id)
         {
             using (WebClient webClient = NewWebClient())
             {
                 var reqparm = new System.Collections.Specialized.NameValueCollection();
                 reqparm.Add("id", id.ToString());
 
-                webClient.UploadValues(new Uri(BaseUrl, "deleteKommentar"), "POST", reqparm);
+                await webClient.UploadValuesTaskAsync(new Uri(BaseUrl, "deleteKommentar"), "POST", reqparm);
             }
         }
 

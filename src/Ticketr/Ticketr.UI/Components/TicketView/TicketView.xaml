@@ -29,6 +29,6 @@
             <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" Foreground="White" />
         </Button>
 
-        <component:TicketTableUserControl Grid.Row="2" Margin="20,3"></component:TicketTableUserControl>
+        <component:TicketTableUserControl DataContext="{Binding TicketTableViewModel}" Grid.Row="2" Margin="20,3"></component:TicketTableUserControl>
     </Grid>
 </UserControl>

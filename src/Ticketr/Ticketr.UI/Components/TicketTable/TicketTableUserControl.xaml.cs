@@ -27,11 +27,6 @@ namespace Ticketr.UI.Components
     {
         public TicketTableUserControl()
         {
-            TicketTableViewModel viewModel = new TicketTableViewModel();
-            viewModel.LoadItems();
-
-            this.DataContext = viewModel;
-
             InitializeComponent();
         }
 
@@ -56,12 +51,14 @@ namespace Ticketr.UI.Components
             if (row != null)
             {
                 TicketTableItemViewModel viewModel = row.Item as TicketTableItemViewModel;
+                DashboardViewModel dashboard = App.MainWindowViewModel.SelectedViewModel as DashboardViewModel;
+
+                dashboard.EditTicketViewModel = new EditTicketViewModel(viewModel.Id);
+
+                dashboard.OpenEditTicketView();
 
             }
 
-
-            
-           
         }
     }
 }

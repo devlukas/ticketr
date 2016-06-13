@@ -111,6 +111,11 @@ namespace Ticketr.Businesslogik
             get { return aenderungsDatum; }
         }
 
+        public string FullName
+        {
+            get { return String.Format("{0} {1}", Vorname, Name); }
+        }
+
         #endregion
 
 
@@ -144,5 +149,6 @@ namespace Ticketr.Businesslogik
 
             throw new NotImplementedException();
         }
+
     }
 }

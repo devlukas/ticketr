@@ -34,7 +34,9 @@ namespace Ticketr.UI.Components
                 bool login = await loginViewModel.Login(userPassword);
                 if (login)
                 {
-                    App.MainWindowViewModel.SetSelectedView(new DashboardViewModel(), new DashboardViewUserControl());
+                    DashboardViewModel dash = new DashboardViewModel();
+                    App.MainWindowViewModel.SetSelectedView(dash, new DashboardViewUserControl());
+                    dash.OpenTicketMenu();
                 }
                 else
                 {

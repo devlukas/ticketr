@@ -49,6 +49,7 @@
     <Compile Include="Position.cs" />
     <Compile Include="Prioritaet.cs" />
     <Compile Include="Ticket.cs" />
+    <Compile Include="TicketHistory.cs" />
     <Compile Include="TicketSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

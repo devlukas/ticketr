@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Ticketr.Businesslogik;
 using Ticketr.UI.Components.Dashboard;
+using Ticketr.UI.Components.TicketTable;
 using Ticketr.UI.Models;
 
 namespace Ticketr.UI.Components.EditTicketView
@@ -14,27 +15,113 @@ namespace Ticketr.UI.Components.EditTicketView
     /// </summary>
     public class EditTicketViewModel : ViewModel
     {
-        private readonly DashboardViewModel dashboardViewModel;
+        private Ticket ticket = new Ticket();
+
+        private List<Task> loaderTasks = new List<Task>();
 
         /// <summary>
         /// Initialsiert das EditTicketViewModel
         /// </summary>
-        public EditTicketViewModel(DashboardViewModel dashboardViewModel)
+        public EditTicketViewModel()
         {
-            this.loading = true;
-            this.dashboardViewModel = dashboardViewModel;
+            Loading = true;
             
-            LoadKunden();
-            LoadMitarbeiter();
-            LoadCategories();
+            loaderTasks.Add(LoadKunden());
+            loaderTasks.Add(LoadMitarbeiter());
+            loaderTasks.Add(LoadCategories());
+
+            Task complete = Task.WhenAll(loaderTasks);
+
+            //Wenn alle Tasks geladen sind, wird der View Signalisiert, das sie jetzt alles anzeigen kann
+            complete.ContinueWith(a => Loading = false);
         }
 
-        public EditTicketViewModel(DashboardViewModel dashboardViewModel, Ticket ticket) : this(dashboardViewModel)
+        public EditTicketViewModel(int ticketId)
         {
-            this.Id = ticket.Id;
-            this.Loesung = ticket.Loesung;
-            this.Beschreibung = ticket.Beschreibung;
-            this.Titel = ticket.Bezeichnung;
+            Loading = true;
+
+            loaderTasks.Add(LoadKunden());
+            loaderTasks.Add(LoadMitarbeiter());
+            loaderTasks.Add(LoadCategories());
+            loaderTasks.Add(LoadTicket(ticketId));
+
+            Task complete = Task.WhenAll(loaderTasks);
+
+            //Wenn alle Tasks geladen sind, wird der View Signalisiert, das sie jetzt alles anzeigen kann
+            complete.ContinueWith(a => Loading = false);
+        }
+
+
+
+        public async Task LoadTicket(int ticketId)
+        {
+            this.ticket = await App.TicketSystem.GetTicketDetail(ticketId);
+            RaisePropertyChanged("");
+        }
+
+
+        public async Task LoadCategories()
+        {
+            await App.TicketSystem.ReloadKategorien();
+            foreach (Kategorie kategorie in App.TicketSystem.Kategorien)
+            {
+                kategorien.Add(new KategorieViewModel(kategorie, false));
+                foreach (Kategorie subKategorie in kategorie.SubKategorien)
+                {
+                    kategorien.Add(new KategorieViewModel(subKategorie, true));
+                }
+            }
+
+            RaisePropertyChanged("Kategorien");
+            RaisePropertyChanged("SelectedKategorie");
+        }
+
+        public async Task LoadMitarbeiter()
+        {
+            await App.TicketSystem.ReloadMitarbeiter();
+            this.mitarbeiter = App.TicketSystem.Mitarbeiter.Select(m => new PersonDropdownItemViewModel
+            {
+                Id = m.PersonId,
+                MitarbeiterId = m.Id,
+                Name = m.Name,
+                Vorname = m.Vorname
+            }).ToList();
+
+            RaisePropertyChanged("Mitarbeiter");
+            RaisePropertyChanged("SelectedMitarbeiter");
+
+            //Wenn neues Ticket
+            if (Id == 0)
+            {
+                //Automatisch aktuellen Benutzer setzen
+                SetCurrentUserAsBearbeiter();
+            }
+
+            //Ladet die Profilbilder der Mitarbeiter im Hintergrund asynchron ins Dropdown
+            LoadMitarbeiterPicturesAsync();
+        }
+
+        public void SetCurrentUserAsBearbeiter()
+        {
+            SelectedMitarbeiter = mitarbeiter.FirstOrDefault(m => m.MitarbeiterId == App.TicketSystem.CurrentUser.Id);
+            RaisePropertyChanged("SelectedMitarbeiter");
+        }
+
+        public async Task LoadKunden()
+        {
+            await App.TicketSystem.ReloadKunden();
+
+            this.kunden = App.TicketSystem.Kunden.Select(k => new PersonDropdownItemViewModel
+            {
+                Id = k.PersonId,
+                Name = k.Name,
+                Vorname = k.Vorname,
+                KundeId = k.Id
+            }).ToList();
+
+            RaisePropertyChanged("Kunden");
+
+            RaisePropertyChanged("SelectedKunde");
         }
 
         private bool loading;
@@ -48,54 +135,10 @@ namespace Ticketr.UI.Components.EditTicketView
                 RaisePropertyChanged("Loading");
             }
         }
-  
 
-
-
-        public async void LoadCategories()
+        public bool StatusEnabled
         {
-            await App.TicketSystem.ReloadKategorien();
-            foreach (Kategorie kategorie in App.TicketSystem.Kategorien)
-            {
-                kategorien.Add(new KategorieViewModel(kategorie, false));
-                foreach (Kategorie subKategorie in kategorie.SubKategorien)
-                {
-                    kategorien.Add(new KategorieViewModel(subKategorie, true));
-                }
-            }
-
-            RaisePropertyChanged("Kategorien");
-        }
-
-        public async void LoadMitarbeiter()
-        {
-            await App.TicketSystem.ReloadMitarbeiter();
-            this.mitarbeiter = App.TicketSystem.Mitarbeiter.Select(m => new PersonDropdownItemViewModel
-            {
-                Id = m.PersonId,
-                MitarbeiterId = m.Id,
-                Name = m.Name,
-                Vorname = m.Vorname
-            }).ToList();
-
-            RaisePropertyChanged("Mitarbeiter");
-
-            SetCurrentUserAsBearbeiter();
-
-            //Ladet die Profilbilder der Mitarbeiter im Hintergrund asynchron ins Dropdown
-            LoadMitarbeiterPicturesAsync();
-        }
-
-        public void SetCurrentUserAsBearbeiter()
-        {
-            SelectedMitarbeiter = mitarbeiter.FirstOrDefault(m => m.MitarbeiterId == App.TicketSystem.CurrentUser.Id);
-            RaisePropertyChanged("SelectedMitarbeiter");
-        }
-
-        public async void LoadKunden()
-        {
-            await App.TicketSystem.ReloadKunden();
-            RaisePropertyChanged("Kunden");
+            get { return Id > 0; }
         }
 
         /// <summary>
@@ -125,12 +168,24 @@ namespace Ticketr.UI.Components.EditTicketView
             }
         }
 
+        public List<string> AllStatus
+        {
+            get { return new List<string> { "Abgeschlossen", "Offen"}; }
+        }
+
+        public string SelectedStatus
+        {
+            get { return this.ticket.Abgeschlossen ? "Abgeschlossen" : "Offen"; }
+            set { this.ticket.Abgeschlossen = (value == "Abgeschlossen"); }
+        }
+
         /// <summary>
         /// Gibt die selektierte Priorität, des Users, zurück und legt diese fest.
         /// </summary>
         public Prioritaet SelectedPriority
         {
-            get; set;
+            get { return this.ticket.Prioritaet; }
+            set { this.ticket.Prioritaet = value; }
         }
         /// <summary>
         /// Gibt alle Mitarbeiter zurück
@@ -139,10 +194,7 @@ namespace Ticketr.UI.Components.EditTicketView
         {
             get
             {
-                
-
                 return mitarbeiter;
-
             }
         }
 
@@ -163,6 +215,17 @@ namespace Ticketr.UI.Components.EditTicketView
                         person.ProfilePicture =
                         await App.TicketSystem.Mitarbeiter.FirstOrDefault(mt => mt.PersonId == person.Id).GetProfilePicture();
                         person.RaisePropertyChanged("ProfilePicture");
+
+                        //Update Histroy and Comment Pictures
+                        Kommentare.Where(k => k.PersonId == person.Id).ToList().ForEach(k =>
+                        {
+                            k.ProfilePicture = person.ProfilePicture;
+                        });
+
+                        History.Where(k => k.PersonId == person.Id).ToList().ForEach(k =>
+                        {
+                            k.ProfilePicture = person.ProfilePicture;
+                        });
                     }
                     catch (Exception) { }
 
@@ -176,19 +239,10 @@ namespace Ticketr.UI.Components.EditTicketView
         /// </summary>
         public List<PersonDropdownItemViewModel> Kunden
         {
-            get
-            {
-                return App.TicketSystem.Kunden.Select(k => new PersonDropdownItemViewModel
-                {
-                    Id = k.PersonId,
-                    Name = k.Name,
-                    Vorname = k.Vorname,
-                    KundeId = k.Id
-                }).ToList();
-            }
+            get { return kunden; }
         }
 
-        private readonly List<PersonDropdownItemViewModel> kunden;
+        private List<PersonDropdownItemViewModel> kunden;
 
 
         public string SiteTitle
@@ -197,42 +251,166 @@ namespace Ticketr.UI.Components.EditTicketView
         }
 
 
-        public int Id { get; set; }
+        public int Id
+        {
+            get { return this.ticket.Id; }
+        }
+
 
         /// <summary>
         /// Gibt die Selektierte Kategorie zurück und legt diese fest.
         /// </summary>
-        public KategorieViewModel SelectedKategorie { get; set; }
+        public KategorieViewModel SelectedKategorie {
+            get
+            {
+                if (this.kategorien != null && this.ticket.Kategorie != null)
+                {
+                    return this.kategorien.FirstOrDefault(k => k.Id == this.ticket.Kategorie.Id);
+                }
+
+                return null;
+            }
+            set { this.ticket.Kategorie = App.TicketSystem.Kategorien.SelectMany(k => k.SubKategorien).FirstOrDefault(k => k.Id == value.Id); }
+        }
 
         /// <summary>
         /// Gibt den Titel zurück und legt diesen fest.
         /// </summary>
-        public string Titel { get; set; }
+        public string Titel
+        {
+            get { return this.ticket.Bezeichnung; }
+            set { this.ticket.Bezeichnung = value; }
+        }
 
         /// <summary>
         /// Gibt die Beschreibung zurück und legt diese fest.
         /// </summary>
-        public string Beschreibung { get; set; }
+        public string Beschreibung
+        {
+            get { return this.ticket.Beschreibung; }
+            set { this.ticket.Beschreibung = value; }
+        }
 
         /// <summary>
         /// Gibt die Loesung zurück oder legt dieses fest
         /// </summary>
-        public string Loesung { get; set; }
+        public string Loesung
+        {
+            get { return this.ticket.Loesung; }
+            set { this.ticket.Loesung = value; }
+        }
+
+        public string Erstelldatum
+        {
+            get { return this.ticket.ErstellDatum.ToString("dd.MM.yyyy HH:mm:ss"); }
+        }
+
+        public string Aenderungsdatum
+        {
+            get { return this.ticket.AenderungsDatum.ToString("dd.MM.yyyy HH:mm:ss"); }
+        }
+
+        public List<KommentarViewModel> Kommentare
+        {
+            get
+            {
+                if (this.ticket.Kommentare != null)
+                {
+                    return this.ticket.Kommentare.Select(k => new KommentarViewModel(k)).ToList();
+                }
+                return null;
+            }
+        }
+
+        public List<HistoryViewModel> History
+        {
+            get
+            {
+                if (this.ticket.Histories != null)
+                {
+                    return this.ticket.Histories.Select(h => new HistoryViewModel(h)).ToList();
+                }
+                return null;
+            }
+        }
+
 
         /// <summary>
         /// Gibt den Selektierten Mitarbeiter zurück und legt diesen fest.
         /// </summary>
-        public PersonDropdownItemViewModel SelectedMitarbeiter { get; set; }
+        public PersonDropdownItemViewModel SelectedMitarbeiter {
+            get
+            {
+                if (this.mitarbeiter != null && this.ticket.Bearbeiter != null)
+                {
+                    return this.mitarbeiter.FirstOrDefault(k => k.MitarbeiterId == this.ticket.Bearbeiter.Id);
+                }
+
+                return null;
+            }
+            set { this.ticket.Bearbeiter = App.TicketSystem.Mitarbeiter.FirstOrDefault(k => k.Id == value.MitarbeiterId); }
+        }
 
         /// <summary>
         /// Gibt den selektieren Kunde zurück und legt diesen fest.
         /// </summary>
-        public PersonDropdownItemViewModel SelectedKunde { get; set; }
-
-        public DashboardViewModel DashboardViewModel
+        public PersonDropdownItemViewModel SelectedKunde
         {
-            get { return dashboardViewModel; }
+            get
+            {
+                if (this.kunden != null && this.ticket.Kunde != null)
+                {
+                    return this.kunden.FirstOrDefault(k => k.KundeId == this.ticket.Kunde.Id);
+                }
+
+                return null;
+            }
+            set { this.ticket.Kunde = App.TicketSystem.Kunden.FirstOrDefault(k => k.Id == value.KundeId); }
         }
+
+        public async Task SaveTicket()
+        {
+            this.Loading = true;
+            int ticketId = await App.TicketSystem.SaveTicket(ticket);
+
+            DashboardViewModel dashboardViewModel = App.MainWindowViewModel.SelectedViewModel as DashboardViewModel;
+
+            //Reload Ticket Page
+            if (dashboardViewModel != null)
+                dashboardViewModel.EditTicketViewModel = new EditTicketViewModel(ticketId);
+
+            this.Loading = false;
+        }
+
+        public async Task DeleteTicket()
+        {
+            this.Loading = true;
+            await App.TicketSystem.RemoveTicket(Id);
+            this.Loading = false;
+
+            DashboardViewModel dashboardViewModel = App.MainWindowViewModel.SelectedViewModel as DashboardViewModel;
+            dashboardViewModel.OpenTicketMenu();
+
+        }
+
+        public string Kommentar { get; set; }
+
+        public async Task AddComment()
+        {
+            this.Loading = true;
+            await ticket.AddKommentar(new Kommentar
+            {
+                Text = Kommentar
+            });
+            this.Loading = false;
+
+            DashboardViewModel dashboardViewModel = App.MainWindowViewModel.SelectedViewModel as DashboardViewModel;
+
+            //Reload Ticket Page
+            if (dashboardViewModel != null)
+                dashboardViewModel.EditTicketViewModel = new EditTicketViewModel(Id);
+        }
+
 
     }
 }

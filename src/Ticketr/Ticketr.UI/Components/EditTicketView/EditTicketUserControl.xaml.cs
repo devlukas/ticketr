@@ -13,7 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Ticketr.Businesslogik;
+using Ticketr.UI.Components.Dashboard;
 using Ticketr.UI.Components.EditTicketView;
+using Ticketr.UI.Components.TicketTable;
 
 namespace Ticketr.UI.Components
 {
@@ -30,22 +32,20 @@ namespace Ticketr.UI.Components
         private void SpeichernButton_Click(object sender, RoutedEventArgs e)
         {
             EditTicketViewModel editTicketViewModel = (EditTicketViewModel)((Button) sender).DataContext;
-            if (editTicketViewModel.SelectedKategorie != null)
-            {
-                Ticket ticket = new Ticket()
-                {
-                    Prioritaet = editTicketViewModel.SelectedPriority,
-                    Kategorie = editTicketViewModel.SelectedKategorie.Kategorie,
-                    Bearbeiter = App.TicketSystem.Mitarbeiter.FirstOrDefault(m => m.Id == editTicketViewModel.SelectedMitarbeiter.MitarbeiterId),
-                    Abgeschlossen = false,
-                    Beschreibung = editTicketViewModel.Beschreibung,
-                    Bezeichnung = editTicketViewModel.Titel,
-                    Kunde = App.TicketSystem.Kunden.FirstOrDefault(k => k.Id == editTicketViewModel.SelectedKunde.KundeId)
-                };
-                App.TicketSystem.SaveTicket(ticket);
-                editTicketViewModel.DashboardViewModel.OpenTicketMenu();
-            }
+            editTicketViewModel.SaveTicket();
 
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            EditTicketViewModel editTicketViewModel = (EditTicketViewModel)((Button)sender).DataContext;
+            editTicketViewModel.DeleteTicket();
+        }
+
+        private void PostComment_Click(object sender, RoutedEventArgs e)
+        {
+            EditTicketViewModel editTicketViewModel = (EditTicketViewModel)((Button)sender).DataContext;
+            editTicketViewModel.AddComment();
         }
     }
 }
