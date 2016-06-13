@@ -45,7 +45,7 @@ namespace Ticketr.UI.Components
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 if (loginViewModel.CheckForInternetConnection())
                 {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ticketr.Schnittstellen.Dto;
 
 namespace Ticketr.Businesslogik
 {
@@ -30,6 +31,7 @@ namespace Ticketr.Businesslogik
         public Position Position
         {
             get { return position; }
+            set { position = value; }
         }
 
         public Kunde(Schnittstellen.Dto.Kunde kunde) 
@@ -40,5 +42,8 @@ namespace Ticketr.Businesslogik
             this.position = new Position(kunde.Position);
         }
 
+        public Kunde()
+        {
+        }
     }
 }

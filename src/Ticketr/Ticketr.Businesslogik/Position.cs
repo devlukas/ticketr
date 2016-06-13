@@ -15,6 +15,10 @@ namespace Ticketr.Businesslogik
             this.name = position.Name;
         }
 
+        public Position()
+        {
+        }
+
         private int id;
         public int Id { 
             get { return id; } 
@@ -22,7 +26,8 @@ namespace Ticketr.Businesslogik
 
         private string name;
         public string Name { 
-            get { return name; } 
+            get { return name; }
+            set { name = value; }
         }
     }
 }

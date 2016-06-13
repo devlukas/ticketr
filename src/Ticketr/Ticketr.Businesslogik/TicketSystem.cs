@@ -291,11 +291,12 @@ namespace Ticketr.Businesslogik
                     EMail = kunde.EMail,
                     ErstellDatum = DateTime.Now,
                     Name = kunde.Name,
-                    Telefon = kunde.Telefon
+                    Telefon = kunde.Telefon,
+                    Vorname =  kunde.Vorname
                 },
                 Position = new Ticketr.Schnittstellen.Dto.Position()
                 {
-                    Name = kunde.Position.Name
+                    Id = kunde.Position.Id
                 }
             };
 

@@ -8,7 +8,7 @@
              xmlns:component="clr-namespace:Ticketr.UI.Components"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DesignHeight="300" d:DesignWidth="800">
-    <Grid>
+    <Grid Background="#FAFAFA">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>

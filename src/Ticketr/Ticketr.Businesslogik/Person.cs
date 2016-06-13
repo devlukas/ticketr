@@ -118,6 +118,10 @@ namespace Ticketr.Businesslogik
 
         #endregion
 
+        public Person()
+        {
+            
+        }
 
         public Person(Schnittstellen.Dto.Person person)
         {

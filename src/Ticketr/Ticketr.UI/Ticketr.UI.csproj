@@ -119,7 +119,7 @@
     <Compile Include="Components\EditPerson\EditPerson.xaml.cs">
       <DependentUpon>EditPerson.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\EditPerson\EditKundeViewModel.cs" />
+    <Compile Include="Components\EditPerson\EditPersonViewModel.cs" />
     <Compile Include="Components\EditTicketView\HistoryViewModel.cs" />
     <Compile Include="Components\EditTicketView\KommentarViewModel.cs" />
     <Compile Include="Components\KundenView\KundenView.xaml.cs">

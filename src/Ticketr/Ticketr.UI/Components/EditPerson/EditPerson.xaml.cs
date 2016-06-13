@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Ticketr.Businesslogik;
+using Ticketr.UI.Components.EditPersonView;
 
 namespace Ticketr.UI.Components
 {
@@ -23,6 +25,13 @@ namespace Ticketr.UI.Components
         public EditPerson()
         {
             InitializeComponent();
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            EditPersonViewModel editPersonViewModel = (EditPersonViewModel)((Button)sender).DataContext;
+            App.TicketSystem.SaveKunde(editPersonViewModel.Kunde);
+            editPersonViewModel.DashboardViewModel.OpenKundenMenu();
         }
     }
 }
