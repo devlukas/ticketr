@@ -20,7 +20,6 @@ namespace Ticketr.UI.Components.Dashboard
         /// </summary>
         public DashboardViewModel()
         {
-            editTicketViewModel = new EditTicketViewModel(this);
             kundenViewModel = new KundenViewModel(this);
             kundenViewModel.LoadItems();
             GetProfilePicture();
