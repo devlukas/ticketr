@@ -245,7 +245,7 @@
 
             if (!empty($name) && !empty($vorname) && !empty($email) && !empty($telefon)) {
                 //add Person
-                $sqlPerson = "INSERT INTO person (name, vorname, email, telefon, erstellDatum, aenderungsDatum) VALUES ('$name', '$vorname', '$telefon', '$vorname', NOW(), NOW())";
+                $sqlPerson = "INSERT INTO person (name, vorname, email, telefon, erstellDatum, aenderungsDatum) VALUES ('$name', '$vorname','$email', '$telefon', NOW(), NOW())";
                 $result = $this->query($sqlPerson);
 
                 //get id of new inserted person
@@ -285,7 +285,7 @@
                 
                 
                 $result = $this->query($sql);
-                
+
                 $response = array();
                 
                 while ($row = mysqli_fetch_array($result)) {
@@ -345,8 +345,6 @@
                 
             $ticketResult = $this->query($ticketSql);
             $ticketRow = mysqli_fetch_assoc($ticketResult);
-           
-            
 
             //---Create JSON-Object----------
 
@@ -358,7 +356,7 @@
             $ticket["bezeichnung"] = $ticketRow["bezeichnung"];
             $ticket["beschreibung"] = $ticketRow["beschreibung"];
             $ticket["loesung"] = $ticketRow["loesung"];
-            $ticket["abgeschlossen"] = ($row["abgeschlossen"] == "1" ? true : false);
+            $ticket["abgeschlossen"] = ($ticketRow["abgeschlossen"] == "1" ? true : false);
             $ticket["prioritaet"] = $ticketRow["prioritaet"];
             $ticket["kategorie"]["id"] = $ticketRow["kategorie_id"];
             $ticket["kategorie"]["name"] = $ticketRow["kategorieName"];
@@ -442,7 +440,7 @@
                 $history["mitarbeiter"]["id"] = $historyRow["mitarbeiterId"];
                 $history["mitarbeiter"]["person"]["id"] = $historyRow["personId"];
                 $history["mitarbeiter"]["person"]["name"] = $historyRow["name"];
-                $history["mitarbeiter"]["person"]["name"] = $historyRow["vorname"];
+                $history["mitarbeiter"]["person"]["vorname"] = $historyRow["vorname"];
                 
                 array_push($histories,  $history);
             }
@@ -498,7 +496,7 @@
             $bearbeiterId = $ticket["bearbeiter"]["id"];
             $prioritaet = $ticket["prioritaet"];
             $kategorieId = $ticket["kategorie"]["id"];
-            $abgeschlossen = ($ticket["abgeschlossen"] == "true" ? "1" : "0");
+            $abgeschlossen = ($ticket["abgeschlossen"] ? "1" : "0");
             
             $sql = "
                 UPDATE ticket
@@ -539,6 +537,9 @@
             $this->query($sql);
             
             $sql = "DELETE FROM ticket WHERE id = $id";
+            $this->query($sql);
+            
+            $sql = "DELETE FROM ticket_history WHERE ticket_id = $id";
             $this->query($sql);
         }
         
