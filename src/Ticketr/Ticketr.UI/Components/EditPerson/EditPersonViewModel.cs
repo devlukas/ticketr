@@ -14,6 +14,7 @@ namespace Ticketr.UI.Components.EditPersonView
     {
         private Person person = new Person();
         private DashboardViewModel dashboardViewModel;
+
         public EditPersonViewModel(DashboardViewModel dashboardViewModel)
         {
             this.dashboardViewModel = dashboardViewModel;

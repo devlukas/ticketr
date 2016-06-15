@@ -39,7 +39,12 @@ namespace Ticketr.Businesslogik
         {
             this.id = kunde.Id;
             this.erstellDatum = kunde.ErstellDatum;
-            this.position = new Position(kunde.Position);
+
+            if (kunde.Position != null)
+            {
+                this.position = new Position(kunde.Position);
+            }
+
         }
 
         public Kunde()

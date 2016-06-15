@@ -64,6 +64,7 @@ namespace Ticketr.UI.Components.Dashboard
             MitarbeiterViewWidth = "0";
             EditPersonViewWidth = "0";
 
+
         }
         /// <summary>
         /// Öffnet die Mitarbeiter View
@@ -196,7 +197,11 @@ namespace Ticketr.UI.Components.Dashboard
         public EditTicketViewModel EditTicketViewModel
         {
             get { return editTicketViewModel; }
-            set { editTicketViewModel = value; }
+            set 
+            { 
+                editTicketViewModel = value;
+                RaisePropertyChanged("EditTicketViewModel");
+            }
         }
 
         private EditPersonViewModel editPersonViewModel;

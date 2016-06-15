@@ -53,7 +53,7 @@ namespace Ticketr.UI.Components
                 TicketTableItemViewModel viewModel = row.Item as TicketTableItemViewModel;
                 DashboardViewModel dashboard = App.MainWindowViewModel.SelectedViewModel as DashboardViewModel;
 
-
+                dashboard.EditTicketViewModel = new EditTicketViewModel(viewModel.Id);
                 dashboard.OpenEditTicketView();
 
             }
