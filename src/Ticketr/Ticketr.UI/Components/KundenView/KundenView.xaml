@@ -5,8 +5,128 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Ticketr.UI.Components"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+             xmlns:component="clr-namespace:Ticketr.UI.Components"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             d:DesignHeight="300" d:DesignWidth="800">
+    <Grid Background="#FAFAFA">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <materialDesign:Card Height="50" FontSize="14" Panel.ZIndex="2" Background="White">
+            <Grid>
+
+               
+                <!-- Search Textbox + Icon -->
+                <Grid Width="Auto" HorizontalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Button Width="Auto" Padding="0" VerticalAlignment="Center" Margin="0,0,10,0" Background="Transparent" BorderBrush="Transparent">
+                        <materialDesign:PackIcon Kind="Magnify" Height="30" Width="30"  Foreground="#444"></materialDesign:PackIcon>
+                    </Button>
+                    <TextBox Grid.Column="1" VerticalAlignment="Center" Width="600" Text="{Binding SearchField}"  materialDesign:TextFieldAssist.Hint="Suchen"></TextBox>
+                </Grid>
+                <Grid HorizontalAlignment="Right">
+                    <Button Click="ButtonBase_OnClick" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                        Margin="0 0 8 0" HorizontalAlignment="Left"
+                        ToolTip="Kunde hinzufügen">
+                        <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" Foreground="White" />
+                    </Button>
+                </Grid>
+            </Grid>
             
+        </materialDesign:Card>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+            <StackPanel.Style>
+                <Style TargetType="StackPanel">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"></Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsLoading}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
+            <materialDesign:PackIcon Kind="Sync" Height="40" Width="40" Margin="5 25 0 0" RenderTransformOrigin="0.5, 0.5">
+                <materialDesign:PackIcon.RenderTransform>
+                    <RotateTransform CenterX="0" CenterY="0"/>
+                </materialDesign:PackIcon.RenderTransform>
+                <materialDesign:PackIcon.Triggers>
+                    <EventTrigger RoutedEvent="Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(Rectangle.RenderTransform).(RotateTransform.Angle)"  From="0" To="360" Duration="0:0:1" RepeatBehavior="Forever"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </materialDesign:PackIcon.Triggers>
+            </materialDesign:PackIcon>
+            <Label FontSize="20" Margin="0 25">Daten werden geladen...</Label>
+        </StackPanel>
+        <ItemsControl Grid.Row="2" ItemsSource="{Binding Kunden}" Margin="0,20">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <!-- KundeItem -->
+                    <Grid Height="50" Name="KundeItem">
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <!-- Text -->
+                            <StackPanel Grid.Row="0" Orientation="Vertical" VerticalAlignment="Center" Margin="20,0,0,0">
+                                <TextBlock Text="{Binding FormattedName}" FontSize="16"></TextBlock>
+                                <TextBlock Text="{Binding PositionsBezeichnung}"></TextBlock>
+                            </StackPanel>
+                            <!-- Icons -->
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,30,0">
+                                <StackPanel.Style>
+                                    <Style TargetType="StackPanel">
+                                        <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=KundeItem,Path=IsMouseOver}" Value="True">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </StackPanel.Style>
+                                <Button ToolTip="Bearbeiten" Width="Auto" Padding="0"  Background="Transparent" BorderBrush="Transparent" Margin="0,0,5,0">
+                                    <materialDesign:PackIcon Kind="BorderColor" Foreground="#6F6F6F" Width="20" Height="20"></materialDesign:PackIcon>
+                                </Button>
+                                <materialDesign:DialogHost HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <materialDesign:DialogHost.DialogContent>
+                                        <StackPanel Margin="16">
+                                            <TextBlock>Wollen Sie diese Kunden wirklich löschen?</TextBlock>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                                                <Button Foreground="#f44336" Click="KundeButtonLöschen_Click" Style="{StaticResource MaterialDesignFlatButton}" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
+                                                    LÖSCHEN
+                                                </Button>
+                                                <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
+                                                    ABBRECHEN
+                                                </Button>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </materialDesign:DialogHost.DialogContent>
+                                    <Button ToolTip="Löschen" Width="Auto" Padding="0"  Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Background="Transparent" BorderBrush="Transparent">
+                                        <materialDesign:PackIcon Kind="Delete" Foreground="#6F6F6F" Width="20" Height="20"></materialDesign:PackIcon>
+                                    </Button>
+                                </materialDesign:DialogHost>
+                            </StackPanel>
+                        </Grid>
+                        <Rectangle Grid.Row="1" Fill="#e6e6e6" Height="1"></Rectangle>
+                    </Grid>
+
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </UserControl>

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Ticketr.Businesslogik;
 
 namespace Ticketr.UI.Components
 {
@@ -23,6 +24,20 @@ namespace Ticketr.UI.Components
         public KundenView()
         {
             InitializeComponent();
+        }
+
+        private void KundeButtonLöschen_Click(object sender, RoutedEventArgs e)
+        {
+            KundeViewModel kundeViewModel = (KundeViewModel) ((Button) sender).DataContext;
+            kundeViewModel.Remove();
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            KundenViewModel kundenViewModel = (KundenViewModel) ((Button) sender).DataContext;
+            
+            kundenViewModel.DashboardViewModel.OpenEditPersonView();
+            kundenViewModel.DashboardViewModel.EditPersonViewModel.Person = new Kunde();
         }
     }
 }

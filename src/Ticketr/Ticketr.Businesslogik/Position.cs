@@ -11,8 +11,12 @@ namespace Ticketr.Businesslogik
         
         public Position(Schnittstellen.Dto.Position position)
         {
-            this.id = id;
-            this.name = name;
+            this.id = position.Id;
+            this.name = position.Name;
+        }
+
+        public Position()
+        {
         }
 
         private int id;
@@ -22,7 +26,8 @@ namespace Ticketr.Businesslogik
 
         private string name;
         public string Name { 
-            get { return name; } 
+            get { return name; }
+            set { name = value; }
         }
     }
 }

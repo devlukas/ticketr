@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using Ticketr.UI.Components.EditPersonView;
 using Ticketr.UI.Components.EditTicketView;
 using Ticketr.UI.Components.TicketTable;
 using Ticketr.UI.Models;
@@ -20,6 +21,9 @@ namespace Ticketr.UI.Components.Dashboard
         /// </summary>
         public DashboardViewModel()
         {
+            
+            
+            
             GetProfilePicture();
         }
         /// <summary>
@@ -30,8 +34,8 @@ namespace Ticketr.UI.Components.Dashboard
             TicketViewWidth = "*";
             KundenViewWidth = "0";
             EditTicketViewWidth = "0";
+            EditPersonViewWidth = "0";
             MitarbeiterViewWidth = "0";
-
             TicketTableViewModel = new TicketTableViewModel();
             TicketTableViewModel.LoadItems();
         }
@@ -40,10 +44,13 @@ namespace Ticketr.UI.Components.Dashboard
         /// </summary>
         public void OpenKundenMenu()
         {
+            KundenViewModel = new KundenViewModel(this);
+            KundenViewModel.LoadItems();
             TicketViewWidth = "0";
             EditTicketViewWidth = "0";
             KundenViewWidth = "*";
             MitarbeiterViewWidth = "0";
+            EditPersonViewWidth = "0";
 
         }
         /// <summary>
@@ -55,15 +62,33 @@ namespace Ticketr.UI.Components.Dashboard
             KundenViewWidth = "0";
             EditTicketViewWidth = "*";
             MitarbeiterViewWidth = "0";
+            EditPersonViewWidth = "0";
 
         }
-
+        /// <summary>
+        /// Öffnet die Mitarbeiter View
+        /// </summary>
         public void OpenMitarbeiterView()
         {
             TicketViewWidth = "0";
             KundenViewWidth = "0";
             EditTicketViewWidth = "0";
             MitarbeiterViewWidth = "*";
+            EditPersonViewWidth = "0";
+        }
+        /// <summary>
+        /// Öffnet die EditPerosn View
+        /// </summary>
+        public void OpenEditPersonView()
+        {
+            EditPersonViewModel = new EditPersonViewModel(this);
+            EditPersonViewModel.LoadItems();
+            EditPersonViewWidth = "*";
+            TicketViewWidth = "0";
+            KundenViewWidth = "0";
+            EditTicketViewWidth = "0";
+            MitarbeiterViewWidth = "0";
+            
         }
         private string ticketViewWidth;
         /// <summary>
@@ -119,6 +144,17 @@ namespace Ticketr.UI.Components.Dashboard
                 RaisePropertyChanged("EditTicketViewWidth");
             }
         }
+
+        private string editPersonViewWidth;
+        /// <summary>
+        /// Gibt die Breite der EditPersonView  zurück und legt diese fest
+        /// </summary>
+        public string EditPersonViewWidth
+        {
+            get { return editPersonViewWidth; }
+            private set { editPersonViewWidth = value; RaisePropertyChanged("EditPersonViewWidth"); }
+        }
+
         /// <summary>
         /// Gibt den Vornamen und Namen im Format "{Vorname} {Name}" zurück.
         /// </summary>
@@ -153,17 +189,40 @@ namespace Ticketr.UI.Components.Dashboard
         }
 
         private EditTicketViewModel editTicketViewModel;
-        
+
         /// <summary>
         /// Gibt das EditTicketViewModel zurück
         /// </summary>
         public EditTicketViewModel EditTicketViewModel
         {
             get { return editTicketViewModel; }
+        }
+
+        private EditPersonViewModel editPersonViewModel;
+        /// <summary>
+        /// Gibt das EditKundeViewModel zurück
+        /// </summary>
+        public EditPersonViewModel EditPersonViewModel
+        {
+            get { return editPersonViewModel; }
             set
             {
-                editTicketViewModel = value;
-                RaisePropertyChanged("EditTicketViewModel");
+                editPersonViewModel = value;
+                RaisePropertyChanged("EditPersonViewModel");
+            }
+        }
+
+        private KundenViewModel kundenViewModel;
+        /// <summary>
+        /// Gibt das KundenViewModel zurück
+        /// </summary>
+        public KundenViewModel KundenViewModel
+        {
+            get { return kundenViewModel; }
+            private set
+            {
+                kundenViewModel = value;
+                RaisePropertyChanged("KundenViewModel");
             }
         }
 

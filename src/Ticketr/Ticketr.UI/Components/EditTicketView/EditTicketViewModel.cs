@@ -373,9 +373,7 @@ namespace Ticketr.UI.Components.EditTicketView
 
             DashboardViewModel dashboardViewModel = App.MainWindowViewModel.SelectedViewModel as DashboardViewModel;
 
-            //Reload Ticket Page
-            if (dashboardViewModel != null)
-                dashboardViewModel.EditTicketViewModel = new EditTicketViewModel(ticketId);
+
 
             this.Loading = false;
         }
@@ -404,9 +402,7 @@ namespace Ticketr.UI.Components.EditTicketView
 
             DashboardViewModel dashboardViewModel = App.MainWindowViewModel.SelectedViewModel as DashboardViewModel;
 
-            //Reload Ticket Page
-            if (dashboardViewModel != null)
-                dashboardViewModel.EditTicketViewModel = new EditTicketViewModel(Id);
+
         }
 
         public async Task RemoveComment(int id)
