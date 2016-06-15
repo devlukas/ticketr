@@ -196,6 +196,7 @@ namespace Ticketr.UI.Components.Dashboard
         public EditTicketViewModel EditTicketViewModel
         {
             get { return editTicketViewModel; }
+            set { editTicketViewModel = value; }
         }
 
         private EditPersonViewModel editPersonViewModel;
