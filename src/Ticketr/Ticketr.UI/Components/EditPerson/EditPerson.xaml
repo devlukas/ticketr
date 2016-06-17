@@ -21,11 +21,17 @@
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <StackPanel Orientation="Vertical">
-                        <Label FontWeight="Bold"  Margin="5,0,20,0">Vorname:</Label>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center"></materialDesign:PackIcon>
+                            <Label FontWeight="Bold"  Margin="0,0,20,0">Vorname:</Label>
+                        </StackPanel>
                         <TextBox Text="{Binding Vorname}" materialDesign:TextFieldAssist.Hint="Roger" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="10" FontSize="14"></TextBox>
                     </StackPanel>
                     <StackPanel Grid.Column="1" Orientation="Vertical">
-                        <Label FontWeight="Bold"  Margin="5,0,20,0">Name:</Label>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center"></materialDesign:PackIcon>
+                            <Label FontWeight="Bold"  Margin="0,0,20,0">Name:</Label>
+                        </StackPanel>
                         <TextBox  Text="{Binding Name}" materialDesign:TextFieldAssist.Hint="Müller" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="10" FontSize="14"></TextBox>
                     </StackPanel>
 
@@ -36,11 +42,18 @@
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <StackPanel Orientation="Vertical">
-                        <Label FontWeight="Bold"  Margin="5,0,20,0">Telefon:</Label>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Phone" VerticalAlignment="Center"></materialDesign:PackIcon>
+                            <Label FontWeight="Bold"  Margin="0,0,20,0">Telefon:</Label>
+                        </StackPanel>
                         <TextBox Text="{Binding Telefon}" materialDesign:TextFieldAssist.Hint="0793189773" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="10" FontSize="14"></TextBox>
                     </StackPanel>
                     <StackPanel Grid.Column="1" Orientation="Vertical">
-                        <Label FontWeight="Bold"  Margin="5,0,20,0">Email:</Label>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon VerticalAlignment="Center" Kind="Email" ></materialDesign:PackIcon>
+                            <Label FontWeight="Bold"  Margin="0,0,20,0">Email:</Label>
+                        </StackPanel>
+
                         <TextBox  Text="{Binding EMail}" materialDesign:TextFieldAssist.Hint="roger.müller@gibz.ch" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="10" FontSize="14"></TextBox>
                     </StackPanel>
                 </Grid>
@@ -56,7 +69,10 @@
                         </Style>
                     </Grid.Style>
                     <StackPanel Orientation="Vertical">
-                        <Label FontWeight="Bold"  Margin="5,0,20,0">Position:</Label>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Star" VerticalAlignment="Center"></materialDesign:PackIcon>
+                            <Label FontWeight="Bold"  Margin="0,0,20,0">Position:</Label>
+                        </StackPanel>
                         <ComboBox IsEditable="True" Width="200" HorizontalAlignment="Left" Height="30" SelectedItem="{Binding Position}"  DisplayMemberPath="Name" SelectedValuePath="Name" ItemsSource="{Binding Positionen}" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="10">
                         </ComboBox>
                     </StackPanel>
