@@ -27,7 +27,7 @@
                     <Button Width="Auto" Padding="0" VerticalAlignment="Center" Margin="0,0,10,0" Background="Transparent" BorderBrush="Transparent">
                         <materialDesign:PackIcon Kind="Magnify" Height="30" Width="30"  Foreground="#444"></materialDesign:PackIcon>
                     </Button>
-                    <TextBox Grid.Column="1" VerticalAlignment="Center" Width="600" Text="{Binding SearchField}"  materialDesign:TextFieldAssist.Hint="Suchen"></TextBox>
+                    <TextBox Grid.Column="1" VerticalAlignment="Center" Width="600" Text="{Binding SearchField, UpdateSourceTrigger=PropertyChanged}"  materialDesign:TextFieldAssist.Hint="Suchen"></TextBox>
                 </Grid>
                 <Grid HorizontalAlignment="Right">
                     <Button Click="ButtonBase_OnClick" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
@@ -68,7 +68,7 @@
             </materialDesign:PackIcon>
             <Label FontSize="20" Margin="0 25">Daten werden geladen...</Label>
         </StackPanel>
-        <ItemsControl Grid.Row="2" ItemsSource="{Binding Kunden}" Margin="0,20">
+        <ItemsControl Grid.Row="2" ItemsSource="{Binding FilteredKunden}" Margin="0,20">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <!-- KundeItem -->

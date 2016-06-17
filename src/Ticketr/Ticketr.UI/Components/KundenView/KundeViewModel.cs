@@ -42,7 +42,27 @@ namespace Ticketr.UI.Components
         public void Remove()
         {
             App.TicketSystem.RemoveKunde(kunde.Id);
-            kundenViewModel.Kunden.Remove(this);
+            kundenViewModel.RemoveKunde(this);
+        }
+        /// <summary>
+        /// Gibt den Namen des Kunde zurück
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                return kunde.Name;
+            }
+        }
+        /// <summary>
+        /// Gibt den Vorname des Kunde zurück
+        /// </summary>
+        public string Vorname
+        {
+            get
+            {
+                return kunde.Vorname;
+            }
         }
     }
 }

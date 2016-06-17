@@ -11,8 +11,19 @@ namespace Ticketr.UI.Components
 {
     public class KundenViewModel : ViewModel
     {
-        private string searchField;
+        /// <summary>
+        /// Initialisiert das KundeViewModel
+        /// </summary>
+        /// <param name="dashboardViewModel"></param>
+        public KundenViewModel(DashboardViewModel dashboardViewModel)
+        {
+            this.dashboardViewModel = dashboardViewModel;
+        }
 
+        private string searchField;
+        /// <summary>
+        /// Gibt den Sucherwert zurück und legt diesen fest und filtert die Kunden damit
+        /// </summary>
         public string SearchField
         {
             get
@@ -20,10 +31,16 @@ namespace Ticketr.UI.Components
                 return searchField;
             }
             set
-            { 
-                searchField = value; 
+            {
+                searchField = value;
+                RaisePropertyChanged("FilteredKunden");
             }
         }
+
+        /// <summary>
+        /// Ladet alle relevanten Datne
+        /// </summary>
+        /// <returns>Task</returns>
         public async Task LoadItems()
         {
             IsLoading = true;
@@ -33,6 +50,9 @@ namespace Ticketr.UI.Components
         }
 
         private bool isLoading;
+        /// <summary>
+        /// Gibt zurück ob es am Daten laden ist.
+        /// </summary>
         public bool IsLoading
         {
             get { return isLoading; }
@@ -45,12 +65,10 @@ namespace Ticketr.UI.Components
 
         private ObservableCollection<KundeViewModel> kunden;
         private DashboardViewModel dashboardViewModel;
-
-        public KundenViewModel(DashboardViewModel dashboardViewModel)
-        {
-            this.dashboardViewModel = dashboardViewModel;
-        }
-
+        
+        /// <summary>
+        /// Gibt alle KundenViewModel zurück
+        /// </summary>
         public ObservableCollection<KundeViewModel> Kunden
         {
             get { return kunden; }
@@ -58,6 +76,27 @@ namespace Ticketr.UI.Components
             {
                 kunden = value;
                 RaisePropertyChanged("Kunden");
+                RaisePropertyChanged("FilteredKunden");
+            }
+        }
+
+        /// <summary>
+        /// Gibt die Kunden mit dem Filter zurück
+        /// </summary>
+        public ObservableCollection<KundeViewModel> FilteredKunden
+        {
+            get
+            {
+                ObservableCollection<KundeViewModel> filteredKunden;
+                if (!string.IsNullOrEmpty(SearchField))
+                {
+                    filteredKunden = new ObservableCollection<KundeViewModel>(kunden.Where(k => k.Name.IndexOf(searchField) == 0 || k.Vorname.IndexOf(searchField) == 0).ToList());
+                }
+                else
+                {
+                    filteredKunden = kunden;
+                }
+                return filteredKunden;
             }
         }
 
@@ -67,6 +106,15 @@ namespace Ticketr.UI.Components
         public DashboardViewModel DashboardViewModel
         {
             get { return dashboardViewModel; }
+        }
+        /// <summary>
+        /// Löscht den Kunde aus dem UI
+        /// </summary>
+        /// <param name="kundeViewModel">Das zu löschende KundeViewModel</param>
+        public void RemoveKunde(KundeViewModel kundeViewModel)
+        {
+            Kunden.Remove(kundeViewModel);
+            RaisePropertyChanged("FilteredKunden");
         }
     }
 }
