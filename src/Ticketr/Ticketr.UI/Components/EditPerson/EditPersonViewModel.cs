@@ -31,6 +31,7 @@ namespace Ticketr.UI.Components.EditPersonView
         {
             await App.TicketSystem.ReloadPositionen();
             Positionen = App.TicketSystem.Positionen;
+            RaisePropertyChanged("Position");
         }
         public string Name
         {
@@ -60,7 +61,10 @@ namespace Ticketr.UI.Components.EditPersonView
         {
             get
             {
-                if (IsKunde) { return Kunde.Position; }
+                if (IsKunde)
+                {
+                    return Kunde.Position;
+                }
                 return null;
             }
             set
@@ -92,6 +96,8 @@ namespace Ticketr.UI.Components.EditPersonView
                 person = value;
                 RaisePropertyChanged("IsKunde");
                 RaisePropertyChanged("Person");
+                RaisePropertyChanged("Telefon");
+                RaisePropertyChanged("EMail");
                 RaisePropertyChanged("Position");
                 RaisePropertyChanged("Name");
                 RaisePropertyChanged("Vorname");

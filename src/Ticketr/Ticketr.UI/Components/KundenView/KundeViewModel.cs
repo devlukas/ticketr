@@ -64,5 +64,25 @@ namespace Ticketr.UI.Components
                 return kunde.Vorname;
             }
         }
+        /// <summary>
+        /// Gibt den Kunde zurück. NICHT FÜR BINDING VERWENDEN
+        /// </summary>
+        public Kunde Kunde
+        {
+            get
+            {
+                return kunde;
+            }
+        }
+        /// <summary>
+        /// Gibt das KundenViewModel zurück
+        /// </summary>
+        public KundenViewModel KundenViewModel
+        {
+            get
+            {
+                return kundenViewModel;
+            }
+        }
     }
 }

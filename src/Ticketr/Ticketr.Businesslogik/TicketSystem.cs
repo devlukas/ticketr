@@ -292,7 +292,8 @@ namespace Ticketr.Businesslogik
                     ErstellDatum = DateTime.Now,
                     Name = kunde.Name,
                     Telefon = kunde.Telefon,
-                    Vorname =  kunde.Vorname
+                    Vorname =  kunde.Vorname,
+                    Id = kunde.PersonId
                 },
                 Position = new Ticketr.Schnittstellen.Dto.Position()
                 {
@@ -308,7 +309,8 @@ namespace Ticketr.Businesslogik
             }
             else
             {
-                // Todo : Update Kunde
+                service.UpdatePerson(kundeDto.Person);
+                service.SetKundenPosition(kunde.Id, kunde.Position.Id);
             }
 
             return id;

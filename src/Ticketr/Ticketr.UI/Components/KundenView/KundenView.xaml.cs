@@ -39,5 +39,14 @@ namespace Ticketr.UI.Components
             kundenViewModel.DashboardViewModel.OpenEditPersonView();
             kundenViewModel.DashboardViewModel.EditPersonViewModel.Person = new Kunde();
         }
+
+ 
+        private void EditKundeButton_Click(object sender, RoutedEventArgs e)
+        {
+            KundeViewModel kundeViewModel = (KundeViewModel)((Button)sender).DataContext;
+
+            kundeViewModel.KundenViewModel.DashboardViewModel.OpenEditPersonView();
+            kundeViewModel.KundenViewModel.DashboardViewModel.EditPersonViewModel.Person = kundeViewModel.Kunde;
+        }
     }
 }
