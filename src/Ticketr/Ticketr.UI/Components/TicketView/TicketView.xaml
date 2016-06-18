@@ -22,13 +22,17 @@
             </Grid.ColumnDefinitions>
             <!-- Statistics -->
         </Grid>
-        <Label Grid.Row="1" HorizontalAlignment="Left" FontSize="30" Margin="30 6">Tickets</Label>
-        <Button Grid.Row="1" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
-                        Click="TicketErstellenButtonClick" Margin="30 0"  HorizontalAlignment="Right"
-                        ToolTip="Ticket hinzufügen">
-            <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" Foreground="White" />
-        </Button>
+        <Grid Effect="{StaticResource z-depth2}" Grid.Row="1" Background="{DynamicResource AccentColorBrush}">
+            <Label HorizontalAlignment="Left" FontSize="30" Margin="30 6" Foreground="White">Tickets</Label>
+            <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{DynamicResource ComplementColor}" BorderBrush="{DynamicResource ComplementColor}" Click="TicketErstellenButtonClick" Margin="30 0"  HorizontalAlignment="Right" ToolTip="Ticket hinzufügen">
+                <Button.RenderTransform>
+                    <TranslateTransform Y="20"></TranslateTransform>
+                </Button.RenderTransform>
+                <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" Foreground="White" />
+            </Button>
+        </Grid>
+        
 
-        <component:TicketTableUserControl DataContext="{Binding TicketTableViewModel}" Grid.Row="2" Margin="20,3"></component:TicketTableUserControl>
+        <component:TicketTableUserControl DataContext="{Binding TicketTableViewModel}" Grid.Row="2" Margin="20,15"></component:TicketTableUserControl>
     </Grid>
 </UserControl>

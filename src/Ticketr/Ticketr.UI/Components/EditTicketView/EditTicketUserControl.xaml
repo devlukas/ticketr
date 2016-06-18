@@ -20,11 +20,14 @@
         <Grid Background="#EEEEEE">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="650"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <Label HorizontalAlignment="Left" FontSize="30" Margin="30 6 0 0" Content="{Binding SiteTitle}"></Label>
-            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Grid Effect="{StaticResource z-depth2}" Background="{DynamicResource AccentColorBrush}">
+                <Label HorizontalAlignment="Left" FontSize="30" Margin="30 6" Foreground="White" Content="{Binding SiteTitle}"></Label>
+            </Grid>
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
                 <StackPanel.Style>
                     <Style>
                         <Style.Triggers>
@@ -56,7 +59,7 @@
                 </materialDesign:PackIcon>
                 <Label FontSize="20" Margin="0 25" >Daten werden geladen...</Label>
             </StackPanel>
-            <materialDesign:Card Margin="15,5,15,15" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <materialDesign:Card Margin="15,5,15,15" Grid.Row="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                 <materialDesign:Card.Style>
                     <Style>
                         <Style.Triggers>
@@ -211,7 +214,7 @@
                     </Grid>
                 </Grid>
             </materialDesign:Card>
-            <Grid Grid.Row="2">
+            <Grid Grid.Row="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition Width="320"></ColumnDefinition>
