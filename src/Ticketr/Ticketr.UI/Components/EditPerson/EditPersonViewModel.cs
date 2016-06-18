@@ -34,6 +34,17 @@ namespace Ticketr.UI.Components.EditPersonView
             Positionen = App.TicketSystem.Positionen;
             RaisePropertyChanged("Position");
         }
+
+        public string Titel
+        {
+            get
+            {
+                string titel = person is Mitarbeiter ? "Mitarbeiter " : "Kunde ";
+                titel += person.PersonId == 0 ? "Erstellen" : "Bearbeiten";
+                return titel;
+            }
+        }
+
         public string Name
         {
             get { return person.Name; }
@@ -136,13 +147,7 @@ namespace Ticketr.UI.Components.EditPersonView
             set
             {
                 person = value;
-                RaisePropertyChanged("IsKunde");
-                RaisePropertyChanged("Person");
-                RaisePropertyChanged("Telefon");
-                RaisePropertyChanged("EMail");
-                RaisePropertyChanged("Position");
-                RaisePropertyChanged("Name");
-                RaisePropertyChanged("Vorname");
+                RaisePropertyChanged("");
             }
         }
 
