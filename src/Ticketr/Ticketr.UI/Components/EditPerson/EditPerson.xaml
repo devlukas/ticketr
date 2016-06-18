@@ -91,12 +91,12 @@
                     <StackPanel Orientation="Vertical">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Lock" VerticalAlignment="Center"></materialDesign:PackIcon>
-                            <Label FontWeight="Bold"  Margin="0,0,20,0">Passwort:</Label>
+                            <Label FontWeight="Bold"  Margin="0,0,20,0">Passwort des Mitarbeiters:</Label>
                         </StackPanel>
                         <PasswordBox BorderBrush="{DynamicResource AccentColorBrush2}" Name="PasswordBox" Width="200" HorizontalAlignment="Left" Height="30" Margin="10"></PasswordBox>
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Repeat" VerticalAlignment="Center"></materialDesign:PackIcon>
-                            <Label FontWeight="Bold"  Margin="0,0,20,0">Passwort wiederholen:</Label>
+                            <Label FontWeight="Bold"  Margin="0,0,20,0">Passwort des Mitarbeiters wiederholen:</Label>
                         </StackPanel>
                         <PasswordBox BorderBrush="{DynamicResource AccentColorBrush2}" Name="PasswordBoxRepeat" Width="200" HorizontalAlignment="Left" Height="30" Margin="10"></PasswordBox>
                     </StackPanel>
