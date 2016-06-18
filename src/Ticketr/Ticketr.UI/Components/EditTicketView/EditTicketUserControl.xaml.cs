@@ -53,5 +53,10 @@ namespace Ticketr.UI.Components
             DashboardViewModel dashboardViewModel = App.MainWindowViewModel.SelectedViewModel as DashboardViewModel;
             dashboardViewModel.EditTicketViewModel.RemoveComment((int) ((Button) sender).Tag);
         }
+
+        private void KategorieCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            KategorieCombobox = new ComboBox();
+        }
     }
 }
