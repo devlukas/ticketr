@@ -6,6 +6,13 @@
              mc:Ignorable="d" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DesignHeight="800" d:DesignWidth="1200">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid Background="#FAFAFA">
         <materialDesign:Card Margin="15,15,15,15" Grid.Row="1" HorizontalAlignment="Stretch" Background="White">
             <Grid>
@@ -25,14 +32,30 @@
                             <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center"></materialDesign:PackIcon>
                             <Label FontWeight="Bold"  Margin="0,0,20,0">Vorname:</Label>
                         </StackPanel>
-                        <TextBox Text="{Binding Vorname}" materialDesign:TextFieldAssist.Hint="Roger" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="10" FontSize="14"></TextBox>
+                        <TextBox Name="Vorname" materialDesign:TextFieldAssist.Hint="Roger" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="10" FontSize="14">
+                            <TextBox.Text>
+                                <Binding Path="Vorname" UpdateSourceTrigger="LostFocus">
+                                    <Binding.ValidationRules>
+                                        <ExceptionValidationRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
                     </StackPanel>
                     <StackPanel Grid.Column="1" Orientation="Vertical">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center"></materialDesign:PackIcon>
                             <Label FontWeight="Bold"  Margin="0,0,20,0">Name:</Label>
                         </StackPanel>
-                        <TextBox  Text="{Binding Name}" materialDesign:TextFieldAssist.Hint="Müller" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="10" FontSize="14"></TextBox>
+                        <TextBox  materialDesign:TextFieldAssist.Hint="Müller" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="10" FontSize="14">
+                            <TextBox.Text>
+                                <Binding Path="Name" UpdateSourceTrigger="LostFocus">
+                                    <Binding.ValidationRules>
+                                        <ExceptionValidationRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
                     </StackPanel>
 
                 </Grid>
@@ -46,7 +69,15 @@
                             <materialDesign:PackIcon Kind="Phone" VerticalAlignment="Center"></materialDesign:PackIcon>
                             <Label FontWeight="Bold"  Margin="0,0,20,0">Telefon:</Label>
                         </StackPanel>
-                        <TextBox Text="{Binding Telefon}" materialDesign:TextFieldAssist.Hint="0793189773" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="10" FontSize="14"></TextBox>
+                        <TextBox materialDesign:TextFieldAssist.Hint="0793189773" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="10" FontSize="14">
+                            <TextBox.Text>
+                                <Binding Path="Telefon" UpdateSourceTrigger="LostFocus">
+                                    <Binding.ValidationRules>
+                                        <ExceptionValidationRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
                     </StackPanel>
                     <StackPanel Grid.Column="1" Orientation="Vertical">
                         <StackPanel Orientation="Horizontal">
@@ -54,7 +85,15 @@
                             <Label FontWeight="Bold"  Margin="0,0,20,0">Email:</Label>
                         </StackPanel>
 
-                        <TextBox  Text="{Binding EMail}" materialDesign:TextFieldAssist.Hint="roger.müller@gibz.ch" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="10" FontSize="14"></TextBox>
+                        <TextBox materialDesign:TextFieldAssist.Hint="roger.müller@gibz.ch" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="10" FontSize="14">
+                            <TextBox.Text>
+                                <Binding Path="EMail" UpdateSourceTrigger="LostFocus">
+                                    <Binding.ValidationRules>
+                                        <ExceptionValidationRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
                     </StackPanel>
                 </Grid>
                 <Grid Margin="10" Grid.Row="2">
@@ -101,7 +140,21 @@
                         <PasswordBox BorderBrush="{DynamicResource AccentColorBrush2}" Name="PasswordBoxRepeat" Width="200" HorizontalAlignment="Left" Height="30" Margin="10"></PasswordBox>
                     </StackPanel>
                 </Grid>
-                <Button IsDefault="True" Click="ButtonBase_OnClick" Grid.Row="3" HorizontalAlignment="Right" Margin="20">Speichern</Button>
+                <Button IsDefault="True" Click="ButtonBase_OnClick" Grid.Row="3" HorizontalAlignment="Right" Margin="20" Content="Speichern">
+                    <Button.Style >
+                        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                            <Setter Property="IsEnabled" Value="False"/>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=Vorname}" Value="False"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
             </Grid>
         </materialDesign:Card>
     </Grid>

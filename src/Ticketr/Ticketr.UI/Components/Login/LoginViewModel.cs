@@ -16,12 +16,23 @@ namespace Ticketr.UI.Components.Login
     {
         private string errorMessage;
 
+        private string email;
 
         /// <summary>
         /// Gibt die Email zurück und legt diese fest
         /// </summary>
-
-        public string Email { get; set; }
+        public string Email
+        {
+            get { return email; }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new ApplicationException("Email muss angegeben werden");
+                }
+                email = value;
+            }
+        }
 
 
         private bool loginInProcess;

@@ -23,7 +23,7 @@
         </MediaElement>
 
         <materialDesign:Card Grid.Column ="1" Width="400" VerticalAlignment="Center">
-            
+
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
@@ -32,7 +32,7 @@
                 <StackPanel Background="{DynamicResource AccentColorBrush}">
                     <Image Source="../../Images/Logo.png" Width="200" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="20"></Image>
                 </StackPanel>
-                
+
                 <Grid Grid.Row="1" Margin="30,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"></RowDefinition>
@@ -42,7 +42,15 @@
                         <RowDefinition Height="Auto"></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <TextBox Text="{Binding Email}"  BorderBrush="{DynamicResource AccentColorBrush2}"  Grid.Row="1" materialDesign:TextFieldAssist.Hint="Email" Margin="0,50,10,0"></TextBox>
+                    <TextBox  BorderBrush="{DynamicResource AccentColorBrush2}"  Grid.Row="1" materialDesign:TextFieldAssist.Hint="Email" Margin="0,50,10,0">
+                        <TextBox.Text>
+                            <Binding Path="Email" UpdateSourceTrigger="LostFocus">
+                                <Binding.ValidationRules>
+                                    <ExceptionValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                     <PasswordBox x:Name="PasswordTextBox" BorderBrush="{DynamicResource AccentColorBrush2}" Grid.Row="2" materialDesign:TextFieldAssist.Hint="Passwort"  Margin="0,30,10,0"></PasswordBox>
                     <TextBlock TextWrapping="Wrap" Grid.Row="3" Margin="0,20" Text="{Binding ErrorMessage}" Foreground="{DynamicResource ErrorColor}"></TextBlock>
                     <StackPanel Grid.Row="4" Orientation="Vertical">
@@ -69,7 +77,7 @@
 
                 </Grid>
             </Grid>
-            
+
         </materialDesign:Card>
 
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,25 +37,61 @@ namespace Ticketr.UI.Components.EditPersonView
         public string Name
         {
             get { return person.Name; }
-            set { person.Name = value; }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new ApplicationException("Name muss angegebene werden");
+                }
+                person.Name = value;
+            }
         }
 
         public string Vorname
         {
             get { return person.Vorname; }
-            set { person.Vorname = value; }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new ApplicationException("Vorname muss angegebenen werden");
+                }
+                person.Vorname = value;
+            }
         }
 
         public string EMail
         {
             get { return person.EMail; }
-            set { person.EMail = value; }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new ApplicationException("Email muss angegeben werden");
+                }
+                try
+                {
+                    MailAddress m = new MailAddress(value);
+                }
+                catch (FormatException)
+                {
+                    throw new ApplicationException("Ungültige Mailadresse");
+                }
+                person.EMail = value;
+            }
         }
 
         public string Telefon
         {
             get { return person.Telefon; }
-            set { person.Telefon = value; }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new ApplicationException("Telefon muss angegebene werden");
+                }
+                person.Telefon = value;
+            }
         }
 
         public Position Position
