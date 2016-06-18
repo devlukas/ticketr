@@ -16,14 +16,24 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <Image Source="../../Images/background.jpg" Stretch="UniformToFill"></Image>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition Width="Auto"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <materialDesign:Card Grid.Column="1" Background="White" Width="400" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                <Grid Margin="30,0">
+        <MediaElement Source="../../Images/497632384.mp4" Stretch="Fill">
+            <MediaElement.Effect>
+                <BlurEffect Radius="10"></BlurEffect>
+            </MediaElement.Effect>
+        </MediaElement>
+
+        <materialDesign:Card Grid.Column ="1" Width="400" VerticalAlignment="Center">
+            
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackPanel Background="{DynamicResource AccentColorBrush}">
+                    <Image Source="../../Images/Logo.png" Width="200" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="20"></Image>
+                </StackPanel>
+                
+                <Grid Grid.Row="1" Margin="30,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
@@ -31,33 +41,37 @@
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Image Source="../../Images/Logo.png" Width="200" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="20"></Image>
+
                     <TextBox Text="{Binding Email}"  BorderBrush="{DynamicResource AccentColorBrush2}"  Grid.Row="1" materialDesign:TextFieldAssist.Hint="Email" Margin="0,50,10,0"></TextBox>
                     <PasswordBox x:Name="PasswordTextBox" BorderBrush="{DynamicResource AccentColorBrush2}" Grid.Row="2" materialDesign:TextFieldAssist.Hint="Passwort"  Margin="0,30,10,0"></PasswordBox>
                     <TextBlock TextWrapping="Wrap" Grid.Row="3" Margin="0,20" Text="{Binding ErrorMessage}" Foreground="{DynamicResource ErrorColor}"></TextBlock>
-                    <StackPanel Grid.Row="4" Orientation="Horizontal">
-                        <Button IsDefault="True" Click="LoginButton_OnClick" Style="{StaticResource MaterialDesignRaisedAccentButton}"  Margin="0,20" Width="100" Height="50" HorizontalAlignment="Left">Einloggen</Button>
-                        <materialDesign:PackIcon Kind="Sync" Height="40" Width="40" Margin="5 25 0 0" RenderTransformOrigin="0.5, 0.5" Visibility="{Binding LoginProcessVisibility}">
-                            <materialDesign:PackIcon.RenderTransform>
-                                <RotateTransform CenterX="0" CenterY="0"/>
-                                </materialDesign:PackIcon.RenderTransform>
-                            <materialDesign:PackIcon.Triggers>
-                                    <EventTrigger RoutedEvent="Loaded">
-                                        <BeginStoryboard>
-                                            <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetProperty="(Rectangle.RenderTransform).(RotateTransform.Angle)"  From="0" To="360" Duration="0:0:1" RepeatBehavior="Forever"/>
-                                            </Storyboard>
-                                        </BeginStoryboard>
-                                    </EventTrigger>
-                                </materialDesign:PackIcon.Triggers>
-                        </materialDesign:PackIcon>
-                        <Label FontSize="20" Margin="0 25" Visibility="{Binding LoginProcessVisibility}">Login..</Label>
+                    <StackPanel Grid.Row="4" Orientation="Vertical">
+                        <Button IsDefault="True" Click="LoginButton_OnClick" Style="{StaticResource MaterialDesignRaisedAccentButton}"  Margin="0,20" Width="120" Height="50" HorizontalAlignment="Right">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Sync" Height="20" Width="20"  RenderTransformOrigin="0.5, 0.5" Visibility="{Binding LoginProcessVisibility}">
+                                    <materialDesign:PackIcon.RenderTransform>
+                                        <RotateTransform CenterX="0" CenterY="0"/>
+                                    </materialDesign:PackIcon.RenderTransform>
+                                    <materialDesign:PackIcon.Triggers>
+                                        <EventTrigger RoutedEvent="Loaded">
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation Storyboard.TargetProperty="(Rectangle.RenderTransform).(RotateTransform.Angle)"  From="0" To="360" Duration="0:0:1" RepeatBehavior="Forever"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </materialDesign:PackIcon.Triggers>
+                                </materialDesign:PackIcon>
+                                <TextBlock VerticalAlignment="Center">Einloggen</TextBlock>
+                            </StackPanel>
+                        </Button>
                     </StackPanel>
-                    
-                </Grid>
-            </materialDesign:Card>
 
-        </Grid>
+                </Grid>
+            </Grid>
+            
+        </materialDesign:Card>
+
 
     </Grid>
 </UserControl>

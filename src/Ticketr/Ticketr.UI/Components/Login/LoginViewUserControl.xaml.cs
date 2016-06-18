@@ -37,9 +37,12 @@ namespace Ticketr.UI.Components
                     DashboardViewModel dash = new DashboardViewModel();
                     App.MainWindowViewModel.SetSelectedView(dash, new DashboardViewUserControl());
                     dash.OpenTicketMenu();
+                    Application.Current.Resources["WindowTitleColorBrush"] =
+                        Application.Current.Resources["WindowTitleColorBrushAfterLogin"];
                 }
                 else
                 {
+                    loginViewModel.LoginInProcess = false;
                     loginViewModel.ErrorMessage =
                         "Das Passwort und die E-Mail-Adresse, die Sie eingegeben haben, stimmen nicht überein.";
                 }
@@ -47,6 +50,7 @@ namespace Ticketr.UI.Components
             }
             catch (Exception ex)
             {
+                loginViewModel.LoginInProcess = false;
                 if (loginViewModel.CheckForInternetConnection())
                 {
                     loginViewModel.ErrorMessage =

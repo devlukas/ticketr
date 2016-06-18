@@ -28,7 +28,7 @@ namespace Ticketr.UI.Components.Login
 
         public Visibility LoginProcessVisibility
         {
-            get { return loginInProcess ? Visibility.Visible : Visibility.Hidden; }
+            get { return loginInProcess ? Visibility.Visible : Visibility.Collapsed; }
         }
 
         public bool LoginButtonEnabled
