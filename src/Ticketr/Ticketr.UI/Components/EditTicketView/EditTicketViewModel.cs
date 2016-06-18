@@ -52,12 +52,22 @@ namespace Ticketr.UI.Components.EditTicketView
             {
                 Loading = false;
                 LoadMitarbeiterPicturesAsync();
+                RaisePropertyChanged("Kategorien");
             });
 
             
         }
 
-
+        private string fehler;
+        public string Fehler
+        {
+            get { return fehler; }
+            set
+            {
+                fehler = value;
+                RaisePropertyChanged("Fehler");
+            }
+        }
 
         public async Task LoadTicket(int ticketId)
         {
@@ -76,10 +86,12 @@ namespace Ticketr.UI.Components.EditTicketView
                 {
                     kategorien.Add(new KategorieViewModel(subKategorie, true));
                 }
-            }
-
+                
             RaisePropertyChanged("Kategorien");
             RaisePropertyChanged("SelectedKategorie");
+
+            }
+
         }
 
         public async Task LoadMitarbeiter()
@@ -266,7 +278,14 @@ namespace Ticketr.UI.Components.EditTicketView
 
                 return null;
             }
-            set { this.ticket.Kategorie = App.TicketSystem.Kategorien.SelectMany(k => k.SubKategorien).FirstOrDefault(k => k.Id == value.Id); }
+            set
+            {
+                if (value != null)
+                {
+                    this.ticket.Kategorie = App.TicketSystem.Kategorien.SelectMany(k => k.SubKategorien).FirstOrDefault(k => k.Id == value.Id);
+                }
+
+            }
         }
 
         /// <summary>
@@ -368,11 +387,25 @@ namespace Ticketr.UI.Components.EditTicketView
 
         public async Task SaveTicket()
         {
-            this.Loading = true;
-            int ticketId = await App.TicketSystem.SaveTicket(ticket);
+            string fehler = "";
+            fehler += SelectedKunde == null ? "Kunde " : "";
+            fehler += SelectedKategorie == null ? "Kategorie " : "";
+            fehler += SelectedMitarbeiter == null ? "Mitarbeiter " : "";
+            fehler += String.IsNullOrEmpty(Titel) ? "Titel " : "";
 
-            DashboardViewModel dashboardViewModel = App.MainWindowViewModel.SelectedViewModel as DashboardViewModel;
-            dashboardViewModel.EditTicketViewModel = new EditTicketViewModel(ticketId);
+            if (fehler == "")
+            {
+                this.Loading = true;
+                int ticketId = await App.TicketSystem.SaveTicket(ticket);
+
+                DashboardViewModel dashboardViewModel = App.MainWindowViewModel.SelectedViewModel as DashboardViewModel;
+                dashboardViewModel.EditTicketViewModel = new EditTicketViewModel(ticketId);
+            }
+            else
+            {
+                Fehler = "Fehlende Angaben: " + fehler;
+            }
+
 
 
             this.Loading = false;
@@ -390,6 +423,8 @@ namespace Ticketr.UI.Components.EditTicketView
         }
 
         public string Kommentar { get; set; }
+
+
 
         public async Task AddComment()
         {
