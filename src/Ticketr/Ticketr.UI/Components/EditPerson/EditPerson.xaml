@@ -77,6 +77,30 @@
                         </ComboBox>
                     </StackPanel>
                 </Grid>
+                <Grid Margin="10" Grid.Row="2">
+                    <Grid.Style>
+                        <Style TargetType="Grid">
+                            <Setter Property="Visibility" Value="Visible"></Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsKunde}" Value="true">
+                                    <Setter Property="Visibility" Value="Hidden"></Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Lock" VerticalAlignment="Center"></materialDesign:PackIcon>
+                            <Label FontWeight="Bold"  Margin="0,0,20,0">Passwort:</Label>
+                        </StackPanel>
+                        <PasswordBox BorderBrush="{DynamicResource AccentColorBrush2}" Name="PasswordBox" Width="200" HorizontalAlignment="Left" Height="30" Margin="10"></PasswordBox>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Repeat" VerticalAlignment="Center"></materialDesign:PackIcon>
+                            <Label FontWeight="Bold"  Margin="0,0,20,0">Passwort wiederholen:</Label>
+                        </StackPanel>
+                        <PasswordBox BorderBrush="{DynamicResource AccentColorBrush2}" Name="PasswordBoxRepeat" Width="200" HorizontalAlignment="Left" Height="30" Margin="10"></PasswordBox>
+                    </StackPanel>
+                </Grid>
                 <Button Click="ButtonBase_OnClick" Grid.Row="3" HorizontalAlignment="Right" Margin="20">Speichern</Button>
             </Grid>
         </materialDesign:Card>

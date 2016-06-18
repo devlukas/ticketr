@@ -315,5 +315,36 @@ namespace Ticketr.Businesslogik
 
             return id;
         }
+
+        public int SaveMitarbeiter(Mitarbeiter mitarbeiter, string password)
+        {
+            Ticketr.Schnittstellen.Dto.Mitarbeiter mitarbeiterDto = new Ticketr.Schnittstellen.Dto.Mitarbeiter()
+            {
+                ErstellDatum = DateTime.Now,
+                Passwort = password,
+                Person = new Ticketr.Schnittstellen.Dto.Person()
+                {
+                    EMail = mitarbeiter.EMail,
+                    ErstellDatum = DateTime.Now,
+                    Name = mitarbeiter.Name,
+                    Telefon = mitarbeiter.Telefon,
+                    Vorname = mitarbeiter.Vorname,
+                    Id = mitarbeiter.PersonId
+                }
+            };
+
+            int id = mitarbeiter.Id;
+
+            if (id == 0)
+            {
+                id = service.AddMitarbeiter(mitarbeiterDto);
+            }
+            else
+            {
+                service.UpdatePerson(mitarbeiterDto.Person);
+            }
+
+            return id;
+        }
     }
 }

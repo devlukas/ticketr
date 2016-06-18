@@ -80,6 +80,11 @@ namespace Ticketr.UI.Components.EditPersonView
         {
             get { return (Kunde)person; }
         }
+
+        public Mitarbeiter Mitarbeiter
+        {
+            get { return (Mitarbeiter) person; }
+        }
         /// <summary>
         /// Gibt zurück ob die Person ein Kunde ist, oder nicht
         /// </summary>

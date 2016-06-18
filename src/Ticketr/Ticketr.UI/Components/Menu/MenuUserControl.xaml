@@ -63,10 +63,10 @@
                             <Rectangle.Style>
                                 <Style TargetType="Rectangle">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding KundenViewWidth}" Value="*">
+                                        <DataTrigger Binding="{Binding IsKundenViewOpen}" Value="true">
                                             <Setter Property="Visibility" Value="Visible"></Setter>
                                         </DataTrigger>
-                                        <DataTrigger Binding="{Binding KundenViewWidth}" Value="0">
+                                        <DataTrigger Binding="{Binding IsKundenViewOpen}" Value="false">
                                             <Setter Property="Visibility" Value="Hidden"></Setter>
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -88,10 +88,10 @@
                             <Rectangle.Style>
                                 <Style TargetType="Rectangle">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding MitarbeiterViewWidth}" Value="*">
+                                        <DataTrigger Binding="{Binding IsMitarbeiterViewOpen}" Value="true">
                                             <Setter Property="Visibility" Value="Visible"></Setter>
                                         </DataTrigger>
-                                        <DataTrigger Binding="{Binding MitarbeiterViewWidth}" Value="0">
+                                        <DataTrigger Binding="{Binding IsMitarbeiterViewOpen}" Value="false">
                                             <Setter Property="Visibility" Value="Hidden"></Setter>
                                         </DataTrigger>
                                     </Style.Triggers>

@@ -21,21 +21,26 @@ namespace Ticketr.UI.Components.Dashboard
         /// </summary>
         public DashboardViewModel()
         {
-            
-            
-            
             GetProfilePicture();
+        }
+
+        private void OnViewChange()
+        {
+            TicketViewWidth = "0";
+            KundenViewWidth = "0";
+            EditTicketViewWidth = "0";
+            EditPersonViewWidth = "0";
+            MitarbeiterViewWidth = "0";
+            IsKundenViewOpen = false;
+            IsMitarbeiterViewOpen = false;
         }
         /// <summary>
         /// Öffnet die TickketView
         /// </summary>
         public void OpenTicketMenu()
         {
+            OnViewChange();
             TicketViewWidth = "*";
-            KundenViewWidth = "0";
-            EditTicketViewWidth = "0";
-            EditPersonViewWidth = "0";
-            MitarbeiterViewWidth = "0";
             TicketTableViewModel = new TicketTableViewModel();
             TicketTableViewModel.LoadItems();
         }
@@ -44,13 +49,11 @@ namespace Ticketr.UI.Components.Dashboard
         /// </summary>
         public void OpenKundenMenu()
         {
-            KundenViewModel = new KundenViewModel(this);
-            KundenViewModel.LoadItems();
-            TicketViewWidth = "0";
-            EditTicketViewWidth = "0";
+            OnViewChange();
+            PersonenViewModel = new KundenViewModel(this);
+            PersonenViewModel.LoadItems();
             KundenViewWidth = "*";
-            MitarbeiterViewWidth = "0";
-            EditPersonViewWidth = "0";
+            IsKundenViewOpen = true;
 
         }
         /// <summary>
@@ -58,38 +61,32 @@ namespace Ticketr.UI.Components.Dashboard
         /// </summary>
         public void OpenEditTicketView()
         {
-            TicketViewWidth = "0";
-            KundenViewWidth = "0";
+            OnViewChange();
             EditTicketViewWidth = "*";
-            MitarbeiterViewWidth = "0";
-            EditPersonViewWidth = "0";
-
 
         }
+
+        
         /// <summary>
         /// Öffnet die Mitarbeiter View
         /// </summary>
         public void OpenMitarbeiterView()
         {
-            TicketViewWidth = "0";
-            KundenViewWidth = "0";
-            EditTicketViewWidth = "0";
-            MitarbeiterViewWidth = "*";
-            EditPersonViewWidth = "0";
+            OnViewChange();
+            IsMitarbeiterViewOpen = true;
+            PersonenViewModel = new MitarbeitersViewModel(this);
+            PersonenViewModel.LoadItems();
+            KundenViewWidth = "*";
         }
         /// <summary>
         /// Öffnet die EditPerosn View
         /// </summary>
         public void OpenEditPersonView()
         {
+            OnViewChange();
             EditPersonViewModel = new EditPersonViewModel(this);
             EditPersonViewModel.LoadItems();
             EditPersonViewWidth = "*";
-            TicketViewWidth = "0";
-            KundenViewWidth = "0";
-            EditTicketViewWidth = "0";
-            MitarbeiterViewWidth = "0";
-            
         }
         private string ticketViewWidth;
         /// <summary>
@@ -218,17 +215,17 @@ namespace Ticketr.UI.Components.Dashboard
             }
         }
 
-        private KundenViewModel kundenViewModel;
+        private PersonenViewModel personenViewModel;
         /// <summary>
         /// Gibt das KundenViewModel zurück
         /// </summary>
-        public KundenViewModel KundenViewModel
+        public PersonenViewModel PersonenViewModel
         {
-            get { return kundenViewModel; }
+            get { return personenViewModel; }
             private set
             {
-                kundenViewModel = value;
-                RaisePropertyChanged("KundenViewModel");
+                personenViewModel = value;
+                RaisePropertyChanged("PersonenViewModel");
             }
         }
 
@@ -241,6 +238,42 @@ namespace Ticketr.UI.Components.Dashboard
                 RaisePropertyChanged("TicketTableViewModel");
             }
         }
+        private bool isMitarbeiterViewOpen;
+        /// <summary>
+        /// Gibt zurück ob die MitarbeiterView offen ist oder nicht
+        /// </summary>
+        public bool IsMitarbeiterViewOpen
+        {
+            get
+            {
+                return isMitarbeiterViewOpen;
+            }
+
+            private set
+            {
+                isMitarbeiterViewOpen = value;
+                RaisePropertyChanged("IsMitarbeiterViewOpen");
+            }
+        }
+        /// <summary>
+        /// Gibt zurück ob die Kunden View offen ist oder nicht
+        /// </summary>
+        public bool IsKundenViewOpen
+        {
+            get
+            {
+                return isKundenViewOpen;
+            }
+
+            private set
+            {
+                isKundenViewOpen = value;
+                RaisePropertyChanged("IsKundenViewOpen");
+            }
+        }
+
+        private bool isKundenViewOpen;
+
 
         private TicketTableViewModel ticketTableViewModel;
     }

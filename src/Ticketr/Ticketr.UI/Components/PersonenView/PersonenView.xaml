@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Ticketr.UI.Components.KundenView"
+﻿<UserControl x:Class="Ticketr.UI.Components.PersonenView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -30,9 +30,9 @@
                     <TextBox Grid.Column="1" VerticalAlignment="Center" Width="600" Text="{Binding SearchField, UpdateSourceTrigger=PropertyChanged}"  materialDesign:TextFieldAssist.Hint="Suchen"></TextBox>
                 </Grid>
                 <Grid HorizontalAlignment="Right">
-                    <Button Click="ButtonBase_OnClick" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                    <Button Click="AddPersonButton_Click" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
                         Margin="0 0 8 0" HorizontalAlignment="Left"
-                        ToolTip="Kunde hinzufügen">
+                        ToolTip="Person hinzufügen">
                         <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" Foreground="White" />
                     </Button>
                 </Grid>
@@ -68,11 +68,11 @@
             </materialDesign:PackIcon>
             <Label FontSize="20" Margin="0 25">Daten werden geladen...</Label>
         </StackPanel>
-        <ItemsControl Grid.Row="2" ItemsSource="{Binding FilteredKunden}" Margin="0,20">
+        <ItemsControl Grid.Row="2" ItemsSource="{Binding FilteredPersonen}" Margin="0,20">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <!-- KundeItem -->
-                    <Grid Height="50" Name="KundeItem">
+                    <!-- PersonItem -->
+                    <Grid Height="50" Name="PersonItem">
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
                             <RowDefinition Height="Auto"></RowDefinition>
@@ -93,21 +93,21 @@
                                     <Style TargetType="StackPanel">
                                         <Setter Property="Visibility" Value="Collapsed"></Setter>
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding ElementName=KundeItem,Path=IsMouseOver}" Value="True">
+                                            <DataTrigger Binding="{Binding ElementName=PersonItem,Path=IsMouseOver}" Value="True">
                                                 <Setter Property="Visibility" Value="Visible"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </StackPanel.Style>
-                                <Button ToolTip="Bearbeiten" Click="EditKundeButton_Click" Width="Auto" Padding="0"  Background="Transparent" BorderBrush="Transparent" Margin="0,0,5,0">
+                                <Button ToolTip="Bearbeiten" Click="EditPersonButton_Click" Width="Auto" Padding="0"  Background="Transparent" BorderBrush="Transparent" Margin="0,0,5,0">
                                     <materialDesign:PackIcon Kind="BorderColor" Foreground="#6F6F6F" Width="20" Height="20"></materialDesign:PackIcon>
                                 </Button>
                                 <materialDesign:DialogHost HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <materialDesign:DialogHost.DialogContent>
                                         <StackPanel Margin="16">
-                                            <TextBlock>Wollen Sie diese Kunden wirklich löschen?</TextBlock>
+                                            <TextBlock>Wollen Sie diese Person wirklich löschen?</TextBlock>
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
-                                                <Button Foreground="#f44336" Click="KundeButtonLöschen_Click" Style="{StaticResource MaterialDesignFlatButton}" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
+                                                <Button Foreground="#f44336" Click="PersonLöschenButton_Click" Style="{StaticResource MaterialDesignFlatButton}" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
                                                     LÖSCHEN
                                                 </Button>
                                                 <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">

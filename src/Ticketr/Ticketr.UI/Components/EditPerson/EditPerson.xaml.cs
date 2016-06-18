@@ -30,8 +30,25 @@ namespace Ticketr.UI.Components
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
             EditPersonViewModel editPersonViewModel = (EditPersonViewModel)((Button)sender).DataContext;
-            App.TicketSystem.SaveKunde(editPersonViewModel.Kunde);
-            editPersonViewModel.DashboardViewModel.OpenKundenMenu();
+            if (editPersonViewModel.IsKunde)
+            {
+                App.TicketSystem.SaveKunde(editPersonViewModel.Kunde);
+                editPersonViewModel.DashboardViewModel.OpenKundenMenu();
+            }
+            else
+            {
+                if (PasswordBox.Password == PasswordBoxRepeat.Password)
+                {
+                    App.TicketSystem.SaveMitarbeiter(editPersonViewModel.Mitarbeiter, PasswordBox.Password);
+                    editPersonViewModel.DashboardViewModel.OpenMitarbeiterView();
+                }
+                else
+                {
+                    throw new Exception("Passwort");
+                }
+                
+            }
+            
         }
     }
 }

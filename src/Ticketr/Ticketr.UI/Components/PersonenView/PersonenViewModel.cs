@@ -9,13 +9,14 @@ using Ticketr.UI.Models;
 
 namespace Ticketr.UI.Components
 {
-    public class KundenViewModel : ViewModel
+    public abstract class PersonenViewModel : ViewModel
     {
+        private readonly DashboardViewModel dashboardViewModel;
         /// <summary>
         /// Initialisiert das KundeViewModel
         /// </summary>
         /// <param name="dashboardViewModel"></param>
-        public KundenViewModel(DashboardViewModel dashboardViewModel)
+        public PersonenViewModel(DashboardViewModel dashboardViewModel)
         {
             this.dashboardViewModel = dashboardViewModel;
         }
@@ -33,7 +34,7 @@ namespace Ticketr.UI.Components
             set
             {
                 searchField = value;
-                RaisePropertyChanged("FilteredKunden");
+                RaisePropertyChanged("FilteredPersonen");
             }
         }
 
@@ -41,13 +42,8 @@ namespace Ticketr.UI.Components
         /// Ladet alle relevanten Datne
         /// </summary>
         /// <returns>Task</returns>
-        public async Task LoadItems()
-        {
-            IsLoading = true;
-            await App.TicketSystem.ReloadKunden();
-            Kunden = new ObservableCollection<KundeViewModel>(App.TicketSystem.Kunden.Select(k => new KundeViewModel(k, this)));
-            IsLoading = false;
-        }
+        public abstract Task LoadItems();
+        
 
         private bool isLoading;
         /// <summary>
@@ -63,40 +59,30 @@ namespace Ticketr.UI.Components
             }
         }
 
-        private ObservableCollection<KundeViewModel> kunden;
-        private DashboardViewModel dashboardViewModel;
-        
+
+
+
+
+        protected abstract List<PersonViewModel> GetPersonenViewModels();
+
         /// <summary>
-        /// Gibt alle KundenViewModel zurück
+        /// Gibt alle PersonViewModels zurück
         /// </summary>
-        public ObservableCollection<KundeViewModel> Kunden
+        public ObservableCollection<PersonViewModel> PersonenViewModels
         {
-            get { return kunden; }
-            private set
-            {
-                kunden = value;
-                RaisePropertyChanged("Kunden");
-                RaisePropertyChanged("FilteredKunden");
-            }
+            get { return new ObservableCollection<PersonViewModel>(GetPersonenViewModels()); }
         }
 
         /// <summary>
         /// Gibt die Kunden mit dem Filter zurück
         /// </summary>
-        public ObservableCollection<KundeViewModel> FilteredKunden
+        public ObservableCollection<PersonViewModel> FilteredPersonen
         {
             get
             {
-                ObservableCollection<KundeViewModel> filteredKunden;
-                if (!string.IsNullOrEmpty(SearchField))
-                {
-                    filteredKunden = new ObservableCollection<KundeViewModel>(kunden.Where(k => k.Name.IndexOf(searchField) == 0 || k.Vorname.IndexOf(searchField) == 0).ToList());
-                }
-                else
-                {
-                    filteredKunden = kunden;
-                }
-                return filteredKunden;
+                List<PersonViewModel> personen = GetPersonenViewModels();
+                personen = FilterPersonen(personen);
+                return new ObservableCollection<PersonViewModel>(personen);
             }
         }
 
@@ -107,14 +93,27 @@ namespace Ticketr.UI.Components
         {
             get { return dashboardViewModel; }
         }
-        /// <summary>
-        /// Löscht den Kunde aus dem UI
-        /// </summary>
-        /// <param name="kundeViewModel">Das zu löschende KundeViewModel</param>
-        public void RemoveKunde(KundeViewModel kundeViewModel)
+
+        
+
+        private List<PersonViewModel> FilterPersonen(List<PersonViewModel> personen)
         {
-            Kunden.Remove(kundeViewModel);
-            RaisePropertyChanged("FilteredKunden");
+            List<PersonViewModel> filteredPersonViewModels = new List<PersonViewModel>();
+            if (personen != null)
+            {
+                if (!string.IsNullOrEmpty(SearchField))
+                {
+                    filteredPersonViewModels =
+                        personen.Where(p => p.Name.ToLower().IndexOf(searchField.ToLower()) == 0 || p.Vorname.ToLower().IndexOf(searchField.ToLower()) == 0)
+                            .ToList();
+                }
+                else
+                {
+                    filteredPersonViewModels = personen;
+                }
+            }
+
+            return filteredPersonViewModels;
         }
     }
 }

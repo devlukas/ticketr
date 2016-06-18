@@ -28,8 +28,6 @@ namespace Ticketr.Businesslogik
         {
             get { return assignedTicketsCount; }
         }
-
-
         public Mitarbeiter(Schnittstellen.Dto.Mitarbeiter mitarbeiter) 
             : base(mitarbeiter.Person)
         {
@@ -38,5 +36,8 @@ namespace Ticketr.Businesslogik
             this.id = mitarbeiter.Id;
         }
 
+        public Mitarbeiter()
+        {
+        }
     } 
 }
