@@ -10,156 +10,257 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ListBox.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Background="#FAFAFA">
-        <materialDesign:Card Margin="15,15,15,15" Grid.Row="1" HorizontalAlignment="Stretch" Background="White">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid Margin="10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center"></materialDesign:PackIcon>
-                            <Label FontWeight="Bold"  Margin="0,0,20,0">Vorname:</Label>
-                        </StackPanel>
-                        <TextBox Name="Vorname" materialDesign:TextFieldAssist.Hint="Roger" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="10" FontSize="14">
-                            <TextBox.Text>
-                                <Binding Path="Vorname" UpdateSourceTrigger="LostFocus">
-                                    <Binding.ValidationRules>
-                                        <ExceptionValidationRule />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox.Text>
-                        </TextBox>
-                    </StackPanel>
-                    <StackPanel Grid.Column="1" Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center"></materialDesign:PackIcon>
-                            <Label FontWeight="Bold"  Margin="0,0,20,0">Name:</Label>
-                        </StackPanel>
-                        <TextBox Name="Name"  materialDesign:TextFieldAssist.Hint="Müller" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="10" FontSize="14">
-                            <TextBox.Text>
-                                <Binding Path="Name" UpdateSourceTrigger="LostFocus">
-                                    <Binding.ValidationRules>
-                                        <ExceptionValidationRule />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox.Text>
-                        </TextBox>
-                    </StackPanel>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <!-- Edit User -->
+            <Grid Grid.Row="0" Background="#FAFAFA">
+                <materialDesign:Card Margin="15,15,15,15" Grid.Row="1" HorizontalAlignment="Stretch" Background="White">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Background="{DynamicResource AccentColorBrush}">
+                            <TextBlock Foreground="White" Text="Person" FontSize="20" FontWeight="Bold" Margin="5,10,0,10"></TextBlock>
+                        </Grid>
+                        <Grid Margin="10" Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center"></materialDesign:PackIcon>
+                                    <Label FontWeight="Bold"  Margin="0,0,20,0">Vorname:</Label>
+                                </StackPanel>
+                                <TextBox Name="Vorname" materialDesign:TextFieldAssist.Hint="Roger" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="10" FontSize="14">
+                                    <TextBox.Text>
+                                        <Binding Path="Vorname" UpdateSourceTrigger="LostFocus">
+                                            <Binding.ValidationRules>
+                                                <ExceptionValidationRule />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center"></materialDesign:PackIcon>
+                                    <Label FontWeight="Bold"  Margin="0,0,20,0">Name:</Label>
+                                </StackPanel>
+                                <TextBox Name="Name"  materialDesign:TextFieldAssist.Hint="Müller" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="10" FontSize="14">
+                                    <TextBox.Text>
+                                        <Binding Path="Name" UpdateSourceTrigger="LostFocus">
+                                            <Binding.ValidationRules>
+                                                <ExceptionValidationRule />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
 
-                </Grid>
-                <Grid Margin="10" Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Phone" VerticalAlignment="Center"></materialDesign:PackIcon>
-                            <Label FontWeight="Bold"  Margin="0,0,20,0">Telefon:</Label>
-                        </StackPanel>
-                        <TextBox Name="Telefon" materialDesign:TextFieldAssist.Hint="0793189773" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="10" FontSize="14">
-                            <TextBox.Text>
-                                <Binding Path="Telefon" UpdateSourceTrigger="LostFocus">
-                                    <Binding.ValidationRules>
-                                        <ExceptionValidationRule />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox.Text>
-                        </TextBox>
-                    </StackPanel>
-                    <StackPanel Grid.Column="1" Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon VerticalAlignment="Center" Kind="Email" ></materialDesign:PackIcon>
-                            <Label FontWeight="Bold"  Margin="0,0,20,0">Email:</Label>
-                        </StackPanel>
+                        </Grid>
+                        <Grid Margin="10" Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Phone" VerticalAlignment="Center"></materialDesign:PackIcon>
+                                    <Label FontWeight="Bold"  Margin="0,0,20,0">Telefon:</Label>
+                                </StackPanel>
+                                <TextBox Name="Telefon" materialDesign:TextFieldAssist.Hint="0793189773" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="10" FontSize="14">
+                                    <TextBox.Text>
+                                        <Binding Path="Telefon" UpdateSourceTrigger="LostFocus">
+                                            <Binding.ValidationRules>
+                                                <ExceptionValidationRule />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon VerticalAlignment="Center" Kind="Email" ></materialDesign:PackIcon>
+                                    <Label FontWeight="Bold"  Margin="0,0,20,0">Email:</Label>
+                                </StackPanel>
 
-                        <TextBox Name="EMail" materialDesign:TextFieldAssist.Hint="roger.müller@gibz.ch" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="10" FontSize="14">
-                            <TextBox.Text>
-                                <Binding Path="EMail" UpdateSourceTrigger="LostFocus">
-                                    <Binding.ValidationRules>
-                                        <ExceptionValidationRule />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox.Text>
-                        </TextBox>
-                    </StackPanel>
-                </Grid>
-                <Grid Margin="10" Grid.Row="2">
-                    <Grid.Style>
-                        <Style TargetType="Grid">
-                            <Setter Property="Visibility" Value="Visible"></Setter>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsKunde}" Value="False">
-                                    <Setter Property="Visibility" Value="Hidden"></Setter>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Grid.Style>
-                    <StackPanel Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Star" VerticalAlignment="Center"></materialDesign:PackIcon>
-                            <Label FontWeight="Bold"  Margin="0,0,20,0">Position:</Label>
-                        </StackPanel>
-                        <ComboBox IsEditable="True" Width="200" HorizontalAlignment="Left" Height="30" SelectedItem="{Binding Position}" DisplayMemberPath="Name" SelectedValuePath="Name" ItemsSource="{Binding Positionen}" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="10">
-                        </ComboBox>
-                    </StackPanel>
-                </Grid>
-                <Grid Margin="10" Grid.Row="2">
-                    <Grid.Style>
-                        <Style TargetType="Grid">
-                            <Setter Property="Visibility" Value="Visible"></Setter>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsKunde}" Value="true">
-                                    <Setter Property="Visibility" Value="Hidden"></Setter>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Grid.Style>
-                    <StackPanel Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Lock" VerticalAlignment="Center"></materialDesign:PackIcon>
-                            <Label FontWeight="Bold"  Margin="0,0,20,0">Passwort des Mitarbeiters:</Label>
-                        </StackPanel>
-                        <PasswordBox BorderBrush="{DynamicResource AccentColorBrush2}" Name="PasswordBox" Width="200" HorizontalAlignment="Left" Height="30" Margin="10"></PasswordBox>
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Repeat" VerticalAlignment="Center"></materialDesign:PackIcon>
-                            <Label FontWeight="Bold"  Margin="0,0,20,0">Passwort des Mitarbeiters wiederholen:</Label>
-                        </StackPanel>
-                        <PasswordBox BorderBrush="{DynamicResource AccentColorBrush2}" Name="PasswordBoxRepeat" Width="200" HorizontalAlignment="Left" Height="30" Margin="10"></PasswordBox>
-                    </StackPanel>
-                </Grid>
-                <Button IsDefault="True" Click="ButtonBase_OnClick" Grid.Row="3" HorizontalAlignment="Right" Margin="20" Content="Speichern">
-                    <Button.Style >
-                        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
-                            <Setter Property="IsEnabled" Value="False"/>
-                            <Style.Triggers>
-                                <MultiDataTrigger>
-                                    <MultiDataTrigger.Conditions>
-                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=Vorname}" Value="False"/>
+                                <TextBox Name="EMail" materialDesign:TextFieldAssist.Hint="roger.müller@gibz.ch" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="10" FontSize="14">
+                                    <TextBox.Text>
+                                        <Binding Path="EMail" UpdateSourceTrigger="LostFocus">
+                                            <Binding.ValidationRules>
+                                                <ExceptionValidationRule />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Margin="10" Grid.Row="3">
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Visibility" Value="Visible"></Setter>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsKunde}" Value="False">
+                                            <Setter Property="Visibility" Value="Hidden"></Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Star" VerticalAlignment="Center"></materialDesign:PackIcon>
+                                    <Label FontWeight="Bold"  Margin="0,0,20,0">Position:</Label>
+                                </StackPanel>
+                                <ComboBox IsEditable="True" Width="200" HorizontalAlignment="Left" Height="30" SelectedItem="{Binding Position}" DisplayMemberPath="Name" SelectedValuePath="Name" ItemsSource="{Binding Positionen}" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="10">
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Margin="10" Grid.Row="4">
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Visibility" Value="Visible"></Setter>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsKunde}" Value="true">
+                                            <Setter Property="Visibility" Value="Hidden"></Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Lock" VerticalAlignment="Center"></materialDesign:PackIcon>
+                                    <Label FontWeight="Bold"  Margin="0,0,20,0">Passwort des Mitarbeiters:</Label>
+                                </StackPanel>
+                                <PasswordBox BorderBrush="{DynamicResource AccentColorBrush2}" Name="PasswordBox" Width="200" HorizontalAlignment="Left" Height="30" Margin="10"></PasswordBox>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Repeat" VerticalAlignment="Center"></materialDesign:PackIcon>
+                                    <Label FontWeight="Bold"  Margin="0,0,20,0">Passwort des Mitarbeiters wiederholen:</Label>
+                                </StackPanel>
+                                <PasswordBox BorderBrush="{DynamicResource AccentColorBrush2}" Name="PasswordBoxRepeat" Width="200" HorizontalAlignment="Left" Height="30" Margin="10"></PasswordBox>
+                            </StackPanel>
+                        </Grid>
+                        <Button IsDefault="True" Click="ButtonBase_OnClick" Grid.Row="4" HorizontalAlignment="Right" Margin="20" Content="Speichern">
+                            <Button.Style >
+                                <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=(Validation.HasError), ElementName=Vorname}" Value="False"/>
 
-                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=Name}" Value="False"/>
-                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=Telefon}" Value="False"/>
-                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=EMail}" Value="False"/>
-                                    </MultiDataTrigger.Conditions>
-                                    <Setter Property="IsEnabled" Value="True"/>
-                                </MultiDataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                </Button>
+                                                <Condition Binding="{Binding Path=(Validation.HasError), ElementName=Name}" Value="False"/>
+                                                <Condition Binding="{Binding Path=(Validation.HasError), ElementName=Telefon}" Value="False"/>
+                                                <Condition Binding="{Binding Path=(Validation.HasError), ElementName=EMail}" Value="False"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="IsEnabled" Value="True"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </Grid>
+                </materialDesign:Card>
             </Grid>
-        </materialDesign:Card>
-    </Grid>
+            <!-- User History -->
+
+            <Grid Margin="15,5,15,15" Grid.Row="1">
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Visibility" Value="Collapsed"></Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsKunde}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <materialDesign:Card>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Background="#f44336">
+                            <TextBlock Foreground="White" Text="Tickets" FontSize="20" FontWeight="Bold" Margin="5,10,0,10"></TextBlock>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding HasTickets}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible"></Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+                            <ListBox  HorizontalContentAlignment="Stretch" ItemsSource="{Binding Tickets}">
+                                <ListBox.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MaterialDesignListBoxItem}">
+                                        <EventSetter Event="PreviewMouseLeftButtonDown" Handler="TicketListBoxItemClick" />
+                                    </Style>
+                                </ListBox.ItemContainerStyle>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <!-- <Button Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}" Margin="0,0,8,0" Content="{Binding KundeInitials}" Background="#9E9E9E" Foreground="White" BorderBrush="#9E9E9E"></Button> -->
+                                            <Grid Grid.Column="1">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <TextBlock FontWeight="Bold" HorizontalAlignment="Stretch" FontSize="16" Text="{Binding Bezeichnung}"></TextBlock>
+                                                <TextBlock Foreground="#A7A7A7" HorizontalAlignment="Stretch" Grid.Row="1" Text="{Binding KurzBeschreibung}" FontSize="14" Margin="0,5,0,0" TextWrapping="Wrap"></TextBlock>
+                                            </Grid>
+                                            <TextBlock Grid.Column="2" FontWeight="Bold" Text="{Binding ErfassungFormatiert}" Foreground="#6FCDF8"></TextBlock>
+                                            <materialDesign:PackIcon HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="3" Kind="ArrowRight" Foreground="#f44336" Width="20"></materialDesign:PackIcon>
+                                        </Grid>
+
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Visibility" Value="Visible"></Setter>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding HasTickets}" Value="True">
+                                            <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+                            <TextBlock Margin="10" FontWeight="Bold" HorizontalAlignment="Stretch" FontSize="16" Text="Keine Tickets vorhanden"></TextBlock>
+                        </Grid>
+                    </Grid>
+
+                </materialDesign:Card>
+            </Grid>
+
+
+
+        </Grid>
+    </ScrollViewer>
+
+
 </UserControl>

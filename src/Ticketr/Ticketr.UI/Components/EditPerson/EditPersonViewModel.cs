@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Ticketr.Businesslogik;
 using Ticketr.UI.Components.Dashboard;
+using Ticketr.UI.Components.TicketTableItem;
 using Ticketr.UI.Models;
 
 namespace Ticketr.UI.Components.EditPersonView
@@ -32,6 +33,8 @@ namespace Ticketr.UI.Components.EditPersonView
         {
             await App.TicketSystem.ReloadPositionen();
             Positionen = App.TicketSystem.Positionen;
+            await App.TicketSystem.ReloadTickets();
+            RaisePropertyChanged("Tickets");
             RaisePropertyChanged("Position");
         }
         public string Name
@@ -154,6 +157,38 @@ namespace Ticketr.UI.Components.EditPersonView
             {
                 positionen = value;
                 RaisePropertyChanged("Positionen");
+            }
+        }
+
+        private List<TicketTableItemViewModel> tickets;
+
+        /// <summary>
+        /// Gibt alle Tickets der Person zurück
+        /// </summary>
+        public List<TicketTableItemViewModel> Tickets
+        {
+            get
+            {
+                if (IsKunde)
+                {
+                    
+                    List<TicketTableItemViewModel> ticketsTableItemViewModels = App.TicketSystem.GetTicketsByKundenId(Kunde.Id).Select(t => new TicketTableItemViewModel(t)).ToList();
+                    HasTickets = ticketsTableItemViewModels.Count > 0;
+                    return ticketsTableItemViewModels;
+                }
+                return new List<TicketTableItemViewModel>();
+            }
+        }
+
+        private bool hasTickets = false;
+
+        public bool HasTickets
+        {
+            get { return hasTickets; }
+            private set
+            {
+                hasTickets = value;
+                RaisePropertyChanged("HasTickets");
             }
         }
     }

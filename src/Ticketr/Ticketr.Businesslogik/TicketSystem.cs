@@ -277,6 +277,10 @@ namespace Ticketr.Businesslogik
             service.DeleteMitarbeiter(mitarbeiterId);
         }
 
+        public List<Ticket> GetTicketsByKundenId(int kundenId)
+        {
+            return Tickets.Where(t => t.Kunde.Id == kundenId).ToList();
+        }
         /// <summary>
         /// Fügt den angegebene Kunde dem System hinzu oder aktualisiert ihn.
         /// </summary>

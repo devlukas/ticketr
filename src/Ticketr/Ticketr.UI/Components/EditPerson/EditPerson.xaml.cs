@@ -13,7 +13,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Ticketr.Businesslogik;
+using Ticketr.UI.Components.Dashboard;
 using Ticketr.UI.Components.EditPersonView;
+using Ticketr.UI.Components.EditTicketView;
+using Ticketr.UI.Components.TicketTableItem;
 
 namespace Ticketr.UI.Components
 {
@@ -46,9 +49,18 @@ namespace Ticketr.UI.Components
                 {
                     throw new Exception("Passwort");
                 }
-                
+
             }
-            
+
+        }
+
+        private void TicketListBoxItemClick(object sender, RoutedEventArgs e)
+        {
+            TicketTableItemViewModel ticket = (TicketTableItemViewModel)((ListBoxItem)sender).DataContext;
+            DashboardViewModel dashboard = App.MainWindowViewModel.SelectedViewModel as DashboardViewModel;
+
+            dashboard.EditTicketViewModel = new EditTicketViewModel(ticket.Id);
+            dashboard.OpenEditTicketView();
         }
     }
 }
