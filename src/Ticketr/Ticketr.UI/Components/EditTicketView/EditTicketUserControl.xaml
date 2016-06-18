@@ -24,8 +24,8 @@
                 <RowDefinition Height="650"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <Grid Effect="{StaticResource z-depth2}" Background="{DynamicResource AccentColorBrush}">
-                <Label HorizontalAlignment="Left" FontSize="30" Margin="30 6" Foreground="White" Content="{Binding SiteTitle}"></Label>
+            <Grid Height="70" Effect="{StaticResource z-depth2}" Background="{DynamicResource DarkWindowTitle}">
+                <Label VerticalAlignment="Bottom" HorizontalAlignment="Left" FontSize="26" Margin="30 6" Foreground="White" Content="{Binding SiteTitle}"></Label>
             </Grid>
             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
                 <StackPanel.Style>

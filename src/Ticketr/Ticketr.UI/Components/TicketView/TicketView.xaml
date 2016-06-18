@@ -22,11 +22,11 @@
             </Grid.ColumnDefinitions>
             <!-- Statistics -->
         </Grid>
-        <Grid Effect="{StaticResource z-depth2}" Grid.Row="1" Background="{DynamicResource AccentColorBrush}">
-            <Label HorizontalAlignment="Left" FontSize="30" Margin="30 6" Foreground="White">Tickets</Label>
-            <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{DynamicResource ComplementColor}" BorderBrush="{DynamicResource ComplementColor}" Click="TicketErstellenButtonClick" Margin="30 0"  HorizontalAlignment="Right" ToolTip="Ticket hinzufügen">
+        <Grid Height="70" Effect="{StaticResource z-depth2}" Grid.Row="1" Background="{DynamicResource DarkWindowTitle}">
+            <Label VerticalAlignment="Bottom" HorizontalAlignment="Left" FontSize="26" Margin="30 6" Foreground="White">Tickets</Label>
+            <Button VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{DynamicResource ComplementColor}" BorderBrush="{DynamicResource ComplementColor}" Click="TicketErstellenButtonClick" Margin="30 0"  HorizontalAlignment="Right" ToolTip="Ticket hinzufügen">
                 <Button.RenderTransform>
-                    <TranslateTransform Y="20"></TranslateTransform>
+                    <TranslateTransform Y="17"></TranslateTransform>
                 </Button.RenderTransform>
                 <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" Foreground="White" />
             </Button>
