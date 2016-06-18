@@ -30,6 +30,7 @@ namespace Ticketr.UI.Components
         private void TicketErstellenButtonClick(object sender, RoutedEventArgs e)
         {
             DashboardViewModel dashboardViewModel = App.MainWindowViewModel.SelectedViewModel as DashboardViewModel;
+            dashboardViewModel.EditTicketViewModel = new EditTicketViewModel();
             dashboardViewModel.OpenEditTicketView();
         }
     }

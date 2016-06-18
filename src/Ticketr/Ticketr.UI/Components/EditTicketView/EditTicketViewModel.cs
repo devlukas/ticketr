@@ -372,7 +372,7 @@ namespace Ticketr.UI.Components.EditTicketView
             int ticketId = await App.TicketSystem.SaveTicket(ticket);
 
             DashboardViewModel dashboardViewModel = App.MainWindowViewModel.SelectedViewModel as DashboardViewModel;
-
+            dashboardViewModel.EditTicketViewModel = new EditTicketViewModel(ticketId);
 
 
             this.Loading = false;
