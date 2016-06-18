@@ -163,12 +163,13 @@
             $name = $this->realString($data["person"]["name"]);
             $vorname = $this->realString($data["person"]["vorname"]);
             $email = $this->realString($data["person"]["email"]);
+            $telefon = $this->realString($data["person"]["telefon"]);
             $passwort = $this->realString($data["passwort"]);
 
             if (!empty($name) && !empty($vorname) && !empty($email) && !empty($passwort)) {
                 $pwHash = hash('sha256', $passwort);
                 //add Person
-                $sqlPerson = "INSERT INTO person (name, vorname, email, telefon, erstellDatum, aenderungsDatum) VALUES ('$name', '$vorname', '$email', NOW(), NOW())";
+                $sqlPerson = "INSERT INTO person (name, vorname, email, telefon, erstellDatum, aenderungsDatum) VALUES ('$name', '$vorname', '$email', '$telefon', NOW(), NOW())";
                 $result = $this->query($sqlPerson);
 
                 //get id of new inserted person
