@@ -36,7 +36,7 @@
                     <PasswordBox x:Name="PasswordTextBox" BorderBrush="{DynamicResource AccentColorBrush2}" Grid.Row="2" materialDesign:TextFieldAssist.Hint="Passwort"  Margin="0,30,10,0"></PasswordBox>
                     <TextBlock TextWrapping="Wrap" Grid.Row="3" Margin="0,20" Text="{Binding ErrorMessage}" Foreground="{DynamicResource ErrorColor}"></TextBlock>
                     <StackPanel Grid.Row="4" Orientation="Horizontal">
-                        <Button Click="LoginButton_OnClick" Style="{StaticResource MaterialDesignRaisedAccentButton}"  Margin="0,20" Width="100" Height="50" HorizontalAlignment="Left">Einloggen</Button>
+                        <Button IsDefault="True" Click="LoginButton_OnClick" Style="{StaticResource MaterialDesignRaisedAccentButton}"  Margin="0,20" Width="100" Height="50" HorizontalAlignment="Left">Einloggen</Button>
                         <materialDesign:PackIcon Kind="Sync" Height="40" Width="40" Margin="5 25 0 0" RenderTransformOrigin="0.5, 0.5" Visibility="{Binding LoginProcessVisibility}">
                             <materialDesign:PackIcon.RenderTransform>
                                 <RotateTransform CenterX="0" CenterY="0"/>

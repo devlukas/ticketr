@@ -320,6 +320,7 @@ namespace Ticketr.Businesslogik
         {
             Ticketr.Schnittstellen.Dto.Mitarbeiter mitarbeiterDto = new Ticketr.Schnittstellen.Dto.Mitarbeiter()
             {
+                Id = 0,
                 ErstellDatum = DateTime.Now,
                 Passwort = password,
                 Person = new Ticketr.Schnittstellen.Dto.Person()

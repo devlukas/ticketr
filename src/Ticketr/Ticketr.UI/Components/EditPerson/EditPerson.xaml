@@ -101,7 +101,7 @@
                         <PasswordBox BorderBrush="{DynamicResource AccentColorBrush2}" Name="PasswordBoxRepeat" Width="200" HorizontalAlignment="Left" Height="30" Margin="10"></PasswordBox>
                     </StackPanel>
                 </Grid>
-                <Button Click="ButtonBase_OnClick" Grid.Row="3" HorizontalAlignment="Right" Margin="20">Speichern</Button>
+                <Button IsDefault="True" Click="ButtonBase_OnClick" Grid.Row="3" HorizontalAlignment="Right" Margin="20">Speichern</Button>
             </Grid>
         </materialDesign:Card>
     </Grid>
