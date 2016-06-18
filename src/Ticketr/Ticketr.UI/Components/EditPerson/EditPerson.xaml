@@ -47,7 +47,7 @@
                             <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center"></materialDesign:PackIcon>
                             <Label FontWeight="Bold"  Margin="0,0,20,0">Name:</Label>
                         </StackPanel>
-                        <TextBox  materialDesign:TextFieldAssist.Hint="Müller" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="10" FontSize="14">
+                        <TextBox Name="Name"  materialDesign:TextFieldAssist.Hint="Müller" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="10" FontSize="14">
                             <TextBox.Text>
                                 <Binding Path="Name" UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
@@ -69,7 +69,7 @@
                             <materialDesign:PackIcon Kind="Phone" VerticalAlignment="Center"></materialDesign:PackIcon>
                             <Label FontWeight="Bold"  Margin="0,0,20,0">Telefon:</Label>
                         </StackPanel>
-                        <TextBox materialDesign:TextFieldAssist.Hint="0793189773" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="10" FontSize="14">
+                        <TextBox Name="Telefon" materialDesign:TextFieldAssist.Hint="0793189773" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="10" FontSize="14">
                             <TextBox.Text>
                                 <Binding Path="Telefon" UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
@@ -85,7 +85,7 @@
                             <Label FontWeight="Bold"  Margin="0,0,20,0">Email:</Label>
                         </StackPanel>
 
-                        <TextBox materialDesign:TextFieldAssist.Hint="roger.müller@gibz.ch" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="10" FontSize="14">
+                        <TextBox Name="EMail" materialDesign:TextFieldAssist.Hint="roger.müller@gibz.ch" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="10" FontSize="14">
                             <TextBox.Text>
                                 <Binding Path="EMail" UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
@@ -148,6 +148,10 @@
                                 <MultiDataTrigger>
                                     <MultiDataTrigger.Conditions>
                                         <Condition Binding="{Binding Path=(Validation.HasError), ElementName=Vorname}" Value="False"/>
+
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=Name}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=Telefon}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=EMail}" Value="False"/>
                                     </MultiDataTrigger.Conditions>
                                     <Setter Property="IsEnabled" Value="True"/>
                                 </MultiDataTrigger>
