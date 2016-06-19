@@ -258,6 +258,10 @@ namespace Ticketr.UI.Components.EditTicketView
             get { return Id > 0 ? "Ticket Bearbeiten" : "Ticket Erstellen"; }
         }
 
+        public bool IsCreating
+        {
+            get { return Id == 0; }
+        }
 
         public int Id
         {

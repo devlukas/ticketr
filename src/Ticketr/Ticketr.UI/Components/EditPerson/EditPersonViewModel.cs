@@ -50,6 +50,11 @@ namespace Ticketr.UI.Components.EditPersonView
             }
         }
 
+        public bool IsCreating
+        {
+            get { return person.PersonId == 0; }
+        }
+
         public string Name
         {
             get { return person.Name; }

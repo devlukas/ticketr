@@ -100,7 +100,7 @@
                         </StackPanel>
 
                         <ComboBox ItemsSource="{Binding Prioritäten}" Text="--- Bitte wählen ---" SelectedItem="{Binding Path=SelectedPriority}" Grid.Row="1" Width="200" Height="30" IsEditable="True" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="5">
- 
+
                         </ComboBox>
                         <StackPanel Orientation="Horizontal" Grid.Row="2">
                             <materialDesign:PackIcon Margin="0,15,0,0" Kind="CubeOutline" ></materialDesign:PackIcon>
@@ -191,9 +191,21 @@
 
                         </Grid>
                         <StackPanel Grid.Row="11" Orientation="Horizontal" HorizontalAlignment="Right">
-                            <Button Click="DeleteButton_Click" Margin="0,10" Foreground="White" Background="DarkRed" BorderBrush="DarkRed" VerticalAlignment="Bottom">
-                                <materialDesign:PackIcon Kind="Delete" ></materialDesign:PackIcon>
-                            </Button>
+                            <Grid>
+                                <Grid.Style>
+                                    <Style TargetType="Grid">
+                                        <Setter Property="Visibility" Value="Visible"></Setter>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsCreating}" Value="True">
+                                                <Setter Property="Visibility" Value="Hidden"></Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+                                <Button Click="DeleteButton_Click" Margin="0,10" Foreground="White" Background="DarkRed" BorderBrush="DarkRed" VerticalAlignment="Bottom">
+                                    <materialDesign:PackIcon Kind="Delete" ></materialDesign:PackIcon>
+                                </Button>
+                            </Grid>
                             <Button Click="SpeichernButton_Click" Margin="10,0,0,10" Content="Speichern" Foreground="White" VerticalAlignment="Bottom"></Button>
                         </StackPanel>
 
@@ -245,7 +257,7 @@
                                             </Grid>
                                             <TextBlock Margin="6,0,0,0" TextWrapping="Wrap" Text="{Binding Text}"></TextBlock>
                                         </StackPanel>
-                                       
+
                                     </Grid>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
