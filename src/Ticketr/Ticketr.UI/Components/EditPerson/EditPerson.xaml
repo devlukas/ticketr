@@ -179,7 +179,19 @@
                                             </StackPanel>
                                         </StackPanel>
                                     </materialDesign:DialogHost.DialogContent>
-                                    <Button  Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Margin="0,10" Foreground="White" Background="DarkRed" BorderBrush="DarkRed" VerticalAlignment="Bottom">
+                                    <Button ToolTipService.ShowOnDisabled="True" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Margin="0,10" Foreground="White" Background="DarkRed" BorderBrush="DarkRed" VerticalAlignment="Bottom">
+                                        <Button.Style>
+                                            <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                                                <Setter Property="IsEnabled" Value="False"></Setter>
+                                                <Setter Property="ToolTip" Value="Diese Person kann erst gelöscht werden, wenn ihm keine Tickets zugewiesen sind."></Setter>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding HasTickets}" Value="False">
+                                                        <Setter Property="IsEnabled"  Value="True"></Setter>
+                                                        <Setter Property="ToolTip" Value="Person löschen"></Setter>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
                                         <materialDesign:PackIcon Kind="Delete" ></materialDesign:PackIcon>
                                     </Button>
 
