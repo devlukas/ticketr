@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using Ticketr.Businesslogik;
 
 namespace Ticketr.UI.Components.TicketTableItem
@@ -25,6 +26,40 @@ namespace Ticketr.UI.Components.TicketTableItem
             get
             {
                 return this.ticket.Abgeschlossen ? PackIconKind.Check : PackIconKind.AlertOutline;
+            }
+        }
+
+        /// <summary>
+        /// Nicht Binden!!!
+        /// </summary>
+        public Ticket Ticket
+        {
+            get { return this.ticket; }
+        }
+
+        public Brush PriorityColor
+        {
+            get
+            {
+                if (!ticket.Abgeschlossen)
+                {
+                    switch (ticket.Prioritaet)
+                    {
+                        case (Prioritaet.Hoch):
+                            return Brushes.IndianRed;
+                        case (Prioritaet.Mittel):
+                            return Brushes.Orange;
+                        case (Prioritaet.Tief):
+                            return Brushes.Yellow;
+                    }
+                }
+                else
+                {
+                    return Brushes.LawnGreen;
+                }
+                
+
+                return null;
             }
         }
 

@@ -59,5 +59,12 @@ namespace Ticketr.UI.Components
             }
 
         }
+
+        private void OnTabSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string view = (e.AddedItems[0] as TabItem).Header.ToString();
+            DashboardViewModel dashboard = App.MainWindowViewModel.SelectedViewModel as DashboardViewModel;
+            dashboard.TicketTableViewModel.ChangeView(view);
+        }
     }
 }

@@ -35,12 +35,27 @@
                             <materialDesign:PackIcon Kind="Check" VerticalAlignment="Center" Height="22" Width="22" Grid.Column="1" Margin="5,0,5,0" />
                             <TextBlock VerticalAlignment="Center" Text="Abgeschlossen"></TextBlock>
                         </StackPanel>
+                        <Grid Grid.Column="2" HorizontalAlignment="Right">
+                            <TabControl SelectionChanged="OnTabSelectionChanged">
+                                <TabItem Header="Offen"></TabItem>
+                                <TabItem Header="Meine"></TabItem>
+                                <TabItem Header="Abgeschlossen"></TabItem>
+                                <TabItem Header="Alle"></TabItem>
+                            </TabControl>
+                        </Grid>
                     </Grid>
                 </Border>
             </materialDesign:Card>
             <materialDesign:Card Grid.Row="1" Margin="5 0 5 5" FontSize="14" >
                 <DataGrid Grid.Row="1" VerticalAlignment="Top" ItemsSource="{Binding Tickets}" IsReadOnly="True" AutoGenerateColumns="False" PreviewMouseDown="TicketTableClick" MouseLeftButtonDown="TicketTableClick">
                     <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="" Width="SizeToCells" IsReadOnly="True" MinWidth="60">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <materialDesign:PackIcon VerticalAlignment="Center" Kind="CheckboxBlankCircle" Foreground="{Binding PriorityColor}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                         <DataGridTemplateColumn Header="Status" Width="SizeToCells" IsReadOnly="True" MinWidth="60">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>

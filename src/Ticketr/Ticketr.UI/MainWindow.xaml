@@ -7,7 +7,7 @@
         xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
         xmlns:component="clr-namespace:Ticketr.UI.Components"
-        Title="Ticketr" Height="800" Width="1200"
+        Title="Ticketr" Height="800" Width="1300"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
