@@ -171,7 +171,7 @@ class Controller {
     //Gibt die Details des angemeldeten Benutzers zurück
     function getCurrentMitarbeiterDetail(){
         //todo hack :)
-        $personId = $this->repo->getCurrentPersonId();
+        $personId = $this->repo->getCurrentMitarbeiterId();
         
         $response = $this->repo->getMitarbeiterDetail($personId);
         

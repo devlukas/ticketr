@@ -29,12 +29,14 @@ namespace Ticketr.UI.Components.EditPersonView
                 return dashboardViewModel;
             }
         }
+
         public async Task LoadItems()
         {
             await App.TicketSystem.ReloadPositionen();
             Positionen = App.TicketSystem.Positionen;
             await App.TicketSystem.ReloadTickets();
             RaisePropertyChanged("Tickets");
+            RaisePropertyChanged("Positionen");
             RaisePropertyChanged("Position");
         }
 
@@ -162,6 +164,7 @@ namespace Ticketr.UI.Components.EditPersonView
             {
                 positionen = value;
                 RaisePropertyChanged("Positionen");
+                RaisePropertyChanged("Position");
             }
         }
 

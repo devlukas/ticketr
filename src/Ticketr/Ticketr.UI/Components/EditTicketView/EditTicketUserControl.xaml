@@ -120,7 +120,7 @@
                             <materialDesign:PackIcon Margin="0,15,0,0" Kind="CubeOutline" ></materialDesign:PackIcon>
                             <Label Margin="0,10,0,0" FontWeight="Bold">Kategorie</Label>
                         </StackPanel>
-                        <ComboBox Name="KategorieCombobox" SelectedItem="{Binding SelectedKategorie}" Text="--- Bitte wählen ---" SelectedValuePath="Name" Grid.Row="3" TextSearch.TextPath="Name" IsTextSearchEnabled="True" ItemsSource="{Binding Kategorien}" IsEditable="False" Width="200" Height="30" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="5" SelectionChanged="KategorieCombobox_SelectionChanged">
+                        <ComboBox Name="KategorieCombobox" SelectedItem="{Binding SelectedKategorie}" Text="--- Bitte wählen ---" SelectedValuePath="Name" Grid.Row="3" TextSearch.TextPath="Name" IsTextSearchEnabled="True" ItemsSource="{Binding Kategorien}" IsEditable="True" Width="200" Height="30" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="5" SelectionChanged="KategorieCombobox_SelectionChanged">
                             <ComboBox.ItemContainerStyle>
                                 <Style TargetType="ComboBoxItem" BasedOn="{StaticResource MaterialDesignComboBoxItemStyle}">
                                     <Setter Property="IsEnabled" Value="{Binding IsSubItem}" />
