@@ -145,7 +145,31 @@
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <Image Width="30" Source="{Binding ProfilePicture}" Margin="0,0,5,0"></Image>
+                                        <Button Margin="0,0,8,0" Background="#9E9E9E" Foreground="White" BorderBrush="#9E9E9E">
+                                            <Button.Style>
+                                                <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFloatingActionMiniLightButton}">
+                                                    <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding HasProfilePicture}" Value="True">
+                                                            <Setter Property="Visibility" Value="Visible"></Setter>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
+                                            <Image Source="{Binding ProfilePicture}" ></Image>
+                                        </Button>
+                                        <Button Margin="0,0,8,0" Content="{Binding PersonInitials}" Background="#9E9E9E" Foreground="White" BorderBrush="#9E9E9E">
+                                            <Button.Style>
+                                                <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFloatingActionMiniLightButton}">
+                                                    <Setter Property="Visibility" Value="Visible"></Setter>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding HasProfilePicture}" Value="True">
+                                                            <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
+                                        </Button>
                                         <TextBlock Text="{Binding FullName}" Margin="0,0,5,0" VerticalAlignment="Center"></TextBlock>
                                     </StackPanel>
                                 </DataTemplate>
@@ -161,7 +185,32 @@
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <Image Width="30" Source="{Binding ProfilePicture}" Margin="0,0,5,0"></Image>
+                                        
+                                        <Button Margin="0,0,8,0" Background="#9E9E9E" Foreground="White" BorderBrush="#9E9E9E">
+                                            <Button.Style>
+                                                <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFloatingActionMiniLightButton}">
+                                                    <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding HasProfilePicture}" Value="True">
+                                                            <Setter Property="Visibility" Value="Visible"></Setter>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
+                                            <Image Source="{Binding ProfilePicture}" ></Image>
+                                        </Button>
+                                        <Button Margin="0,0,8,0" Content="{Binding PersonInitials}" Background="#9E9E9E" Foreground="White" BorderBrush="#9E9E9E">
+                                            <Button.Style>
+                                                <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFloatingActionMiniLightButton}">
+                                                    <Setter Property="Visibility" Value="Visible"></Setter>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding HasProfilePicture}" Value="True">
+                                                            <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
+                                        </Button>
                                         <TextBlock Text="{Binding FullName}" Margin="0,0,5,0" VerticalAlignment="Center"></TextBlock>
                                     </StackPanel>
                                 </DataTemplate>
@@ -281,7 +330,9 @@
                                             <ColumnDefinition Width="Auto"></ColumnDefinition>
                                             <ColumnDefinition></ColumnDefinition>
                                         </Grid.ColumnDefinitions>
-                                        <Image Source="{Binding ProfilePicture}" Width="45" Height="45"></Image>
+                                        <Button Width="45" Height="45" Background="#9E9E9E" Foreground="White" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}">
+                                            <Image Source="{Binding ProfilePicture}" Width="45" Height="45"></Image>
+                                        </Button>
                                         <StackPanel Grid.Column="1">
                                             <Label FontWeight="Bold" Content="{Binding Verfasser}"></Label>
                                             <TextBlock Margin="6,0,0,0" TextWrapping="Wrap" Text="{Binding Text}"></TextBlock>
