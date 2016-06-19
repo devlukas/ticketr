@@ -50,7 +50,7 @@ namespace Ticketr.UI.Components
  
         private void EditPersonButton_Click(object sender, RoutedEventArgs e)
         {
-            PersonViewModel personViewModel = (PersonViewModel)((Button)sender).DataContext;
+            PersonViewModel personViewModel = (PersonViewModel)((ListBoxItem)sender).DataContext;
 
             personViewModel.PersonenViewModel.DashboardViewModel.OpenEditPersonView();
             if (personViewModel is KundeViewModel)

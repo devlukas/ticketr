@@ -67,16 +67,21 @@
             </materialDesign:PackIcon>
             <Label FontSize="20" Margin="0 25">Daten werden geladen...</Label>
         </StackPanel>
-        <ItemsControl Grid.Row="2" ItemsSource="{Binding FilteredPersonen}" Margin="0,20">
-            <ItemsControl.ItemTemplate>
+        <ListBox HorizontalContentAlignment="Stretch" Grid.Row="2" ItemsSource="{Binding FilteredPersonen}" Margin="0,20">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MaterialDesignListBoxItem}">
+                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="EditPersonButton_Click" />
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemTemplate>
                 <DataTemplate>
                     <!-- PersonItem -->
-                    <Grid Height="50" Name="PersonItem">
+                    <Grid Height="50" Name="PersonItem" HorizontalAlignment="Stretch">
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
                             <RowDefinition Height="Auto"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Grid VerticalAlignment="Center">
+                        <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition></ColumnDefinition>
                                 <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -98,9 +103,6 @@
                                         </Style.Triggers>
                                     </Style>
                                 </StackPanel.Style>
-                                <Button ToolTip="Bearbeiten" Click="EditPersonButton_Click" Width="Auto" Padding="0"  Background="Transparent" BorderBrush="Transparent" Margin="0,0,5,0">
-                                    <materialDesign:PackIcon Kind="BorderColor" Foreground="#6F6F6F" Width="20" Height="20"></materialDesign:PackIcon>
-                                </Button>
                                 <materialDesign:DialogHost HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <materialDesign:DialogHost.DialogContent>
                                         <StackPanel Margin="16">
@@ -121,11 +123,10 @@
                                 </materialDesign:DialogHost>
                             </StackPanel>
                         </Grid>
-                        <Rectangle Grid.Row="1" Fill="#e6e6e6" Height="1"></Rectangle>
                     </Grid>
 
                 </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </UserControl>
