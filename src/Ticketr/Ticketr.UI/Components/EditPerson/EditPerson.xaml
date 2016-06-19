@@ -17,12 +17,16 @@
     <ScrollViewer HorizontalScrollBarVisibility="Auto">
         <Grid Background="#EEEEEE">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
+            <Grid Height="70" Effect="{StaticResource z-depth2}" Background="{DynamicResource DarkWindowTitle}" Grid.Row="0">
+                <Label VerticalAlignment="Bottom" HorizontalAlignment="Left" FontSize="26" Margin="30 6" Foreground="White" Content="{Binding SiteTitle}"></Label>
+            </Grid>
             <!-- Edit User -->
-            <Grid Grid.Row="0" >
-                <materialDesign:Card Margin="15,15,15,15" Grid.Row="1" HorizontalAlignment="Stretch" Background="White">
+            <Grid Grid.Row="1" >
+                <materialDesign:Card Margin="15,15,15,15" HorizontalAlignment="Stretch" Background="White">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"></RowDefinition>
@@ -31,9 +35,6 @@
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="Auto"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Grid Background="{DynamicResource AccentColorBrush}">
-                            <TextBlock Foreground="White" Text="{Binding Titel}" FontSize="20" FontWeight="Bold" Margin="5,10,0,10"></TextBlock>
-                        </Grid>
                         <Grid Margin="10" Grid.Row="1">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition></ColumnDefinition>
@@ -97,7 +98,7 @@
                                     <Label FontWeight="Bold"  Margin="0,0,20,0">Email:</Label>
                                 </StackPanel>
 
-                                <TextBox Name="EMail" materialDesign:TextFieldAssist.Hint="roger.müller@gibz.ch" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="10" FontSize="14">
+                                <TextBox Name="EMail" materialDesign:TextFieldAssist.Hint="E-Mail Adresse" BorderBrush="{DynamicResource AccentColorBrush2}" Margin="10" FontSize="14">
                                     <TextBox.Text>
                                         <Binding Path="EMail" UpdateSourceTrigger="LostFocus">
                                             <Binding.ValidationRules>
@@ -176,10 +177,10 @@
             </Grid>
             <!-- User History -->
 
-            <Grid Margin="20" Grid.Row="1">
+            <Grid Margin="20" Grid.Row="2">
                 <Grid.Style>
                     <Style TargetType="Grid">
-                        <Setter Property="Visibility" Value="Collapsed"></Setter>
+                        <Setter Property="Visibility" Value="Visible"></Setter>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding IsKunde}" Value="True">
                                 <Setter Property="Visibility" Value="Visible"></Setter>
@@ -187,15 +188,15 @@
                         </Style.Triggers>
                     </Style>
                 </Grid.Style>
-                <materialDesign:Card Margin="0,5,0,5">
+                <materialDesign:Card Margin="5">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Grid Background="{DynamicResource ComplementColor}">
-                            <TextBlock Foreground="White" Text="Tickets" FontSize="20" FontWeight="Bold" Margin="5,10,0,10"></TextBlock>
-                        </Grid>
+
+                        <Label FontSize="20" Margin="5,5,5,10" Grid.Row="0">Historie</Label>
+                        
                         <Grid Grid.Row="1">
                             <Grid.Style>
                                 <Style TargetType="Grid">
@@ -228,8 +229,8 @@
                                                     <RowDefinition></RowDefinition>
                                                     <RowDefinition></RowDefinition>
                                                 </Grid.RowDefinitions>
-                                                <TextBlock FontWeight="Bold" HorizontalAlignment="Stretch" FontSize="16" Text="{Binding Bezeichnung}"></TextBlock>
-                                                <TextBlock Foreground="#A7A7A7" HorizontalAlignment="Stretch" Grid.Row="1" Text="{Binding KurzBeschreibung}" FontSize="14" Margin="0,5,0,0" TextWrapping="Wrap"></TextBlock>
+                                                <TextBlock HorizontalAlignment="Stretch" FontSize="16" Margin="2,0,0,0" Text="{Binding Bezeichnung}"></TextBlock>
+                                                <TextBlock Foreground="#A7A7A7" HorizontalAlignment="Stretch" Grid.Row="1" Text="{Binding KurzBeschreibung}" FontSize="14" Margin="2,5,0,0" TextWrapping="Wrap"></TextBlock>
                                             </Grid>
                                             <TextBlock Grid.Column="2" FontWeight="Bold" Text="{Binding ErfassungFormatiert}" Foreground="#6FCDF8"></TextBlock>
                                             <materialDesign:PackIcon HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="3" Kind="ArrowRight" Foreground="{DynamicResource ComplementColor}" Width="20"></materialDesign:PackIcon>

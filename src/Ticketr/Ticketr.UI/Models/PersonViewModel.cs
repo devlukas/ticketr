@@ -13,6 +13,7 @@ namespace Ticketr.UI.Components
     {
         private Person person;
         private PersonenViewModel personenViewModel;
+
         public PersonViewModel(Person person, PersonenViewModel personenViewModel)
         {
             this.person = person;
@@ -47,6 +48,8 @@ namespace Ticketr.UI.Components
                 return person.Vorname;
             }
         }
+
+
 
         /// <summary>
         /// Gibt das PersonenViewModel zurück

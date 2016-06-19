@@ -38,7 +38,7 @@ namespace Ticketr.UI.Components.EditPersonView
             RaisePropertyChanged("Position");
         }
 
-        public string Titel
+        public string SiteTitle
         {
             get
             {
