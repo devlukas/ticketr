@@ -18,6 +18,7 @@ namespace Ticketr.UI.Components
         {
             this.mitarbeiter = mitarbeiter;
             this.mitarbeitersViewModel = mitarbeitersViewModel;
+            GetProfilePicture();
         }
 
         /// <summary>
@@ -31,12 +32,17 @@ namespace Ticketr.UI.Components
             }
         }
 
-        /// <summary>
-        /// Gibt das Profile Bild zurück
-        /// </summary>
+        private byte[] userImage;
+
+        private async Task GetProfilePicture()
+        {
+            userImage = await this.Mitarbeiter.GetProfilePicture();
+            RaisePropertyChanged("ProfilePicture");
+            RaisePropertyChanged("HasProfilePicture");
+        }
         public override byte[] ProfilePicture
         {
-            get { return null; }
+            get { return userImage; }
         }
 
         /// <summary>

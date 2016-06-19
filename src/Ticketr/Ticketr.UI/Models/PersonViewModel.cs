@@ -30,7 +30,7 @@ namespace Ticketr.UI.Components
 
         public bool HasProfilePicture
         {
-            get { return ProfilePicture != null; }
+            get { return ProfilePicture != null && ProfilePicture.Length != 0; }
         }
 
         public abstract byte[] ProfilePicture { get; }

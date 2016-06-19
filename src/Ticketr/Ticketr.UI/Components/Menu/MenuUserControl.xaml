@@ -21,11 +21,15 @@
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
                 </Grid.RowDefinitions>
-                <Image Margin="0, 30, 0, 0" VerticalAlignment="Center" 
+                <Button Background="{DynamicResource WindowTitleColorBrushAfterLogin}" Style="{StaticResource MaterialDesignFloatingActionLightButton}" BorderBrush="Transparent" Width="100" Height="100" Margin="0, 30, 0, 0" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                    <Image VerticalAlignment="Center" 
                        HorizontalAlignment="Center" 
                        Source="{Binding UserImage}" 
                        Width="100" >
-                </Image>
+                    </Image>
+                </Button>
+
+                
                 <TextBlock Margin="0,10,0,0" Grid.Row="1" Foreground="{DynamicResource NormalFont}" TextAlignment="Center" FontSize="16" Text="{Binding FormattedUserName}"></TextBlock>
                 <Button Click="TicketsButton_Click" Margin="0,10,0,0" Grid.Row="2"  Height="30" Padding="0"  Background="Transparent" BorderBrush="Transparent">
                     <Grid Width="170" HorizontalAlignment="Stretch">
