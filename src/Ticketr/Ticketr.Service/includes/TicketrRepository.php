@@ -108,7 +108,7 @@
             $id = $data["id"];
             $name = $data["name"];
             $vorname = $data["vorname"];
-            $email = $data["eMail"];
+            $email = $data["email"];
             $telefon = $data["telefon"];
             
             $sql = "
