@@ -28,6 +28,13 @@ namespace Ticketr.UI.Components
             get { return string.Format("{0} {1}", person.Vorname, person.Name); }
         }
 
+        public bool HasProfilePicture
+        {
+            get { return ProfilePicture != null; }
+        }
+
+        public abstract byte[] ProfilePicture { get; }
+
         /// <summary>
         /// Gibt den Namen des Kunde zurück
         /// </summary>
@@ -60,6 +67,11 @@ namespace Ticketr.UI.Components
             {
                 return personenViewModel;
             }
+        }
+
+        public string PersonInitials
+        {
+            get { return String.Format("{0}{1}", person.Vorname.ToUpper()[0], person.Name.ToUpper()[0]); }
         }
 
         public abstract void Remove();

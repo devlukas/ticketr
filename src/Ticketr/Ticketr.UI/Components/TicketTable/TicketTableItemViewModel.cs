@@ -48,10 +48,6 @@ namespace Ticketr.UI.Components.TicketTableItem
             get { return ticket.Beschreibung.Length <= 100 ? ticket.Beschreibung : ticket.Beschreibung.Substring(0, 120) + " .."; }
         }
 
-        public string KundeInitials
-        {
-            get { return String.Format("{0}{1}", ticket.Kunde.Vorname.ToUpper()[0], ticket.Kunde.Name.ToUpper()[0]); }
-        }
         public string Erfassung
         {
             get

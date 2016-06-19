@@ -97,6 +97,18 @@ namespace Ticketr.UI.Components.EditPersonView
             }
         }
 
+        public void RemoveCurrentPerson()
+        {
+            if (IsKunde)
+            {
+                App.TicketSystem.RemoveKunde(Kunde.Id);
+            }
+            else
+            {
+                App.TicketSystem.RemoveMitarbeiter(Mitarbeiter.Id);
+            }
+        }
+
         public string Telefon
         {
             get { return person.Telefon; }

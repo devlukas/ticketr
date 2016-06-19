@@ -32,6 +32,14 @@ namespace Ticketr.UI.Components
         }
 
         /// <summary>
+        /// Gibt das Profile Bild zurück
+        /// </summary>
+        public override byte[] ProfilePicture
+        {
+            get { return null; }
+        }
+
+        /// <summary>
         /// Löscht den Mitarbeiter aus der Datenbank und aus dem UI
         /// </summary>
         public override void Remove()

@@ -28,8 +28,7 @@ namespace Ticketr.UI.Components
 
         private void PersonLöschenButton_Click(object sender, RoutedEventArgs e)
         {
-            PersonViewModel personViewModel = (PersonViewModel) ((Button) sender).DataContext;
-            personViewModel.Remove();
+            
         }
 
         private void AddPersonButton_Click(object sender, RoutedEventArgs e)

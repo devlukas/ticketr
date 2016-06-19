@@ -62,5 +62,19 @@ namespace Ticketr.UI.Components
             dashboard.EditTicketViewModel = new EditTicketViewModel(ticket.Id);
             dashboard.OpenEditTicketView();
         }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            EditPersonViewModel editPersonViewModel = (EditPersonViewModel)((Button)sender).DataContext;
+            editPersonViewModel.RemoveCurrentPerson();
+            if (editPersonViewModel.IsKunde)
+            {
+                editPersonViewModel.DashboardViewModel.OpenKundenMenu();
+            }
+            else
+            {
+                editPersonViewModel.DashboardViewModel.OpenMitarbeiterView();
+            }
+        }
     }
 }

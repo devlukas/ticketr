@@ -22,6 +22,7 @@ namespace Ticketr.UI.Components
         {
             this.kunde = kunde;
             this.kundenViewModel = kundenViewModel;
+            GetProfilePicture();
         }
         
         /// <summary>
@@ -51,6 +52,19 @@ namespace Ticketr.UI.Components
                 return kunde;
             }
         }
-        
+
+        private byte[] userImage;
+
+        private async Task GetProfilePicture()
+        {
+            userImage = await App.TicketSystem.CurrentUser.GetProfilePicture();
+            RaisePropertyChanged("ProfilePicture");
+            RaisePropertyChanged("HasProfilePicture");
+        }
+
+        public override byte[] ProfilePicture
+        {
+            get { return userImage; }
+        }
     }
 }
