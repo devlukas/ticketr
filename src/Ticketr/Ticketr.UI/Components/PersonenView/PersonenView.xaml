@@ -58,21 +58,7 @@
                     </Style.Triggers>
                 </Style>
             </StackPanel.Style>
-            <materialDesign:PackIcon Kind="Sync" Height="40" Width="40" Margin="5 25 0 0" RenderTransformOrigin="0.5, 0.5">
-                <materialDesign:PackIcon.RenderTransform>
-                    <RotateTransform CenterX="0" CenterY="0"/>
-                </materialDesign:PackIcon.RenderTransform>
-                <materialDesign:PackIcon.Triggers>
-                    <EventTrigger RoutedEvent="Loaded">
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <DoubleAnimation Storyboard.TargetProperty="(Rectangle.RenderTransform).(RotateTransform.Angle)"  From="0" To="360" Duration="0:0:1" RepeatBehavior="Forever"/>
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger>
-                </materialDesign:PackIcon.Triggers>
-            </materialDesign:PackIcon>
-            <Label FontSize="20" Margin="0 25">Daten werden geladen...</Label>
+            <ProgressBar Height="50" Width="50" Style="{StaticResource MaterialDesignCircularProgressBar}" Margin="0,15,5,0" Value="0" IsIndeterminate="True" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </StackPanel>
         <ListBox HorizontalContentAlignment="Stretch" Grid.Row="2" ItemsSource="{Binding FilteredPersonen}" Margin="0,0">
             <ListBox.ItemContainerStyle>

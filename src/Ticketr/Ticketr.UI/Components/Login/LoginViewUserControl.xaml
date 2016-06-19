@@ -56,20 +56,7 @@
                     <StackPanel Grid.Row="4" Orientation="Vertical">
                         <Button IsDefault="True" Click="LoginButton_OnClick" Style="{StaticResource MaterialDesignRaisedAccentButton}"  Margin="0,20" Width="120" Height="50" HorizontalAlignment="Right">
                             <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="Sync" Height="20" Width="20"  RenderTransformOrigin="0.5, 0.5" Visibility="{Binding LoginProcessVisibility}">
-                                    <materialDesign:PackIcon.RenderTransform>
-                                        <RotateTransform CenterX="0" CenterY="0"/>
-                                    </materialDesign:PackIcon.RenderTransform>
-                                    <materialDesign:PackIcon.Triggers>
-                                        <EventTrigger RoutedEvent="Loaded">
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <DoubleAnimation Storyboard.TargetProperty="(Rectangle.RenderTransform).(RotateTransform.Angle)"  From="0" To="360" Duration="0:0:1" RepeatBehavior="Forever"/>
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </EventTrigger>
-                                    </materialDesign:PackIcon.Triggers>
-                                </materialDesign:PackIcon>
+                                <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}" Margin="0,0,5,0" Value="0" IsIndeterminate="True" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding LoginProcessVisibility}"/>
                                 <TextBlock VerticalAlignment="Center">Einloggen</TextBlock>
                             </StackPanel>
                         </Button>
