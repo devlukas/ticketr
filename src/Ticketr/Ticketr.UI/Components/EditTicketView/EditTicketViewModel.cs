@@ -436,6 +436,9 @@ namespace Ticketr.UI.Components.EditTicketView
             this.Loading = false;
 
             DashboardViewModel dashboardViewModel = App.MainWindowViewModel.SelectedViewModel as DashboardViewModel;
+            //Reload Ticket Page
+            if (dashboardViewModel != null)
+                dashboardViewModel.EditTicketViewModel = new EditTicketViewModel(Id);
 
 
         }
