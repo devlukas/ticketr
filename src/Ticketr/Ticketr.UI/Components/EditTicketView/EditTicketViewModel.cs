@@ -25,7 +25,7 @@ namespace Ticketr.UI.Components.EditTicketView
         public EditTicketViewModel()
         {
             Loading = true;
-            
+
             loaderTasks.Add(LoadKunden());
             loaderTasks.Add(LoadMitarbeiter());
             loaderTasks.Add(LoadCategories());
@@ -55,7 +55,7 @@ namespace Ticketr.UI.Components.EditTicketView
                 RaisePropertyChanged("Kategorien");
             });
 
-            
+
         }
 
         private string fehler;
@@ -86,9 +86,9 @@ namespace Ticketr.UI.Components.EditTicketView
                 {
                     kategorien.Add(new KategorieViewModel(subKategorie, true));
                 }
-                
-            RaisePropertyChanged("Kategorien");
-            RaisePropertyChanged("SelectedKategorie");
+
+                RaisePropertyChanged("Kategorien");
+                RaisePropertyChanged("SelectedKategorie");
 
             }
 
@@ -188,7 +188,7 @@ namespace Ticketr.UI.Components.EditTicketView
 
         public List<string> AllStatus
         {
-            get { return new List<string> { "Abgeschlossen", "Offen"}; }
+            get { return new List<string> { "Abgeschlossen", "Offen" }; }
         }
 
         public string SelectedStatus
@@ -272,7 +272,8 @@ namespace Ticketr.UI.Components.EditTicketView
         /// <summary>
         /// Gibt die Selektierte Kategorie zurück und legt diese fest.
         /// </summary>
-        public KategorieViewModel SelectedKategorie {
+        public KategorieViewModel SelectedKategorie
+        {
             get
             {
                 if (this.kategorien != null && this.ticket.Kategorie != null)
@@ -359,7 +360,8 @@ namespace Ticketr.UI.Components.EditTicketView
         /// <summary>
         /// Gibt den Selektierten Mitarbeiter zurück und legt diesen fest.
         /// </summary>
-        public PersonDropdownItemViewModel SelectedMitarbeiter {
+        public PersonDropdownItemViewModel SelectedMitarbeiter
+        {
             get
             {
                 if (this.mitarbeiter != null && this.ticket.Bearbeiter != null)
@@ -369,7 +371,13 @@ namespace Ticketr.UI.Components.EditTicketView
 
                 return null;
             }
-            set { this.ticket.Bearbeiter = App.TicketSystem.Mitarbeiter.FirstOrDefault(k => k.Id == value.MitarbeiterId); }
+            set
+            {
+                if (value != null)
+                {
+                    this.ticket.Bearbeiter = App.TicketSystem.Mitarbeiter.FirstOrDefault(k => k.Id == value.MitarbeiterId);
+                }
+            }
         }
 
         /// <summary>
@@ -386,7 +394,13 @@ namespace Ticketr.UI.Components.EditTicketView
 
                 return null;
             }
-            set { this.ticket.Kunde = App.TicketSystem.Kunden.FirstOrDefault(k => k.Id == value.KundeId); }
+            set
+            {
+                if (value != null)
+                {
+                    this.ticket.Kunde = App.TicketSystem.Kunden.FirstOrDefault(k => k.Id == value.KundeId);
+                }
+            }
         }
 
         public async Task SaveTicket()
